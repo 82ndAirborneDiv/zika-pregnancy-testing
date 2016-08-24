@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="css/custom.css" rel="stylesheet">
+
+    <title>Pregnancy & Zika Testing</title>
+</head>
+<body>
+<div data-iframe-height="" class="widget-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary" id="zika-app-intro"  tabindex="0">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Pregnancy & Zika Testing</h3>
+                </div>
+                <div class="scrollable">
+                    <div class="panel-body">
+                        <p>CDC’s top priority for the public health response to Zika is to protect pregnant
+                            women because of the risks associated with Zika virus infection during pregnancy.
+                            <br /><br />
+                            Recently, CDC updated its interim guidance for healthcare providers caring for
+                            pregnant women with possible Zika virus exposure. This web tool is intended to help
+                            healthcare providers apply the updated recommendations for Zika virus testing,
+                            interpretation of results, and clinical management for a pregnant woman with
+                            possible exposure to Zika virus. </p>
+                        <ul>
+                            <li>This tool is intended for healthcare providers and public health officials in the United
+                                States.</li>
+                            <li>CDC continues to evaluate all available evidence and will update recommendations as
+                                new information becomes available.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="panel-footer" align="right">
+
+                    <button type="button" class="btn btn-primary" id="start">Start</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-primary" id="zika-app-main" style="display: none">
+                <div class="panel-heading">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 pull-left">
+                            <h3 class="panel-title pull-left zika-title">Pregnancy & Zika Testing</h3>
+                        </div>
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 pull-right" align="right">
+                            <button class="btn btn-default" id="restart">Restart</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="scrollable">
+                    <div class="panel-body" id="zika-app-question" tabindex="-1">
+                        <div id="question-text">
+
+                        </div>
+                        <div id="question-answers">
+
+                        </div>
+
+                        <form role="form" id="singleSelectListDiv" class="form-group" style="display: none">
+                            <label id="singleSelectLabel" for="singleSelectList"></label>
+                            <select class="form-control" id="singleSelectList" name="select">
+                                <option></option>
+                            </select>
+                        </form>
+
+
+                        <div id="multiSelectListDiv" style="display:none">
+                            <label id="multiSelectLabel" for="multiSelectList"></label>
+                            <div role="group" aria-labelledby="multiSelectLabel" id="multiSelectList" class="multiselect">
+
+                            </div>
+                        </div>
+
+                        <div id="alert-area" style="padding-top: 10px">
+
+                        </div>
+                    </div>
+
+                    <div class="panel-body" id="zika-app-endpoint" tabindex="-1">
+                        <div id="zika-app-endpoint-text"></div>
+                        <div id="zika-app-endpoint-additional-notes"></div>
+                        <div id="zika-app-endpoint-disclaimer" class="well"></div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-6 col-sm-6 pull-left">
+                            <button type="button" class="btn btn-primary" id="back"><em class="glyphicon glyphicon-chevron-left"></em> Back</button>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 pull-right" align="right">
+                            <button class="btn btn-primary zika-app-next-btn" id="next" style="display: none">Next <em class="glyphicon glyphicon-chevron-right"></em></button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="zika_clinical_webtool.js"></script>
+<script src="./tp-widget-common.js"></script>
+</body>
+</html>

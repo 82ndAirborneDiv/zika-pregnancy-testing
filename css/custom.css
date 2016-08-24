@@ -1,0 +1,81 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.z-risk-rad {
+	margin-left:20px;
+}
+.panel-heading{
+	height: 54px;
+}
+.panel-title {
+	vertical-align: middle;
+	padding-top: 6px;
+}
+
+.btn-default{
+	border: none;
+	color: #337ab7;
+}
+
+.close {
+	opacity: .5;
+}
+a {
+	color: #2e6da4;
+	text-decoration: underline;
+}
+
+.panel-body{
+	min-height: 375px;
+	max-height: 640px;
+}
+
+@media only screen and (max-width: 350px) {
+
+	.zika-title {font-size:14px;}
+	.panel-body{
+		height: 375px;
+	}
+}
+
+@media only screen and (max-width: 500px) {
+
+	.zika-title {font-size:12px;}
+	.panel-body{
+		min-height: 375px;
+		max-height: 450px;
+	}
+}
+
+.panel-primary>.panel-heading {
+	color: #fff;
+	background-color: #075290;
+	border-color: #075290;
+}
+.btn-primary {
+	color: #fff;
+	background-color: #075290;
+	border-color: #075290;
+}
+.scrollable{
+	overflow:auto;
+}
+.widget-wrapper{
+	min-width: 274px;
+	max-height:755px;
+}
+
+.multiselect {
+	height:18em;
+	border:solid 1px #c0c0c0;
+	overflow:auto;
+}
+
+.multiselect label {
+	display:block;
+}
+
+.multiselect-on {
+
+	background-color:#e5e5e5;
+}
