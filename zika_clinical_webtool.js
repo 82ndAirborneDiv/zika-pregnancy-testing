@@ -633,14 +633,25 @@ var nodes = {
         +   "<div class='panel panel-default'>"
         +       "<div class='panel-heading'>"
         +           "<h4 class='panel-title'>"
-        +               "<a data-toggle='collapse' data-parent='#accordion' href='#collapse1'>Zika affected areas</a>"
+        +               "<a style='font-size: 14px' data-toggle='collapse' data-parent='#accordion' href='#collapse1'>View current Zika affected areas</a>"
         +           "</h4>"
         +       "</div>"
         +       "<div id='collapse1' class='panel-collapse collapse'>"
         +           "<div class='panel-body'>"
-        +               "<div id='zikaAffectedAreas' style='height: 500px' class='scrollable'>"
-        +                   "<script type='text/javascript'>var zikaCountries = '<ul>'; $.each(countries, function(){"
-        +                   "if(this.riskCategory == RiskCategory.ZIKA) {zikaCountries += '<li>' +this.text +'</li>';}}); zikaCountries += '</ul>'; $('#zikaAffectedAreas').append(zikaCountries);</script>"
+        +               "<div id='zikaAffectedAreas' class='scrollable'>"
+        +                   "<script type='text/javascript'>var zikaCountriesDiv = '<div>';"
+        +                       "var zikaAffectedCountries = getCountriesByRiskCategory(RiskCategory.ZIKA);console.log(zikaAffectedCountries);"
+        +                       "var numCountries = Object.keys(zikaAffectedCountries).length;"
+        +                       "for(var i = 0; i < numCountries; i++){"
+        +                           "var currentCountry = zikaAffectedCountries[Object.keys(zikaAffectedCountries)[i]];"
+        +                               "if(i == numCountries - 1){"
+        +                                   "zikaCountriesDiv +=  currentCountry.text;"
+        +                                "} else {"
+        +                                   "zikaCountriesDiv += currentCountry.text +', ';"
+        +                           "}"
+        +                        "}"
+        +                        "zikaCountriesDiv += '</div>';"
+        +                        "$('#zikaAffectedAreas').append(zikaCountriesDiv);</script>"
         +               "</div>"
         +           "</div>"
         +       "</div>"
@@ -654,7 +665,7 @@ var nodes = {
             },
             2: {
                 text: "No",
-                nextNode: 6,
+                nextNode: 6
             },
         },
         nodeType: NodeType.QUESTION,
@@ -1283,6 +1294,18 @@ function getRiskForCountry(country){
 
 function getRiskForState(state){
     return getStateById(state).riskCategory;
+}
+function getCountriesByRiskCategory(riskCategory){
+    var numCountries = Object.keys(countries).length;
+    var matchingCountries = {};
+    var currentCountry;
+    for(var i = 0; i < numCountries; i++){
+        currentCountry = countries[Object.keys(countries)[i]];
+        if(currentCountry.riskCategory === riskCategory){
+            matchingCountries[Object.keys(countries)[i]] = currentCountry;
+        }
+    }
+    return matchingCountries;
 }
 /*
  Countries object was built from the State Dept list of countries. Countries/Territories listed on

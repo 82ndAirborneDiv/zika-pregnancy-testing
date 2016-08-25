@@ -4,10 +4,10 @@
 .z-risk-rad {
 	margin-left:20px;
 }
-.panel-heading{
+.app-panel-heading{
 	height: 54px;
 }
-.panel-title {
+.app-panel-title {
 	vertical-align: middle;
 	padding-top: 6px;
 }
@@ -25,24 +25,24 @@ a {
 	text-decoration: underline;
 }
 
-.panel-body{
-	min-height: 375px;
+.app-panel-content{
+	min-height: 350px;
 	max-height: 640px;
 }
 
 @media only screen and (max-width: 350px) {
 
 	.zika-title {font-size:14px;}
-	.panel-body{
-		height: 375px;
+	.app-panel-content{
+		height: 350px;
 	}
 }
 
 @media only screen and (max-width: 500px) {
 
 	.zika-title {font-size:12px;}
-	.panel-body{
-		min-height: 375px;
+	.app-panel-content{
+		min-height: 350px;
 		max-height: 450px;
 	}
 }
