@@ -1227,7 +1227,7 @@ var nodes = {
             },
             2: {
                 text: "Zika virus PRNT >= 10 AND dengue virus PRNT >= 10",
-                nextNode: 28
+                nextNode: 47
             },
             3:{
                 text: "Zika virus PRNT <10",
@@ -1271,6 +1271,10 @@ var nodes = {
         getValuesForAnswers: function() {
             return states;
         }
+    },
+    47:{
+        nodeType: NodeType.ENDPOINT,
+        endpointName: "clinicalManagementRecentFlavivirusInfectionNOS"
     }
 }
 
