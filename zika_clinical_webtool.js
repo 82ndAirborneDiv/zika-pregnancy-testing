@@ -524,14 +524,22 @@ var nodes = {
         text: "Select your profession:",
         answers: {
             1: {
-                text: "Healthcare provider",
+                text: "Obstetrician/Gynecologist",
                 nextNode: 2
             },
             2: {
-                text: "Health department official",
+                text: "Family Physician",
                 nextNode: 2
             },
             3:{
+                text: "State health department official",
+                nextNode: 2
+            },
+            4:{
+                text: "Local health department official",
+                nextNode: 2
+            },
+            5:{
                 text: "Other",
                 nextNode: 2
             }
