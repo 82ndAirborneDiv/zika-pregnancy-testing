@@ -25,6 +25,8 @@ var back = $("#back");
 var restart = $("#restart");
 var nextButton = $("#next");
 
+var debug = true;
+
 /*array to store answers
 Each index of nodeHistory stores a NodeHistory object
 */
@@ -103,7 +105,6 @@ $(document).ready(function(){
         cdcMetrics.trackEvent("ButtonClicked", "Restart");
         triggerRestart();
     });
-    $('#zikaAreasSyndicatedContent').load(    );
 });
 //populate singleSelect list
 var populateSingleSelectList = function(list) {
@@ -159,6 +160,11 @@ function loadQuestion(nextQuestionNumber){
 
     var nextQuestionObject = getNode(nextQuestionNumber);
     var nextQuestionText = nextQuestionObject.text;
+    if(debug){
+        nextQuestionText = "Node number: " +nextQuestionNumber;
+        nextQuestionText += "<br />";
+        nextQuestionText += nextQuestionObject.text;
+    }
     var nextQuestionAnswers = nextQuestionObject.getValuesForAnswers();
 
     var previouslyVisited = false;
@@ -254,7 +260,13 @@ function loadEndPoint(number){
     }
     cdcMetrics.trackEvent("Endpoint Reached", number);
     var nodeObject = getNode(number);
-    endpointText.load("endpoints.html #" +nodeObject.endpointName);
+
+    if(debug){
+        var nodeNumText = "Node number: " +number;
+        endpointText.html("<div>" +nodeNumText +"</div>");
+    }
+
+    endpointText.append($('<div>').load("endpoints.html #" +nodeObject.endpointName));
     endpointDisclaimer.load("disclaimers.html #allResults")
 
     endpointContent.show();
