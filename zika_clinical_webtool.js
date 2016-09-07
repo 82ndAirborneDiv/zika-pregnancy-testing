@@ -621,7 +621,7 @@ var nodes = {
         }
     },
     4: {
-        text: "Where does your patient live?",
+        text: "Where does your pregnant patient live?",
         answers: {
             1: {
                 text: "Ongoing Exposure",
@@ -646,42 +646,14 @@ var nodes = {
         }
     },
     5: {
-        text: "<div id='q5'>Has patient traveled to Zika affected area(s) during pregancy or periconceptional "
+        text: "<div id='q5'>Has your pregnant patient traveled during pregancy or periconceptional "
         +"period? (Periconceptional period is defined as eight weeks before conception or six weeks "
         +"before last missed period).<br /> "
-         +"<div class='panel-group' id='accordion'>"
-        +   "<div class='panel panel-default'>"
-        +       "<div class='panel-heading'>"
-        +           "<h4 class='panel-title'>"
-        +               "<a style='font-size: 14px' data-toggle='collapse' data-parent='#accordion' href='#collapse1'>View current Zika affected areas</a>"
-        +           "</h4>"
-        +       "</div>"
-        +       "<div id='collapse1' class='panel-collapse collapse'>"
-        +           "<div class='panel-body'>"
-        +               "<div id='zikaAffectedAreas' class='scrollable'>"
-        +                   "<script type='text/javascript'>var zikaCountriesDiv = '<div>';"
-        +                       "var zikaAffectedCountries = getCountriesByRiskCategory(RiskCategory.ZIKA);console.log(zikaAffectedCountries);"
-        +                       "var numCountries = Object.keys(zikaAffectedCountries).length;"
-        +                       "for(var i = 0; i < numCountries; i++){"
-        +                           "var currentCountry = zikaAffectedCountries[Object.keys(zikaAffectedCountries)[i]];"
-        +                               "if(i == numCountries - 1){"
-        +                                   "zikaCountriesDiv +=  currentCountry.text;"
-        +                                "} else {"
-        +                                   "zikaCountriesDiv += currentCountry.text +', ';"
-        +                           "}"
-        +                        "}"
-        +                        "zikaCountriesDiv += '</div>';"
-        +                        "$('#zikaAffectedAreas').append(zikaCountriesDiv);</script>"
-        +               "</div>"
-        +           "</div>"
-        +       "</div>"
-        +   "</div>"
-        +"</div>"
         +"</div>",
         answers: {
             1:{
                 text: "Yes",
-                nextNode: 15
+                nextNode: 48
             },
             2: {
                 text: "No",
@@ -698,7 +670,7 @@ var nodes = {
         }
     },
     6: {
-        text: "Has patient had unprotected sexual activity (vaginal, anal, or oral sex, or shared "
+        text: "Has your pregnant patient had unprotected sexual activity (vaginal, anal, or oral sex, or shared "
         +"sex toys without a condom) with a partner who has traveled to or lives in an area with "
         +"active Zika virus transmission during her pregnancy or the periconceptional period "
         +"(eight weeks before conception or six weeks before last missed period)?",
@@ -722,7 +694,7 @@ var nodes = {
         }
     },
     7:{
-        text: "Does the patient have one or more symptoms consistent with Zika virus disease: fever, rash, " +
+        text: "Does your pregnant patient have one or more symptoms consistent with Zika virus disease: fever, rash, " +
         "arthralgia, or conjunctivitis? ",
         answers:{
             1:{
@@ -814,7 +786,7 @@ var nodes = {
         endpointName: "lowRiskOfExposure"
     },
     15: {
-        text: "Does patient regularly travel to area?",
+        text: "Does your pregnant patient regularly travel to area?",
         answers: {
             1: {
                 text: "Yes",
@@ -856,7 +828,7 @@ var nodes = {
         }
     },
     17: {
-        text: "Does the patient have one or more symptoms consistent with Zika virus disease: fever, rash, " +
+        text: "Does your pregnant patient have one or more symptoms consistent with Zika virus disease: fever, rash, " +
         "arthralgia, or conjunctivitis?",
         answers: {
             1: {
@@ -1295,6 +1267,27 @@ var nodes = {
     47:{
         nodeType: NodeType.ENDPOINT,
         endpointName: "clinicalManagementRecentFlavivirusInfectionNOS"
+    },
+    48:{
+        text: "Where has your patient traveled?",
+        answers: {
+            1: {
+                text: "Zika area",
+                nextNode: 15
+            },
+            2: {
+                text: "Non-Zika area",
+                nextNode: 6
+            }
+        },
+        nodeType: NodeType.QUESTION,
+        answerType: AnswerType.MULTISELECT,
+        decideChoice: function(qNum, input){
+            return nodes.decisionLogic.multiCountryCheckForZika(qNum, input);
+        },
+        getValuesForAnswers: function() {
+            return countries;
+        }
     }
 }
 
@@ -1370,7 +1363,7 @@ var countries = {
     },
     'AG': {
         text: "Antigua and Barbuda",
-        riskCategory: RiskCategory.NONE
+        riskCategory: RiskCategory.ZIKA
     },
     'AR': {
         text: "Argentina",
@@ -1398,7 +1391,7 @@ var countries = {
     },
     'BS': {
         text: "Bahamas, The",
-        riskCategory: RiskCategory.NONE
+        riskCategory: RiskCategory.ZIKA
     },
     'BH': {
         text: "Bahrain",
@@ -1452,6 +1445,10 @@ var countries = {
         text: "Brazil",
         riskCategory: RiskCategory.ZIKA
     },
+    'VG' : {
+        text: "British Virgin Islands",
+        riskCategory: RiskCategory.ZIKA
+    },
     'BN': {
         text: "Brunei",
         riskCategory: RiskCategory.NONE
@@ -1486,6 +1483,10 @@ var countries = {
     },
     'CV': {
         text: "Cape Verde",
+        riskCategory: RiskCategory.ZIKA
+    },
+    'KY' :{
+        text: "Cayman Islands",
         riskCategory: RiskCategory.ZIKA
     },
     'CF': {
@@ -2026,7 +2027,7 @@ var countries = {
     },
     'SG': {
         text: "Singapore",
-        riskCategory: RiskCategory.NONE
+        riskCategory: RiskCategory.ZIKA
     },
     'BQ': {
         text: "Sint Eustatius",
@@ -2139,6 +2140,10 @@ var countries = {
     'TM': {
         text: "Turkmenistan",
         riskCategory: RiskCategory.NONE
+    },
+    'TC' : {
+        text: "Turks and Caicos",
+        riskCategory: RiskCategory.ZIKA
     },
     'TV': {
         text: "Tuvalu",
