@@ -71,9 +71,9 @@
 
         // INIT METRICS
         cdcMetrics.init({
-            c32 : "",
-            pageName : "",
-            useMetrics : 'false'
+            c32 : "widget-137",
+            pageName : "pregnancy&ZikaTesting",
+            useMetrics : 'true'
         });
 
         cdcCommon.log('Common Framework Metrics Initialized!');

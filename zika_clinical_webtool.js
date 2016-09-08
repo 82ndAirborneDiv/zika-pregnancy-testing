@@ -306,7 +306,7 @@ function nextButtonClicked(){
             }
             break;
         case AnswerType.NONE:
-            if(currentQuestionNumber === "1") {
+            if(currentQuestionNumber === "2") {
                 selection = "Accepted Disclaimer";
                 trackAnswer(selection);
             }
@@ -489,7 +489,9 @@ var nodes = {
         //Generic logic for radio button answerType
         getRadioAnswer: function(questionNumber, selection){
             var questionObject = getNode(questionNumber);
-            return questionObject.answers["" +selection];
+            var answerObject = questionObject.answers["" +selection];
+            trackAnswer(answerObject.text);
+            return answerObject;
         },
         //disclaimer logic for country selections based on Zika risk
         disclaimerBasedOnCountryZikaRisk: function(userAnswer){
