@@ -603,11 +603,14 @@ var nodes = {
                 nextNode: 4
             },
             2: {
-                text: "You recently received test results for your patient and you need to understand how to "
-                +"interpret the results and manage clinical care.",
-                nextNode: 22
+                text: "You recently received initial test results for your patient and you need to understand how to interpret the results and manage clinical care.",
+                nextNode: 23
             },
             3: {
+                text: "You recently received results from subsequent tests done to confirm or rule our infection and you need to understand how to interpret the results and manage care.",
+                nextNode: 41
+            },
+            4: {
                 text: "Your patient already received a negative rRT-PCR result within 2 weeks of possible exposure "
                 +"and has returned 2-12 weeks later for a Zika IgM test.",
                 nextNode: 10
@@ -905,28 +908,28 @@ var nodes = {
         nodeType: NodeType.ENDPOINT,
         endpointName: "prenatalClinicalManagement3rdTrimester"
     },
-    22: {
-        text: "Have you received results from the first test you ordered (initial result) or are you following " +
-        "up on a subsequent test to confirm or rule out infection (follow-up result)?",
-        answers: {
-            1: {
-                text: "Initial result",
-                nextNode: 23
-            },
-            2: {
-                text: "Follow-Up result",
-                nextNode: 41
-            }
-        },
-        nodeType: NodeType.QUESTION,
-        answerType: AnswerType.SINGLESELECT,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
-        },
-        getValuesForAnswers: function(){
-            return this.answers;
-        }
-    },
+    // 22: {
+    //     text: "Have you received results from the first test you ordered (initial result) or are you following " +
+    //     "up on a subsequent test to confirm or rule out infection (follow-up result)?",
+    //     answers: {
+    //         1: {
+    //             text: "Initial result",
+    //             nextNode: 23
+    //         },
+    //         2: {
+    //             text: "Follow-Up result",
+    //             nextNode: 41
+    //         }
+    //     },
+    //     nodeType: NodeType.QUESTION,
+    //     answerType: AnswerType.SINGLESELECT,
+    //     decideChoice: function(qNum, input){
+    //         return nodes.decisionLogic.getRadioAnswer(qNum, input);
+    //     },
+    //     getValuesForAnswers: function(){
+    //         return this.answers;
+    //     }
+    // },
     23: {
         text: "Choose test performed:",
         answers: {
