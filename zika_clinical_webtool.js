@@ -607,7 +607,7 @@ var nodes = {
                 nextNode: 23
             },
             3: {
-                text: "You recently received results from subsequent tests done to confirm or rule our infection and you need to understand how to interpret the results and manage care.",
+                text: "You recently received results from subsequent tests done to confirm or rule out infection and you need to understand how to interpret the results and manage care.",
                 nextNode: 41
             },
             4: {
