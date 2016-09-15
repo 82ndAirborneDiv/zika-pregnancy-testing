@@ -161,7 +161,7 @@ function loadQuestion(nextQuestionNumber){
     var nextQuestionObject = getNode(nextQuestionNumber);
     var nextQuestionText = nextQuestionObject.text;
     if(debug){
-        nextQuestionText = "Screen number: " +nextQuestionNumber;
+        nextQuestionText = "<strong>Screen number: " +nextQuestionNumber+"</strong></br>";
         nextQuestionText += "<br />";
         nextQuestionText += nextQuestionObject.text;
     }
@@ -180,7 +180,7 @@ function loadQuestion(nextQuestionNumber){
             if(previouslyVisited){
                 nodeHistory.pop();
             }
-            questionText.html('<strong>' +nextQuestionText +'</strong>');
+            questionText.html('<strong>' +nextQuestionText +'</strong></strong>');
             break;
         case AnswerType.SINGLESELECT:
             singleSelectListSurround.show();
@@ -263,7 +263,7 @@ function loadEndPoint(number){
 
     if(debug){
         var nodeNumText = "Screen number: " +number;
-        endpointText.html("<div>" +nodeNumText +"</div>");
+        endpointText.html("<div><strong>" +nodeNumText +"</strong></div></br>");
     }
 
     endpointText.append($('<div>').load("endpoints.html #" +nodeObject.endpointName));
