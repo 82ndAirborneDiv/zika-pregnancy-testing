@@ -599,19 +599,19 @@ var nodes = {
         text: "To begin, please select what information you are looking for.",
         answers: {
             1: {
-                text: "Your patient is initiating care and you need to decide if Zika virus testing is needed.",
+                text: "If your patient is initiating care and you need to decide if Zika virus testing is needed.",
                 nextNode: 4
             },
             2: {
-                text: "You recently received initial test results for your patient and you need to understand how to interpret the results and manage clinical care.",
+                text: "If your patient recently received initial test results for your patient and you need to understand how to interpret the results and manage clinical care.",
                 nextNode: 23
             },
             3: {
-                text: "You recently received results from subsequent tests done to confirm or rule out infection and you need to understand how to interpret the results and manage care.",
+                text: "If your patient recently received results from subsequent tests done to confirm or rule out infection and you need to understand how to interpret the results and manage care.",
                 nextNode: 41
             },
             4: {
-                text: "Your patient already received a negative rRT-PCR result within 2 weeks of possible exposure "
+                text: "If your patient already received a negative rRT-PCR result within 2 weeks of possible exposure "
                 +"and has returned 2-12 weeks later for a Zika IgM test.",
                 nextNode: 10
             }
