@@ -977,12 +977,33 @@ var nodes = {
             return this.answers;
         }
     },
+    // 25: {
+    //     nodeType: NodeType.ENDPOINT,
+    //     endpointName: "clinicalManagementRecentZikaInfection"
+    // },
     25: {
-        nodeType: NodeType.ENDPOINT,
-        endpointName: "clinicalManagementRecentZikaInfection"
+        text: "<div><strong>Interpretation of Test Result:</strong> Test results suggest recent maternal Zika virus infection. </div></br><div>Is the patient still pregnant?</div>",
+        answers: {
+            1: {
+                text: "Yes",
+                nextNode: 27
+            },
+            2: {
+                text: "No",
+                nextNode: 28
+            }
+        },
+        nodeType: NodeType.QUESTION,
+        answerType: AnswerType.RADIO,
+        decideChoice: function(qNum, input){
+            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        },
+        getValuesForAnswers: function() {
+            return this.answers;
+        }
     },
     26: {
-        text: "Is the patient still pregnant?",
+        text: "</br><div>Is the patient still pregnant?</div>",
         answers: {
             1: {
                 text: "Yes",
@@ -1089,12 +1110,12 @@ var nodes = {
         nodeType: NodeType.ENDPOINT,
         endpointName: "armBReflexrRTPCR"
     },
-    36:{
-        nodeType: NodeType.ENDPOINT,
-        endpointName: "clinicalManagementPresumptiveRecentZikaVirusInfectionOrRecentFlavivirusInfectionNOS"
-    },
-    37:{
-        text: "Is the patient still pregnant?",
+    // 36:{
+    //     nodeType: NodeType.ENDPOINT,
+    //     endpointName: "clinicalManagementPresumptiveRecentZikaVirusInfectionOrRecentFlavivirusInfectionNOS"
+    // },
+    36: {
+        text: "<div><strong>Interpretation of Test Result:</strong> Test results indicate presumptive recent Zika virus infection or recent maternal flavivirus infection, but the specific virus cannot be identified. </br></br><strong>Action needed: Zika virus disease is a nationally notifiable condition. Your patient meets criteria for eporting to the <a target='_blank' href='http://www.cdc.gov/zika/hc-providers/registry.html'>US Zika Pregnancy Registry</a>. </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal, local, or territorial health department. <ul> <li>If you are a healthcare provider or health department and you have questions about the registry, please <a href='mailto:ZikaMCH@cdc.gov'>email</a> or call 770-488-7100 and ask for the Zika Pregnancy Hotline.</li></ul></div></br><div>Is the patient still pregnant?</div>",
         answers: {
             1: {
                 text: "Yes",
@@ -1114,6 +1135,27 @@ var nodes = {
             return this.answers;
         }
     },
+    // 37:{
+    //     text: "Is the patient still pregnant?",
+    //     answers: {
+    //         1: {
+    //             text: "Yes",
+    //             nextNode: 38
+    //         },
+    //         2: {
+    //             text: "No",
+    //             nextNode: 28
+    //         }
+    //     },
+    //     nodeType: NodeType.QUESTION,
+    //     answerType: AnswerType.RADIO,
+    //     decideChoice: function(qNum, input){
+    //         return nodes.decisionLogic.getRadioAnswer(qNum, input);
+    //     },
+    //     getValuesForAnswers: function() {
+    //         return this.answers;
+    //     }
+    // },
     38:{
         nodeType: NodeType.ENDPOINT,
         endpointName: "prenatalClinicalManagementPresumptiveRecentZIKVInfectionOrFlavivirusNOS"
@@ -1269,9 +1311,30 @@ var nodes = {
             return states;
         }
     },
-    47:{
-        nodeType: NodeType.ENDPOINT,
-        endpointName: "clinicalManagementRecentFlavivirusInfectionNOS"
+    // 47:{
+    //     nodeType: NodeType.ENDPOINT,
+    //     endpointName: "clinicalManagementRecentFlavivirusInfectionNOS"
+    // },
+    47: {
+        text: "<div><strong>Interpretation of Test Result:</strong> Test results suggest recent maternal flavivirus infection, but the specific virus cannot be identified.</div></br><div>Is the patient still pregnant?</div>",
+        answers: {
+            1: {
+                text: "Yes",
+                nextNode: 27
+            },
+            2: {
+                text: "No",
+                nextNode: 28
+            }
+        },
+        nodeType: NodeType.QUESTION,
+        answerType: AnswerType.RADIO,
+        decideChoice: function(qNum, input){
+            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        },
+        getValuesForAnswers: function() {
+            return this.answers;
+        }
     },
     48:{
         text: "Where has your patient traveled?",
