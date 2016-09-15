@@ -161,7 +161,7 @@ function loadQuestion(nextQuestionNumber){
     var nextQuestionObject = getNode(nextQuestionNumber);
     var nextQuestionText = nextQuestionObject.text;
     if(debug){
-        nextQuestionText = "Node number: " +nextQuestionNumber;
+        nextQuestionText = "Screen number: " +nextQuestionNumber;
         nextQuestionText += "<br />";
         nextQuestionText += nextQuestionObject.text;
     }
