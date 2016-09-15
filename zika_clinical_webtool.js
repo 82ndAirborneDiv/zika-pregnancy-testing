@@ -262,7 +262,7 @@ function loadEndPoint(number){
     var nodeObject = getNode(number);
 
     if(debug){
-        var nodeNumText = "Node number: " +number;
+        var nodeNumText = "Screen number: " +number;
         endpointText.html("<div>" +nodeNumText +"</div>");
     }
 
