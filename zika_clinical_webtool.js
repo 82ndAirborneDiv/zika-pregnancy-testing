@@ -603,7 +603,7 @@ var nodes = {
                 nextNode: 4
             },
             2: {
-                text: "If your patient recently received initial test results for your patient and you need to understand how to interpret the results and manage clinical care.",
+                text: "If your patient recently received initial test results and you need to understand how to interpret the results and manage clinical care.",
                 nextNode: 23
             },
             3: {
@@ -1085,7 +1085,7 @@ var nodes = {
         text: "What were the results of the IgM tests?",
         answers:{
             1:{
-                text: "Negative Zika IgM",
+                text: "Zika IgM Negative",
                 nextNode: 34
             },
             2:{
@@ -1115,7 +1115,7 @@ var nodes = {
     //     endpointName: "clinicalManagementPresumptiveRecentZikaVirusInfectionOrRecentFlavivirusInfectionNOS"
     // },
     36: {
-        text: "<div><strong>Interpretation of Test Result:</strong> Test results indicate presumptive recent Zika virus infection or recent maternal flavivirus infection, but the specific virus cannot be identified. </br></br><strong>Action needed: Zika virus disease is a nationally notifiable condition. Your patient meets criteria for eporting to the <a target='_blank' href='http://www.cdc.gov/zika/hc-providers/registry.html'>US Zika Pregnancy Registry</a>. </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal, local, or territorial health department. <ul> <li>If you are a healthcare provider or health department and you have questions about the registry, please <a href='mailto:ZikaMCH@cdc.gov'>email</a> or call 770-488-7100 and ask for the Zika Pregnancy Hotline.</li></ul></div></br><div>Is the patient still pregnant?</div>",
+        text: "<div><strong>Interpretation of Test Result:</strong> Test results indicate presumptive recent Zika virus infection or recent maternal flavivirus infection, but the specific virus cannot be identified. </br></br><strong>Action needed: Zika virus disease is a nationally notifiable condition. Your patient meets criteria for reporting to the <a target='_blank' href='http://www.cdc.gov/zika/hc-providers/registry.html'>US Zika Pregnancy Registry</a>. </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal, local, or territorial health department. <ul> <li>If you are a healthcare provider or health department and you have questions about the registry, please <a href='mailto:ZikaMCH@cdc.gov'>email</a> or call 770-488-7100 and ask for the Zika Pregnancy Hotline.</li></ul></div></br><div>Is the patient still pregnant?</div>",
         answers: {
             1: {
                 text: "Yes",
