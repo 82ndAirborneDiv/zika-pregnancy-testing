@@ -25,7 +25,7 @@ var back = $("#back");
 var restart = $("#restart");
 var nextButton = $("#next");
 
-var debug = true;
+var debug = false;
 
 /*array to store answers
 Each index of nodeHistory stores a NodeHistory object
