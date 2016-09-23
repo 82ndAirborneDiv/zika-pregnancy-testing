@@ -985,7 +985,7 @@ var nodes = {
     //     endpointName: "clinicalManagementRecentZikaInfection"
     // },
     25: {
-        text: "<div><strong>Interpretation of Test Result:</strong> Test results suggest recent maternal Zika virus infection. </div></br><div>Is the patient still pregnant?</div>",
+        text: "<div><strong>Interpretation of test result:</strong> Test results suggest recent maternal Zika virus infection. </div></br><div>Is the patient still pregnant?</div>",
         answers: {
             1: {
                 text: "Yes",
