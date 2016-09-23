@@ -1319,7 +1319,7 @@ var nodes = {
     //     endpointName: "clinicalManagementRecentFlavivirusInfectionNOS"
     // },
     47: {
-        text: "<div><strong>Interpretation of Test Result:</strong> Test results suggest recent maternal flavivirus infection, but the specific virus cannot be identified.</div></br><div>Is the patient still pregnant?</div>",
+        text: "<div><strong>Interpretation of test result:</strong> Test results suggest recent maternal flavivirus infection, but the specific virus cannot be identified.</div></br><div>Is the patient still pregnant?</div>",
         answers: {
             1: {
                 text: "Yes",
