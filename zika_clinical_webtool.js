@@ -571,15 +571,16 @@ var nodes = {
         }
     },
     2: {
-        text: "<div>The User acknowledges and agrees that this tool will be used only as a reference aid, "
-        +"and that the information contained in the product is not intended to be (nor should it be "
-        +"used as) a substitute for the exercise of professional judgment.<br /><br />"
-        +"In view of the possibility of human error or changes in medical science, the User should "
-        +"confirm the information in the product conforms to the current version of the CDC "
-        +"Updated Interim Guidance for Healthcare Providers Caring for Pregnant Women by "
-        +"checking for <a target='_blank' href='http://www.cdc.gov/zika/hc-providers/pregnant-woman.html'>guidance</a> updates. This product is provided without warranties of any kind, "
-        +"express or implied, and the authors disclaim any liability, loss, or damage caused by it or "
-        +"its content.<br /><br />"
+        text: "<div>The user acknowledges and agrees that this tool is provided for informational purposes only and that the"
+        +"product is not intended to be (nor should it be used as) a substitute for the exercise of your professional"
+        +"judgment."
+        +"<br /><br />"
+        +"The product is being provided for informational purposes only. Therefore, User should continue to check the CDC"
+        +"website for the current version of the CDC"
+        +"<a target='_blank' href='http://www.cdc.gov/zika/hc-providers/pregnant-woman.html'>Updated Interim Guidance for"
+        +"Healthcare Providers Caring for Pregnant Women</a>. This product is provided without warranties of any"
+        +"kind, express or implied, and the authors disclaim any liability, loss, or damage caused by it or its content."
+        +"<br /><br />"
         +"By clicking the \"Next\" button below, you have indicated your acceptance of these terms.</div>",
         answers: {
             0: {
@@ -654,7 +655,7 @@ var nodes = {
     5: {
         text: "<div id='q5'>Has your pregnant patient traveled during pregancy or periconceptional "
         +"period? (Periconceptional period is defined as eight weeks before conception or six weeks "
-        +"before last missed period).<br /> "
+        +"before last missed menstrual period).<br /> "
         +"</div>",
         answers: {
             1:{
@@ -677,9 +678,10 @@ var nodes = {
     },
     6: {
         text: "Has your pregnant patient had unprotected sexual activity (vaginal, anal, or oral sex, or shared "
-        +"sex toys without a condom) with a partner who has traveled to or lives in an area with "
-        +"active Zika virus transmission during her pregnancy or the periconceptional period "
-        +"(eight weeks before conception or six weeks before last missed period)?",
+        +"sex toys, without a condom) with a partner who has traveled to or lives in an "
+        +"<a target='_blank' href='http://www.cdc.gov/zika/geo/index.html'>area with active Zika virus transmission</a> " +
+        "during her pregnancy or the periconceptional period (eight weeks before conception or six weeks before last "
+        +"missed menstrual period)?",
         answers: {
             1: {
                 text: "Yes",
