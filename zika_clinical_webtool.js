@@ -1043,7 +1043,7 @@ var nodes = {
             }
         },
         nodeType: NodeType.QUESTION,
-        answerType: AnswerType.SINGLESELECT,
+        answerType: AnswerType.RADIO,
         decideChoice: function(qNum, input){
             return nodes.decisionLogic.getRadioAnswer(qNum, input);
         },
