@@ -1175,12 +1175,12 @@ var nodes = {
                 nextNode: 35
             },
             3:{
-                text: "dengue IgM positive or equivocal and Zika IgM negative",
+                text: "Dengue IgM positive or equivocal and Zika IgM negative",
                 nextNode: 40
             }
         },
         nodeType: NodeType.QUESTION,
-        answerType: AnswerType.SINGLESELECT,
+        answerType: AnswerType.RADIO,
         decideChoice: function(qNum, input){
             return nodes.decisionLogic.getRadioAnswer(qNum, input);
         },
