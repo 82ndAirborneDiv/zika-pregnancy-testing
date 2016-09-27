@@ -756,7 +756,7 @@ var nodes = {
             +   "}"
             +   "$('#zikaAffectedAreasVisited').append(zikaAffectedAreasVisited +'<br />');"
             +"</script>"
-            +"Does your pregnant patient regularly travel to any area listed above?",
+            +"Does your pregnant patient frequently travel to any area listed above, or was this a single trip?",
         answers: {
             1: {
                 text: "Frequently travel",
