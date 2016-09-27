@@ -197,7 +197,7 @@ function loadQuestion(nextQuestionNumber){
             });
             break;
         case AnswerType.MULTISELECT:
-            populateMultiSelectList(countries);
+            populateMultiSelectList(nextQuestionObject.getValuesForAnswers());
             if(previouslyVisited){
                 multiSelectList.find("input:checkbox").each(function(){
                     var answerChecked = previousAnswerObject.answer.indexOf($(this).val());
@@ -410,80 +410,12 @@ var AdditionalNotes = {
 
 var nodes = {
     decisionLogic: {
-        //Specific logic for multi select nodes regarding potential Zika countries
-        multiCountryCheckForZika : function(questionNumber, selections){
-            var questionObject = getNode(questionNumber);
-            var zika = false;
-            for(var i = 0; i < selections.length; i++){
-                if(getRiskForCountry(selections[i]) == RiskCategory.ZIKA){
-                    zika = true;
-                    break;
-                }
-            }
-            if(zika){
-                trackAnswer("Answer set included Zika country(ies)");
-                return questionObject.answers["1"];
-            }
-            else{
-                trackAnswer("Answer set did not include a Zika country");
-                return questionObject.answers["2"];
-            }
-        },
-        //Specific logic for single select nodes regarding potential Zika countries
-        singleCountryCheckForZika : function(questionNumber, selection){
-            var questionObject = getNode(questionNumber);
-            trackAnswer(selection);
-
-            //question 1 requires disclaimer for non-US countries
-            if(currentQuestionNumber === "4" && selection === "US"){
-                questionObject = getNode(4);
-                return questionObject.answers["3"];
-            }
-            else{
-                if (getRiskForCountry(selection) == RiskCategory.ZIKA) { //Zika country
-                    return questionObject.answers["1"];
-                }
-                else { //non-Zika country
-                    return questionObject.answers["2"];
-                }
-            }
-        },
-        //Specific logic for multi select nodes regarding potential Zika states
-        multiStateCheckForZika : function(questionNumber, selections){
-            var questionObject = getNode(questionNumber);
-            var zika = false;
-            for(var i = 0; i < selections.length; i++){
-                if(getRiskForState(selections[i]) == RiskCategory.ZIKA){
-                    zika = true;
-                    break;
-                }
-            }
-            if(zika){
-                trackAnswer("Answer set included Zika state(s)");
-                return questionObject.answers["1"];
-            }
-            else{
-                trackAnswer("Answer set did not include a Zika state");
-                return questionObject.answers["2"];
-            }
-        },
-        //Specific logic for single select nodes regarding potential Zika countries
-        singleStateCheckForZika : function(questionNumber, selection){
-            var questionObject = getNode(questionNumber);
-            trackAnswer(selection);
-
-            //question 1 requires disclaimer for non-US countries
-            if(currentQuestionNumber === "4" && selection === "US"){
-                questionObject = getNode(4);
-                return questionObject.answers["3"];
-            }
-            else{
-                if (getRiskForState(selection) == RiskCategory.ZIKA) { //Zika country
-                    return questionObject.answers["1"];
-                }
-                else { //non-Zika country
-                    return questionObject.answers["2"];
-                }
+        checkAreaForZika : function(areaType, selection) {
+            switch (areaType) {
+                case "country":
+                    return getRiskForCountry(selection);
+                case "state":
+                    return getRiskForState(selection);
             }
         },
         //Generic logic for radio button answerType
@@ -493,6 +425,7 @@ var nodes = {
             trackAnswer(answerObject.text);
             return answerObject;
         },
+/*      TODO: Refactor this if needed. Add "disclaimer/additionalNotes" to answer object and search through previous answers when displaying endpoint.
         //disclaimer logic for country selections based on Zika risk
         disclaimerBasedOnCountryZikaRisk: function(userAnswer){
             var questionObject = getNode(userAnswer.node);
@@ -532,7 +465,7 @@ var nodes = {
             } else {
                 return null;
             }
-        },
+        },*/
     },
     1: {
         text: "Select your profession:",
@@ -565,20 +498,17 @@ var nodes = {
         },
         getValuesForAnswers: function(){
             return this.answers;
-        },
-        getDisclaimer: function(input){
-            return nodes.decisionLogic.disclaimerBasedOnCountryZikaRisk(input);
         }
     },
     2: {
-        text: "<div>The user acknowledges and agrees that this tool is provided for informational purposes only and that the"
-        +"product is not intended to be (nor should it be used as) a substitute for the exercise of your professional"
+        text: "<div>The user acknowledges and agrees that this tool is provided for informational purposes only and that the "
+        +"product is not intended to be (nor should it be used as) a substitute for the exercise of your professional "
         +"judgment."
         +"<br /><br />"
-        +"The product is being provided for informational purposes only. Therefore, User should continue to check the CDC"
-        +"website for the current version of the CDC"
-        +"<a target='_blank' href='http://www.cdc.gov/zika/hc-providers/pregnant-woman.html'>Updated Interim Guidance for"
-        +"Healthcare Providers Caring for Pregnant Women</a>. This product is provided without warranties of any"
+        +"The product is being provided for informational purposes only. Therefore, User should continue to check the CDC "
+        +"website for the current version of the CDC "
+        +"<a target='_blank' href='http://www.cdc.gov/zika/hc-providers/pregnant-woman.html'>Updated Interim Guidance for "
+        +"Healthcare Providers Caring for Pregnant Women</a>. This product is provided without warranties of any "
         +"kind, express or implied, and the authors disclaim any liability, loss, or damage caused by it or its content."
         +"<br /><br />"
         +"By clicking the \"Next\" button below, you have indicated your acceptance of these terms.</div>",
@@ -646,7 +576,20 @@ var nodes = {
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.SINGLESELECT,
         decideChoice: function(qNum, input){
-            return nodes.decisionLogic.singleCountryCheckForZika(qNum, input);
+            var questionObject = getNode(qNum);
+            trackAnswer(input);
+
+            switch (input){
+                case "US":
+                    return questionObject.answers["3"];
+                default:
+                    switch (nodes.decisionLogic.checkAreaForZika("country", input)){
+                        case RiskCategory.ZIKA:
+                            return questionObject.answers["1"];
+                        case RiskCategory.NONE:
+                            return questionObject.answers["2"];
+                    }
+            }
         },
         getValuesForAnswers: function() {
             return countries;
@@ -794,7 +737,26 @@ var nodes = {
         endpointName: "lowRiskOfExposure"
     },
     15: {
-        text: "Does your pregnant patient regularly travel to area?",
+        text: "You indicated that your patient has travelled to the following Zika affected areas:<br />"
+            +"<div id='zikaAffectedAreasVisited'></div>"
+            +"<script type='text/javascript'>"
+            +   "var lastNode = nodeHistory[nodeHistory.length - 1];"
+            +   "var zikaAffectedAreasVisited = '';"
+            +   "if(lastNode.node == 49){"
+            +       "$.each(lastNode.answer, function(){"
+            +           "if(getRiskForState(this) == RiskCategory.ZIKA){zikaAffectedAreasVisited += getStateById(this).text +'<br />';}"
+            +        "});"
+            +       "$.each(nodeHistory[nodeHistory.length - 2].answer, function(){"
+            +           "if(getRiskForCountry(this) == RiskCategory.ZIKA){zikaAffectedAreasVisited += getCountryById(this).text +'<br />';}"
+            +       "});"
+            +   "} else {"
+            +       "$.each(lastNode.answer, function(){"
+            +           "if(getRiskForCountry(this) == RiskCategory.ZIKA){zikaAffectedAreasVisited += getCountryById(this).text +'<br />';}"
+            +        "});"
+            +   "}"
+            +   "$('#zikaAffectedAreasVisited').append(zikaAffectedAreasVisited +'<br />');"
+            +"</script>"
+            +"Does your pregnant patient regularly travel to any area listed above?",
         answers: {
             1: {
                 text: "Yes",
@@ -1294,7 +1256,7 @@ var nodes = {
         endpointName: "IngridsPaper"
     },
     46:{
-        text: "What state?",
+        text: "Which state do you live in?",
         answers: {
             1: {
                 text: "Zika area",
@@ -1308,7 +1270,15 @@ var nodes = {
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.SINGLESELECT,
         decideChoice: function(qNum, input){
-            return nodes.decisionLogic.singleStateCheckForZika(qNum, input);
+            var questionObject = getNode(qNum);
+            trackAnswer(input);
+
+            switch (nodes.decisionLogic.checkAreaForZika("state", input)){
+                case RiskCategory.ZIKA:
+                    return questionObject.answers["1"];
+                case RiskCategory.NONE:
+                    return questionObject.answers["2"];
+            }
         },
         getValuesForAnswers: function() {
             return states;
@@ -1349,15 +1319,93 @@ var nodes = {
             2: {
                 text: "Non-Zika area",
                 nextNode: 6
+            },
+            3: {
+                text: "US",
+                nextNode: 49
             }
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.MULTISELECT,
         decideChoice: function(qNum, input){
-            return nodes.decisionLogic.multiCountryCheckForZika(qNum, input);
+            var questionObject = getNode(qNum);
+            var zika = false;
+
+            //If US is included, find out what states
+            if(input.indexOf("US") >= 0)
+            {
+                return questionObject.answers["3"];
+            }
+            for(var i = 0; i < input.length; i++){
+                if(nodes.decisionLogic.checkAreaForZika("country", input[i]) == RiskCategory.ZIKA){
+                    zika = true;
+                    break;
+                }
+            }
+            if(zika){
+                trackAnswer("Answer set included Zika country(ies)");
+                return questionObject.answers["1"];
+            }
+            else{
+                trackAnswer("Answer set did not include a Zika country");
+                return questionObject.answers["2"];
+            }
         },
         getValuesForAnswers: function() {
             return countries;
+        }
+    },
+    49:{
+        text: "Which states did your patient visit?",
+        answers: {
+            1: {
+                text: "Zika area",
+                nextNode: 15
+            },
+            2: {
+                text: "Non-Zika area",
+                nextNode: 6
+            }
+        },
+        nodeType: NodeType.QUESTION,
+        answerType: AnswerType.MULTISELECT,
+
+        getValuesForAnswers: function() {
+            return states;
+        },
+        decideChoice: function(qNum, input){
+            /*
+                This question checks for a Zika state, if none are selected, it then checks the previous answer for
+                Zika countries since that logic was bypassed in the last question because "US" was selected.
+
+             */
+            var questionObject = getNode(qNum);
+            var zika = false;
+
+            for(var i = 0; i < input.length; i++){
+                if(nodes.decisionLogic.checkAreaForZika("state", input[i]) == RiskCategory.ZIKA){
+                    zika = true;
+                    break;
+                }
+            }
+            if(zika){
+                trackAnswer("Answer set included Zika state");
+                return questionObject.answers["1"];
+            }
+            else{
+                trackAnswer("Answer set did not include a Zika state");
+
+                //check previous answer, if no Zika countries, use nextNode from non-Zika area
+                var lastAnswer = nodeHistory[nodeHistory.length - 2].answer;
+                var zika = false;
+                for(var i = 0; i < lastAnswer.length; i++){
+                    if(nodes.decisionLogic.checkAreaForZika("country", lastAnswer[i]) == RiskCategory.ZIKA){
+                        zika = true;
+                        return questionObject.answers["1"];
+                    }
+                }
+                return questionObject.answers["2"];
+            }
         }
     }
 }
