@@ -759,11 +759,11 @@ var nodes = {
             +"Does your pregnant patient regularly travel to any area listed above?",
         answers: {
             1: {
-                text: "Yes",
+                text: "Frequently travel",
                 nextNode: 16
             },
             2: {
-                text: "No",
+                text: "Single trip",
                 nextNode: 12
             }
         },
