@@ -780,11 +780,11 @@ var nodes = {
         text: "How frequently do they travel to this area?",
         answers: {
             1: {
-                text: "Daily or weekly.",
+                text: "Daily or weekly",
                 nextNode: 17
             },
             2: {
-                text: "Less frequently than weekly.",
+                text: "Less frequently than weekly",
                 nextNode: 12
             }
         },
@@ -925,11 +925,11 @@ var nodes = {
         text: "What were the results of the Zika virus rRT-PCR on serum or urine?",
         answers: {
             1: {
-                text: "Positive on either serum or urine.",
+                text: "Positive on either serum or urine",
                 nextNode: 25
             },
             2: {
-                text: "Negative on both serum AND urine.",
+                text: "Negative on both serum AND urine",
                 nextNode: 31
             }
         },
@@ -1025,11 +1025,11 @@ var nodes = {
         text: "Which of these best describes your patient?",
         answers:{
             1:{
-                text: "Symptomatic and seeking care within 2 weeks of symptom onset.",
+                text: "Symptomatic and seeking care within 2 weeks of symptom onset",
                 nextNode: 10
             },
             2:{
-                text: "Asymptomatic and not living in an area with active Zika virus transmission.",
+                text: "Asymptomatic and not living in an area with active Zika virus transmission",
                 nextNode: 32
             }
         },
