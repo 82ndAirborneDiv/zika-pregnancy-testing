@@ -1256,7 +1256,7 @@ var nodes = {
         endpointName: "IngridsPaper"
     },
     46:{
-        text: "Which state do you live in?",
+        text: "In which US state does your patient live?",
         answers: {
             1: {
                 text: "Zika area",
@@ -1356,7 +1356,7 @@ var nodes = {
         }
     },
     49:{
-        text: "Which states did your patient visit?",
+        text: "Which US state(s) did your patient visit?",
         answers: {
             1: {
                 text: "Zika area",
