@@ -26,9 +26,9 @@
         // ADD POINTER/SHORTCUT FOR METRICS
         window.cdcMetrics = window.cdcCommon.metrics;
 
-        cdcCommon.log('*********** Hello World! ***********');
-        cdcCommon.log('Common Framework Loaded!');
-        cdcCommon.log('Widget Load Method Executing Loaded!');
+        //cdcCommon.log('*********** Hello World! ***********');
+        //cdcCommon.log('Common Framework Loaded!');
+        //cdcCommon.log('Widget Load Method Executing Loaded!');
 
         /*
          OMNITURE PARAMETER KEY / TRANSLATION GUIDE:
@@ -102,8 +102,8 @@
 
         cdcCommon = cdcCommon || window.cdcCommon || window.CDC.Widget.Common;
 
-        cdcCommon.log('I am widget.js, I am being syndicated!');
-        cdcCommon.log('Syndication specific handlers here!');
+        //cdcCommon.log('I am widget.js, I am being syndicated!');
+        //cdcCommon.log('Syndication specific handlers here!');
 
     };
 
