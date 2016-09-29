@@ -479,14 +479,18 @@ var nodes = {
                 nextNode: 2
             },
             3:{
-                text: "State health department official",
+                text: "Other healthcare provider",
                 nextNode: 2
             },
             4:{
-                text: "Local health department official",
+                text: "State health department official",
                 nextNode: 2
             },
             5:{
+                text: "Local health department official",
+                nextNode: 2
+            },
+            6:{
                 text: "Other",
                 nextNode: 2
             }
