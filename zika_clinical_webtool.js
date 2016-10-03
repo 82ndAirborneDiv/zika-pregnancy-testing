@@ -602,7 +602,7 @@ var nodes = {
     5: {
         text: "<div id='q5'>Has your pregnant patient traveled during pregancy or periconceptional "
         +"period? (Periconceptional period is defined as eight weeks before conception or six weeks "
-        +"before last missed menstrual period).<br /> "
+        +"before last menstrual period).<br /> "
         +"</div>",
         answers: {
             1:{
