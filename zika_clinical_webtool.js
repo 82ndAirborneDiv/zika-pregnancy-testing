@@ -25,7 +25,7 @@ var back = $("#back");
 var restart = $("#restart");
 var nextButton = $("#next");
 
-var debug = false;
+var debug = true;
 
 /*array to store answers
 Each index of nodeHistory stores a NodeHistory object
@@ -628,7 +628,7 @@ var nodes = {
         +"sex toys, without a condom) with a partner who has traveled to or lives in an "
         +"<a target='_blank' href='http://www.cdc.gov/zika/geo/index.html'>area with active Zika virus transmission</a> " +
         "during her pregnancy or the periconceptional period (eight weeks before conception or six weeks before last "
-        +"missed menstrual period)?",
+        +"menstrual period)?",
         answers: {
             1: {
                 text: "Yes",
