@@ -971,7 +971,7 @@ var nodes = {
             return this.answers;
         }
     },
-    26: {
+    /*26: {
         text: "</br><div>Is the patient still pregnant?</div>",
         answers: {
             1: {
@@ -991,7 +991,7 @@ var nodes = {
         getValuesForAnswers: function() {
             return this.answers;
         }
-    },
+    },*/
     27: {
         nodeType: NodeType.ENDPOINT,
         endpointName: "prenatalClinicalManagementRecentZikaInfectionOrFlavivirusNOS"
