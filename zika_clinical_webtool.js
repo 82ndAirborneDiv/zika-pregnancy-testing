@@ -600,7 +600,7 @@ var nodes = {
         }
     },
     5: {
-        text: "<div id='q5'>Has your pregnant patient traveled during pregancy or periconceptional "
+        text: "<div id='q5'>Has your pregnant patient traveled during pregancy or the periconceptional "
         +"period? (Periconceptional period is defined as eight weeks before conception or six weeks "
         +"before last menstrual period).<br /> "
         +"</div>",
@@ -768,7 +768,7 @@ var nodes = {
             },
             2: {
                 text: "Single trip",
-                nextNode: 12
+                nextNode: 7
             }
         },
         nodeType: NodeType.QUESTION,
@@ -789,7 +789,7 @@ var nodes = {
             },
             2: {
                 text: "Less frequently than weekly",
-                nextNode: 12
+                nextNode: 7
             }
         },
         nodeType: NodeType.QUESTION,
