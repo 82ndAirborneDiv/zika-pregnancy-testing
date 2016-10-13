@@ -1033,7 +1033,7 @@ var nodes = {
                 nextNode: 10
             },
             2:{
-                text: "Asymptomatic and not living in an area with active Zika virus transmission",
+                text: "Asymptomatic and <strong>not</strong> living in an area with active Zika virus transmission",
                 nextNode: 32
             }
         },
