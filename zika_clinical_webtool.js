@@ -1054,7 +1054,7 @@ var nodes = {
         text: "What were the results of the IgM tests?",
         answers:{
             1:{
-                text: "Zika IgM Negative",
+                text: "Zika IgM negative",
                 nextNode: 34
             },
             2:{
