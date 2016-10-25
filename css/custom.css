@@ -32,7 +32,7 @@ a {
 
 @media only screen and (max-width: 350px) {
 
-	.zika-title {font-size:14px;}
+	.zika-title {font-size:12px;}
 	.app-panel-content{
 		height: 350px;
 	}
@@ -40,7 +40,6 @@ a {
 
 @media only screen and (max-width: 500px) {
 
-	.zika-title {font-size:12px;}
 	.app-panel-content{
 		min-height: 350px;
 		max-height: 450px;
@@ -82,12 +81,4 @@ a {
 
 #zika-app-endpoint-disclaimer {
 	margin-top: 1em;
-}
-
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {
-	img { max-width: 100%; }
-}
-
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {
-	img { max-width: 100%; }
 }

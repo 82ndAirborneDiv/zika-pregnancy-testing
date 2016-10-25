@@ -410,14 +410,6 @@ var AdditionalNotes = {
 
 var nodes = {
     decisionLogic: {
-        checkAreaForZika : function(areaType, selection) {
-            switch (areaType) {
-                case "country":
-                    return getRiskForCountry(selection);
-                case "state":
-                    return getRiskForState(selection);
-            }
-        },
         //Generic logic for radio button answerType
         getRadioAnswer: function(questionNumber, selection){
             var questionObject = getNode(questionNumber);
@@ -425,47 +417,6 @@ var nodes = {
             trackAnswer(answerObject.text);
             return answerObject;
         },
-/*      TODO: Refactor this if needed. Add "disclaimer/additionalNotes" to answer object and search through previous answers when displaying endpoint.
-        //disclaimer logic for country selections based on Zika risk
-        disclaimerBasedOnCountryZikaRisk: function(userAnswer){
-            var questionObject = getNode(userAnswer.node);
-            var answerObject;
-            switch(questionObject.answerType) {
-                case AnswerType.MULTISELECT:
-                    answerObject = nodes.decisionLogic
-                        .multiCountryCheckForZika(userAnswer.question, userAnswer.answer);
-                    break;
-                case AnswerType.SINGLESELECT:
-                    answerObject = nodes.decisionLogic
-                        .singleCountryCheckForZika(userAnswer.question, userAnswer.answer);
-                    break;
-            }
-            if (answerObject.hasOwnProperty("disclaimer")) {
-                return answerObject.disclaimer;
-            } else {
-                return null;
-            }
-        },
-        //additionalNotes logic for country selections based on Zika risk
-        additionalNotesBasedOnCountryZikaRisk: function(userAnswer){
-            var questionObject = getNode(userAnswer.node);
-            var answerObject;
-            switch(questionObject.answerType) {
-                case AnswerType.MULTISELECT:
-                    answerObject = nodes.decisionLogic
-                        .multiCountryCheckForZika(userAnswer.question, userAnswer.answer);
-                    break;
-                case AnswerType.SINGLESELECT:
-                    answerObject = nodes.decisionLogic
-                        .singleCountryCheckForZika(userAnswer.question, userAnswer.answer);
-                    break;
-            }
-            if (answerObject.hasOwnProperty("additionalNotes")) {
-                return answerObject.additionalNotes;
-            } else {
-                return null;
-            }
-        },*/
     },
     1: {
         text: "Select your profession:",
@@ -478,25 +429,33 @@ var nodes = {
                 text: "Family Physician",
                 nextNode: 2
             },
-            3:{
-                text: "Other healthcare provider",
+            3: {
+                text: "Nurse",
                 nextNode: 2
             },
-            4:{
-                text: "State health department official",
+            4: {
+                text: "Nurse-midwife",
                 nextNode: 2
             },
             5:{
-                text: "Local health department official",
+                text: "Other healthcare provider",
                 nextNode: 2
             },
             6:{
+                text: "State health department official",
+                nextNode: 2
+            },
+            7:{
+                text: "Local health department official",
+                nextNode: 2
+            },
+            8:{
                 text: "Other",
                 nextNode: 2
             }
         },
         nodeType: NodeType.QUESTION,
-        answerType: AnswerType.SINGLESELECT,
+        answerType: AnswerType.RADIO,
         decideChoice: function(qNum, input){
             return nodes.decisionLogic.getRadioAnswer(qNum, input);
         },
@@ -549,7 +508,7 @@ var nodes = {
             4: {
                 text: "Next steps for a patient who already received a negative rRT-PCR result within 2 weeks of " +
                 "possible exposure and returned 2-12 weeks later for a Zika IgM test.",
-                nextNode: 10
+                nextNode: 22
             }
         },
         nodeType: NodeType.QUESTION,
@@ -562,57 +521,44 @@ var nodes = {
         }
     },
     4: {
-        text: "Where does your pregnant patient live?",
+        text: "<div>Does your pregnant patient live in "+
+        "<a target='_blank' href='https://www.cdc.gov/zika/geo/index.html'>an area with active Zika virus "+
+        "transmission</a>?</div>",
         answers: {
             1: {
-                text: "Ongoing Exposure",
+                text: "Yes",
                 nextNode: 17
             },
             2: {
-                text: "No Ongoing Exposure",
+                text: "No",
                 nextNode: 5
-            },
-            3: {
-                text: "US",
-                nextNode: 46
             }
         },
         nodeType: NodeType.QUESTION,
-        answerType: AnswerType.SINGLESELECT,
+        answerType: AnswerType.RADIO,
         decideChoice: function(qNum, input){
-            var questionObject = getNode(qNum);
-            trackAnswer(input);
-
-            switch (input){
-                case "US":
-                    return questionObject.answers["3"];
-                default:
-                    switch (nodes.decisionLogic.checkAreaForZika("country", input)){
-                        case RiskCategory.ZIKA:
-                            return questionObject.answers["1"];
-                        case RiskCategory.NONE:
-                            return questionObject.answers["2"];
-                    }
-            }
+            return nodes.decisionLogic.getRadioAnswer(qNum, input);
         },
         getValuesForAnswers: function() {
-            return countries;
+            return this.answers;
         }
     },
     5: {
-        text: "<div id='q5'>Has your pregnant patient traveled during pregancy or the periconceptional "
-        +"period? (Periconceptional period is defined as eight weeks before conception or six weeks "
-        +"before last menstrual period).<br /> "
+        text: "<div id='q5'>Has your pregnant patient previously lived in or traveled to " +
+        "<a target='_blank' href='https://www.cdc.gov/zika/geo/index.html'>" +
+        "an area with active Zika virus transmission</a> "
+        +"during pregnancy or the periconceptional period? (Periconceptional period is defined as eight weeks before " +
+        "conception or six weeks before last menstrual period).<br />"
         +"</div>",
         answers: {
             1:{
                 text: "Yes",
-                nextNode: 48
+                nextNode: 15
             },
             2: {
                 text: "No",
                 nextNode: 6
-            },
+            }
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
@@ -741,26 +687,8 @@ var nodes = {
         endpointName: "lowRiskOfExposure"
     },
     15: {
-        text: "You indicated that your patient has travelled to the following Zika affected areas:<br />"
-            +"<div id='zikaAffectedAreasVisited'></div>"
-            +"<script type='text/javascript'>"
-            +   "var lastNode = nodeHistory[nodeHistory.length - 1];"
-            +   "var zikaAffectedAreasVisited = '';"
-            +   "if(lastNode.node == 49){"
-            +       "$.each(lastNode.answer, function(){"
-            +           "if(getRiskForState(this) == RiskCategory.ZIKA){zikaAffectedAreasVisited += '<b>'+getStateById(this).text +'</b><br />';}"
-            +        "});"
-            +       "$.each(nodeHistory[nodeHistory.length - 2].answer, function(){"
-            +           "if(getRiskForCountry(this) == RiskCategory.ZIKA){zikaAffectedAreasVisited += '<b>' +getCountryById(this).text +'</b><br />';}"
-            +       "});"
-            +   "} else {"
-            +       "$.each(lastNode.answer, function(){"
-            +           "if(getRiskForCountry(this) == RiskCategory.ZIKA){zikaAffectedAreasVisited += '<b>' +getCountryById(this).text +'</b><br />';}"
-            +        "});"
-            +   "}"
-            +   "$('#zikaAffectedAreasVisited').append(zikaAffectedAreasVisited +'<br />');"
-            +"</script>"
-            +"Does your pregnant patient frequently travel to any area listed above or was this a single trip?",
+        text: "You indicated that your patient has travelled to a Zika affected area. Does your patient frequently " +
+        "travel to this area or was this a single trip?",
         answers: {
             1: {
                 text: "Frequently travel",
@@ -877,28 +805,10 @@ var nodes = {
         nodeType: NodeType.ENDPOINT,
         endpointName: "prenatalClinicalManagement3rdTrimester"
     },
-    // 22: {
-    //     text: "Have you received results from the first test you ordered (initial result) or are you following " +
-    //     "up on a subsequent test to confirm or rule out infection (follow-up result)?",
-    //     answers: {
-    //         1: {
-    //             text: "Initial result",
-    //             nextNode: 23
-    //         },
-    //         2: {
-    //             text: "Follow-Up result",
-    //             nextNode: 41
-    //         }
-    //     },
-    //     nodeType: NodeType.QUESTION,
-    //     answerType: AnswerType.SINGLESELECT,
-    //     decideChoice: function(qNum, input){
-    //         return nodes.decisionLogic.getRadioAnswer(qNum, input);
-    //     },
-    //     getValuesForAnswers: function(){
-    //         return this.answers;
-    //     }
-    // },
+    22: {
+        nodeType: NodeType.ENDPOINT,
+        endpointName: "nextStepsReturned2to12WeeksLaterForZikaIgMTest"
+    },
     23: {
         text: "Choose test performed:",
         answers: {
@@ -946,12 +856,8 @@ var nodes = {
             return this.answers;
         }
     },
-    // 25: {
-    //     nodeType: NodeType.ENDPOINT,
-    //     endpointName: "clinicalManagementRecentZikaInfection"
-    // },
     25: {
-        text: "<div><strong>Interpretation of test result:</strong> Test results suggest recent maternal Zika virus infection. </div></br><div>Is the patient still pregnant?</div>",
+        text: "<div><strong>Interpretation of test result:</strong> Test results suggest recent maternal Zika virus infection. </div></br><br/><strong>Action needed: Zika virus disease is a nationally notifiable condition. Your patient meets criteria for reporting to the <a target='_blank' href='http://www.cdc.gov/zika/hc-providers/registry.html'>US Zika Pregnancy Registry</a>. </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal, local, or territorial health department. <ul> <li>If you are a healthcare provider or health department and you have questions about the registry, please <a href='mailto:ZikaMCH@cdc.gov'>email</a> or call 770-488-7100 and ask for the Zika Pregnancy Hotline.</li></ul></div></br><div>Is the patient still pregnant?</div>",
         answers: {
             1: {
                 text: "Yes",
@@ -971,27 +877,7 @@ var nodes = {
             return this.answers;
         }
     },
-    /*26: {
-        text: "</br><div>Is the patient still pregnant?</div>",
-        answers: {
-            1: {
-                text: "Yes",
-                nextNode: 27
-            },
-            2: {
-                text: "No",
-                nextNode: 28
-            }
-        },
-        nodeType: NodeType.QUESTION,
-        answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
-        },
-        getValuesForAnswers: function() {
-            return this.answers;
-        }
-    },*/
+    26: "unused",
     27: {
         nodeType: NodeType.ENDPOINT,
         endpointName: "prenatalClinicalManagementRecentZikaInfectionOrFlavivirusNOS"
@@ -1079,12 +965,8 @@ var nodes = {
         nodeType: NodeType.ENDPOINT,
         endpointName: "armBReflexrRTPCR"
     },
-    // 36:{
-    //     nodeType: NodeType.ENDPOINT,
-    //     endpointName: "clinicalManagementPresumptiveRecentZikaVirusInfectionOrRecentFlavivirusInfectionNOS"
-    // },
     36: {
-        text: "<div><strong>Interpretation of test result:</strong> Test results indicate presumptive recent Zika virus infection or recent maternal flavivirus infection, but the specific virus cannot be identified. </br></br><strong>Action needed: Zika virus disease is a nationally notifiable condition. Your patient meets criteria for reporting to the <a target='_blank' href='http://www.cdc.gov/zika/hc-providers/registry.html'>US Zika Pregnancy Registry</a>. </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal, local, or territorial health department. <ul> <li>If you are a healthcare provider or health department and you have questions about the registry, please <a href='mailto:ZikaMCH@cdc.gov'>email</a> or call 770-488-7100 and ask for the Zika Pregnancy Hotline.</li></ul></div></br><div>Is the patient still pregnant?</div>",
+        text: "<div><strong>Interpretation of test result:</strong> Test results indicate presumptive recent Zika virus infection or recent maternal flavivirus infection, but the specific virus cannot be identified. </br><div>Is the patient still pregnant?</div>",
         answers: {
             1: {
                 text: "Yes",
@@ -1104,27 +986,7 @@ var nodes = {
             return this.answers;
         }
     },
-    // 37:{
-    //     text: "Is the patient still pregnant?",
-    //     answers: {
-    //         1: {
-    //             text: "Yes",
-    //             nextNode: 38
-    //         },
-    //         2: {
-    //             text: "No",
-    //             nextNode: 28
-    //         }
-    //     },
-    //     nodeType: NodeType.QUESTION,
-    //     answerType: AnswerType.RADIO,
-    //     decideChoice: function(qNum, input){
-    //         return nodes.decisionLogic.getRadioAnswer(qNum, input);
-    //     },
-    //     getValuesForAnswers: function() {
-    //         return this.answers;
-    //     }
-    // },
+    37 :'unused',
     38:{
         nodeType: NodeType.ENDPOINT,
         endpointName: "prenatalClinicalManagementPresumptiveRecentZIKVInfectionOrFlavivirusNOS"
@@ -1259,39 +1121,7 @@ var nodes = {
         nodeType: NodeType.ENDPOINT,
         endpointName: "IngridsPaper"
     },
-    46:{
-        text: "In which US state does your patient live?",
-        answers: {
-            1: {
-                text: "Zika area",
-                nextNode: 17
-            },
-            2: {
-                text: "Non-Zika area",
-                nextNode: 5
-            }
-        },
-        nodeType: NodeType.QUESTION,
-        answerType: AnswerType.SINGLESELECT,
-        decideChoice: function(qNum, input){
-            var questionObject = getNode(qNum);
-            trackAnswer(input);
-
-            switch (nodes.decisionLogic.checkAreaForZika("state", input)){
-                case RiskCategory.ZIKA:
-                    return questionObject.answers["1"];
-                case RiskCategory.NONE:
-                    return questionObject.answers["2"];
-            }
-        },
-        getValuesForAnswers: function() {
-            return states;
-        }
-    },
-    // 47:{
-    //     nodeType: NodeType.ENDPOINT,
-    //     endpointName: "clinicalManagementRecentFlavivirusInfectionNOS"
-    // },
+    46: "unused",
     47: {
         text: "<div><strong>Interpretation of test result:</strong> Test results suggest recent maternal flavivirus infection, but the specific virus cannot be identified.</div></br><div>Is the patient still pregnant?</div>",
         answers: {
@@ -1312,1219 +1142,6 @@ var nodes = {
         getValuesForAnswers: function() {
             return this.answers;
         }
-    },
-    48:{
-        text: "Where has your patient traveled?",
-        answers: {
-            1: {
-                text: "Zika area",
-                nextNode: 15
-            },
-            2: {
-                text: "Non-Zika area",
-                nextNode: 6
-            },
-            3: {
-                text: "US",
-                nextNode: 49
-            }
-        },
-        nodeType: NodeType.QUESTION,
-        answerType: AnswerType.MULTISELECT,
-        decideChoice: function(qNum, input){
-            var questionObject = getNode(qNum);
-            var zika = false;
-
-            //If US is included, find out what states
-            if(input.indexOf("US") >= 0)
-            {
-                return questionObject.answers["3"];
-            }
-            for(var i = 0; i < input.length; i++){
-                if(nodes.decisionLogic.checkAreaForZika("country", input[i]) == RiskCategory.ZIKA){
-                    zika = true;
-                    break;
-                }
-            }
-            if(zika){
-                trackAnswer("Answer set included Zika country(ies)");
-                return questionObject.answers["1"];
-            }
-            else{
-                trackAnswer("Answer set did not include a Zika country");
-                return questionObject.answers["2"];
-            }
-        },
-        getValuesForAnswers: function() {
-            return countries;
-        }
-    },
-    49:{
-        text: "Which US state(s) did your patient visit?",
-        answers: {
-            1: {
-                text: "Zika area",
-                nextNode: 15
-            },
-            2: {
-                text: "Non-Zika area",
-                nextNode: 6
-            }
-        },
-        nodeType: NodeType.QUESTION,
-        answerType: AnswerType.MULTISELECT,
-
-        getValuesForAnswers: function() {
-            return states;
-        },
-        decideChoice: function(qNum, input){
-            /*
-                This question checks for a Zika state, if none are selected, it then checks the previous answer for
-                Zika countries since that logic was bypassed in the last question because "US" was selected.
-
-             */
-            var questionObject = getNode(qNum);
-            var zika = false;
-
-            for(var i = 0; i < input.length; i++){
-                if(nodes.decisionLogic.checkAreaForZika("state", input[i]) == RiskCategory.ZIKA){
-                    zika = true;
-                    break;
-                }
-            }
-            if(zika){
-                trackAnswer("Answer set included Zika state");
-                return questionObject.answers["1"];
-            }
-            else{
-                trackAnswer("Answer set did not include a Zika state");
-
-                //check previous answer, if no Zika countries, use nextNode from non-Zika area
-                var lastAnswer = nodeHistory[nodeHistory.length - 2].answer;
-                var zika = false;
-                for(var i = 0; i < lastAnswer.length; i++){
-                    if(nodes.decisionLogic.checkAreaForZika("country", lastAnswer[i]) == RiskCategory.ZIKA){
-                        zika = true;
-                        return questionObject.answers["1"];
-                    }
-                }
-                return questionObject.answers["2"];
-            }
-        }
     }
 }
 
-var RiskCategory = {
-    NONE : "none",
-    ZIKA: "zika"
-}
-
-function getCountryById(name){
-    return countries[name];
-}
-function getStateById(name){
-    return states[name];
-}
-
-
-//Returns riskCategory of country
-function getRiskForCountry(country){
-    return getCountryById(country).riskCategory;
-}
-
-function getRiskForState(state){
-    return getStateById(state).riskCategory;
-}
-function getCountriesByRiskCategory(riskCategory){
-    var numCountries = Object.keys(countries).length;
-    var matchingCountries = {};
-    var currentCountry;
-    for(var i = 0; i < numCountries; i++){
-        currentCountry = countries[Object.keys(countries)[i]];
-        if(currentCountry.riskCategory === riskCategory){
-            matchingCountries[Object.keys(countries)[i]] = currentCountry;
-        }
-    }
-    return matchingCountries;
-}
-/*
- Countries object was built from the State Dept list of countries. Countries/Territories listed on
- the active Zika countries page that were missing from the State Dept list were added.
- */
-var countries = {
-    'US': {
-        text: "United States (USA)",
-        riskCategory: RiskCategory.NONE
-    },
-    'AF': {
-        text: "Afghanistan",
-        riskCategory: RiskCategory.NONE
-    },
-    'AL': {
-        text: "Albania",
-        riskCategory: RiskCategory.NONE
-    },
-    'DZ': {
-        text: "Algeria",
-        riskCategory: RiskCategory.NONE
-    },
-    'AS': {
-        text: "American Samoa",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'AD': {
-        text: "Andorra",
-        riskCategory: RiskCategory.NONE
-    },
-    'AO': {
-        text: "Angola",
-        riskCategory: RiskCategory.NONE
-    },
-    'AI': {
-        text: "Anguilla",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'AG': {
-        text: "Antigua and Barbuda",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'AR': {
-        text: "Argentina",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'AM': {
-        text: "Armenia",
-        riskCategory: RiskCategory.NONE
-    },
-    'AW': {
-        text: "Aruba",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'AU': {
-        text: "Australia",
-        riskCategory: RiskCategory.NONE
-    },
-    'AT': {
-        text: "Austria",
-        riskCategory: RiskCategory.NONE
-    },
-    'AZ': {
-        text: "Azerbaijan",
-        riskCategory: RiskCategory.NONE
-    },
-    'BS': {
-        text: "Bahamas, The",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'BH': {
-        text: "Bahrain",
-        riskCategory: RiskCategory.NONE
-    },
-    'BD': {
-        text: "Bangladesh",
-        riskCategory: RiskCategory.NONE
-    },
-    'BB': {
-        text: "Barbados",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'BY': {
-        text: "Belarus",
-        riskCategory: RiskCategory.NONE
-    },
-    'BE': {
-        text: "Belgium",
-        riskCategory: RiskCategory.NONE
-    },
-    'BZ': {
-        text: "Belize",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'BJ': {
-        text: "Benin",
-        riskCategory: RiskCategory.NONE
-    },
-    'BT': {
-        text: "Bhutan",
-        riskCategory: RiskCategory.NONE
-    },
-    'BO': {
-        text: "Bolivia",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'BQ': {
-        text: "Bonaire",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'BA': {
-        text: "Bosnia and Herzegovina",
-        riskCategory: RiskCategory.NONE
-    },
-    'BW': {
-        text: "Botswana",
-        riskCategory: RiskCategory.NONE
-    },
-    'BR': {
-        text: "Brazil",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'VG' : {
-        text: "British Virgin Islands",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'BN': {
-        text: "Brunei",
-        riskCategory: RiskCategory.NONE
-    },
-    'BG': {
-        text: "Bulgaria",
-        riskCategory: RiskCategory.NONE
-    },
-    'BF': {
-        text: "Burkina Faso",
-        riskCategory: RiskCategory.NONE
-    },
-    'MM': {
-        text: "Burma",
-        riskCategory: RiskCategory.NONE
-    },
-    'BI': {
-        text: "Burundi",
-        riskCategory: RiskCategory.NONE
-    },
-    'KH': {
-        text: "Cambodia",
-        riskCategory: RiskCategory.NONE
-    },
-    'CM': {
-        text: "Cameroon",
-        riskCategory: RiskCategory.NONE
-    },
-    'CA': {
-        text: "Canada",
-        riskCategory: RiskCategory.NONE
-    },
-    'CV': {
-        text: "Cape Verde",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'KY' :{
-        text: "Cayman Islands",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'CF': {
-        text: "Central African Republic",
-        riskCategory: RiskCategory.NONE
-    },
-    'TD': {
-        text: "Chad",
-        riskCategory: RiskCategory.NONE
-    },
-    'CL': {
-        text: "Chile",
-        riskCategory: RiskCategory.NONE
-    },
-    'CN': {
-        text: "China",
-        riskCategory: RiskCategory.NONE
-    },
-    'CO': {
-        text: "Colombia",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'PR': {
-        text: "Commonwealth of Puerto Rico",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'CD': {
-        text: "Congo, Democratic Republic of the",
-        riskCategory: RiskCategory.NONE
-    },
-    'CG': {
-        text: "Congo, Republic of the",
-        riskCategory: RiskCategory.NONE
-    },
-    'CR': {
-        text: "Costa Rica",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'CI': {
-        text: "Cote d'Ivoire",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'HR': {
-        text: "Croatia",
-        riskCategory: RiskCategory.NONE
-    },
-    'CU': {
-        text: "Cuba",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'CW': {
-        text: "Curacao",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'CY': {
-        text: "Cyprus",
-        riskCategory: RiskCategory.NONE
-    },
-    'CZ': {
-        text: "Czech Republic",
-        riskCategory: RiskCategory.NONE
-    },
-    'DK': {
-        text: "Denmark",
-        riskCategory: RiskCategory.NONE
-    },
-    'DJ': {
-        text: "Djibouti",
-        riskCategory: RiskCategory.NONE
-    },
-    'DM': {
-        text: "Dominica",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'DO': {
-        text: "Dominican Republic",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'EC': {
-        text: "Ecuador",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'EG': {
-        text: "Egypt",
-        riskCategory: RiskCategory.NONE
-    },
-    'SV': {
-        text: "El Salvador",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'GQ': {
-        text: "Equatorial Guinea",
-        riskCategory: RiskCategory.NONE
-    },
-    'ER': {
-        text: "Eritrea",
-        riskCategory: RiskCategory.NONE
-    },
-    'EE': {
-        text: "Estonia",
-        riskCategory: RiskCategory.NONE
-    },
-    'ET': {
-        text: "Ethiopia",
-        riskCategory: RiskCategory.NONE
-    },
-    'FJ': {
-        text: "Fiji",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'FI': {
-        text: "Finland",
-        riskCategory: RiskCategory.NONE
-    },
-    'FR': {
-        text: "France",
-        riskCategory: RiskCategory.NONE
-    },
-    'GF': {
-        text: "French Guiana",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'GA': {
-        text: "Gabon",
-        riskCategory: RiskCategory.NONE
-    },
-    'GM': {
-        text: "Gambia, The",
-        riskCategory: RiskCategory.NONE
-    },
-    'GE': {
-        text: "Georgia",
-        riskCategory: RiskCategory.NONE
-    },
-    'DE': {
-        text: "Germany",
-        riskCategory: RiskCategory.NONE
-    },
-    'GH': {
-        text: "Ghana",
-        riskCategory: RiskCategory.NONE
-    },
-    'GR': {
-        text: "Greece",
-        riskCategory: RiskCategory.NONE
-    },
-    'GD': {
-        text: "Grenada",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'GP': {
-        text: "Guadeloupe",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'GT': {
-        text: "Guatemala",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'GN': {
-        text: "Guinea",
-        riskCategory: RiskCategory.NONE
-    },
-    'GW': {
-        text: "Guinea-Bissau",
-        riskCategory: RiskCategory.NONE
-    },
-    'GY': {
-        text: "Guyana",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'HT': {
-        text: "Haiti",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'VA': {
-        text: "Holy See",
-        riskCategory: RiskCategory.NONE
-    },
-    'HN': {
-        text: "Honduras",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'HK': {
-        text: "Hong Kong",
-        riskCategory: RiskCategory.NONE
-    },
-    'HU': {
-        text: "Hungary",
-        riskCategory: RiskCategory.NONE
-    },
-    'IS': {
-        text: "Iceland",
-        riskCategory: RiskCategory.NONE
-    },
-    'IN': {
-        text: "India",
-        riskCategory: RiskCategory.NONE
-    },
-    'ID': {
-        text: "Indonesia",
-        riskCategory: RiskCategory.NONE
-    },
-    'IR': {
-        text: "Iran",
-        riskCategory: RiskCategory.NONE
-    },
-    'IQ': {
-        text: "Iraq",
-        riskCategory: RiskCategory.NONE
-    },
-    'IE': {
-        text: "Ireland",
-        riskCategory: RiskCategory.NONE
-    },
-    'IL': {
-        text: "Israel",
-        riskCategory: RiskCategory.NONE
-    },
-    'IT': {
-        text: "Italy",
-        riskCategory: RiskCategory.NONE
-    },
-    'JM': {
-        text: "Jamaica",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'JP': {
-        text: "Japan",
-        riskCategory: RiskCategory.NONE
-    },
-    'JO': {
-        text: "Jordan",
-        riskCategory: RiskCategory.NONE
-    },
-    'KZ': {
-        text: "Kazakhstan",
-        riskCategory: RiskCategory.NONE
-    },
-    'KE': {
-        text: "Kenya",
-        riskCategory: RiskCategory.NONE
-    },
-    'KI': {
-        text: "Kiribati",
-        riskCategory: RiskCategory.NONE
-    },
-    'FM': {
-        text: "Kosrae, Federated States of Micronesia",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'XK': {
-        text: "Kosovo",
-        riskCategory: RiskCategory.NONE
-    },
-    'KW': {
-        text: "Kuwait",
-        riskCategory: RiskCategory.NONE
-    },
-    'KG': {
-        text: "Kyrgyzstan",
-        riskCategory: RiskCategory.NONE
-    },
-    'LA': {
-        text: "Laos",
-        riskCategory: RiskCategory.NONE
-    },
-    'LV': {
-        text: "Latvia",
-        riskCategory: RiskCategory.NONE
-    },
-    'LB': {
-        text: "Lebanon",
-        riskCategory: RiskCategory.NONE
-    },
-    'LS': {
-        text: "Lesotho",
-        riskCategory: RiskCategory.NONE
-    },
-    'LR': {
-        text: "Liberia",
-        riskCategory: RiskCategory.NONE
-    },
-    'LY': {
-        text: "Libya",
-        riskCategory: RiskCategory.NONE
-    },
-    'LI': {
-        text: "Liechtenstein",
-        riskCategory: RiskCategory.NONE
-    },
-    'LT': {
-        text: "Lithuania",
-        riskCategory: RiskCategory.NONE
-    },
-    'LU': {
-        text: "Luxembourg",
-        riskCategory: RiskCategory.NONE
-    },
-    'MO': {
-        text: "Macau",
-        riskCategory: RiskCategory.NONE
-    },
-    'MK': {
-        text: "Macedonia",
-        riskCategory: RiskCategory.NONE
-    },
-    'MG': {
-        text: "Madagascar",
-        riskCategory: RiskCategory.NONE
-    },
-    'MW': {
-        text: "Malawi",
-        riskCategory: RiskCategory.NONE
-    },
-    'MY': {
-        text: "Malaysia",
-        riskCategory: RiskCategory.NONE
-    },
-    'MV': {
-        text: "Maldives",
-        riskCategory: RiskCategory.NONE
-    },
-    'ML': {
-        text: "Mali",
-        riskCategory: RiskCategory.NONE
-    },
-    'MT': {
-        text: "Malta",
-        riskCategory: RiskCategory.NONE
-    },
-    'MH': {
-        text: "Marshall Islands",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'MQ': {
-        text: "Martinique",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'MR': {
-        text: "Mauritania",
-        riskCategory: RiskCategory.NONE
-    },
-    'MU': {
-        text: "Mauritius",
-        riskCategory: RiskCategory.NONE
-    },
-    'MX': {
-        text: "Mexico",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'MD': {
-        text: "Moldova",
-        riskCategory: RiskCategory.NONE
-    },
-    'MC': {
-        text: "Monaco",
-        riskCategory: RiskCategory.NONE
-    },
-    'MN': {
-        text: "Mongolia",
-        riskCategory: RiskCategory.NONE
-    },
-    'ME': {
-        text: "Montenegro",
-        riskCategory: RiskCategory.NONE
-    },
-    'MA': {
-        text: "Morocco",
-        riskCategory: RiskCategory.NONE
-    },
-    'MZ': {
-        text: "Mozambique",
-        riskCategory: RiskCategory.NONE
-    },
-    'MA': {
-        text: "Namibia",
-        riskCategory: RiskCategory.NONE
-    },
-    'NR': {
-        text: "Nauru",
-        riskCategory: RiskCategory.NONE
-    },
-    'NP': {
-        text: "Nepal",
-        riskCategory: RiskCategory.NONE
-    },
-    'NL': {
-        text: "Netherlands",
-        riskCategory: RiskCategory.NONE
-    },
-    'AN': {
-        text: "Netherlands Antilles",
-        riskCategory: RiskCategory.NONE
-    },
-    'NC': {
-        text: "New Caledonia",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'NZ': {
-        text: "New Zealand",
-        riskCategory: RiskCategory.NONE
-    },
-    'NI': {
-        text: "Nicaragua",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'NE': {
-        text: "Niger",
-        riskCategory: RiskCategory.NONE
-    },
-    'NG': {
-        text: "Nigeria",
-        riskCategory: RiskCategory.NONE
-    },
-    'KP': {
-        text: "North Korea",
-        riskCategory: RiskCategory.NONE
-    },
-    'NO': {
-        text: "Norway",
-        riskCategory: RiskCategory.NONE
-    },
-    'OM': {
-        text: "Oman",
-        riskCategory: RiskCategory.NONE
-    },
-    'PK': {
-        text: "Pakistan",
-        riskCategory: RiskCategory.NONE
-    },
-    'PW': {
-        text: "Palau",
-        riskCategory: RiskCategory.NONE
-    },
-    'PS': {
-        text: "Palestinian Territories",
-        riskCategory: RiskCategory.NONE
-    },
-    'PA': {
-        text: "Panama",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'PG': {
-        text: "Papua New Guinea",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'PY': {
-        text: "Paraguay",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'PE': {
-        text: "Peru",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'PH': {
-        text: "Philippines",
-        riskCategory: RiskCategory.NONE
-    },
-    'PL': {
-        text: "Poland",
-        riskCategory: RiskCategory.NONE
-    },
-    'PT': {
-        text: "Portugal",
-        riskCategory: RiskCategory.NONE
-    },
-    'QA': {
-        text: "Qatar",
-        riskCategory: RiskCategory.NONE
-    },
-    'RO': {
-        text: "Romania",
-        riskCategory: RiskCategory.NONE
-    },
-    'RU': {
-        text: "Russia",
-        riskCategory: RiskCategory.NONE
-    },
-    'RW': {
-        text: "Rwanda",
-        riskCategory: RiskCategory.NONE
-    },
-    'BQ': {
-        text: "Saba",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'BL': {
-        text: "Saint Barthelemy",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'KN': {
-        text: "Saint Kitts and Nevis",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'LC': {
-        text: "Saint Lucia",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'MF': {
-        text: "Saint Martin",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'VC': {
-        text: "Saint Vincent and the Grenadines",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'WS': {
-        text: "Samoa",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'SM': {
-        text: "San Marino",
-        riskCategory: RiskCategory.NONE
-    },
-    'ST': {
-        text: "Sao Tome and Principe",
-        riskCategory: RiskCategory.NONE
-    },
-    'SA': {
-        text: "Saudi Arabia",
-        riskCategory: RiskCategory.NONE
-    },
-    'SN': {
-        text: "Senegal",
-        riskCategory: RiskCategory.NONE
-    },
-    'RS': {
-        text: "Serbia",
-        riskCategory: RiskCategory.NONE
-    },
-    'SC': {
-        text: "Seychelles",
-        riskCategory: RiskCategory.NONE
-    },
-    'SL': {
-        text: "Sierra Leone",
-        riskCategory: RiskCategory.NONE
-    },
-    'SG': {
-        text: "Singapore",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'BQ': {
-        text: "Sint Eustatius",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'SX': {
-        text: "Sint Maarten",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'SK': {
-        text: "Slovakia",
-        riskCategory: RiskCategory.NONE
-    },
-    'SI': {
-        text: "Slovenia",
-        riskCategory: RiskCategory.NONE
-    },
-    'SB': {
-        text: "Solomon Islands",
-        riskCategory: RiskCategory.NONE
-    },
-    'SO': {
-        text: "Somalia",
-        riskCategory: RiskCategory.NONE
-    },
-    'ZA': {
-        text: "South Africa",
-        riskCategory: RiskCategory.NONE
-    },
-    'KR': {
-        text: "South Korea",
-        riskCategory: RiskCategory.NONE
-    },
-    'SS': {
-        text: "South Sudan",
-        riskCategory: RiskCategory.NONE
-    },
-    'ES': {
-        text: "Spain",
-        riskCategory: RiskCategory.NONE
-    },
-    'LK': {
-        text: "Sri Lanka",
-        riskCategory: RiskCategory.NONE
-    },
-    'SD': {
-        text: "Sudan",
-        riskCategory: RiskCategory.NONE
-    },
-    'SR': {
-        text: "Suriname",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'SZ': {
-        text: "Swaziland",
-        riskCategory: RiskCategory.NONE
-    },
-    'SE': {
-        text: "Sweden",
-        riskCategory: RiskCategory.NONE
-    },
-    'CH': {
-        text: "Switzerland",
-        riskCategory: RiskCategory.NONE
-    },
-    'SY': {
-        text: "Syria",
-        riskCategory: RiskCategory.NONE
-    },
-    'TW': {
-        text: "Taiwan",
-        riskCategory: RiskCategory.NONE
-    },
-    'TJ': {
-        text: "Tajikistan",
-        riskCategory: RiskCategory.NONE
-    },
-    'TZ': {
-        text: "Tanzania",
-        riskCategory: RiskCategory.NONE
-    },
-    'TH': {
-        text: "Thailand",
-        riskCategory: RiskCategory.NONE
-    },
-    'TL': {
-        text: "Timor-Leste",
-        riskCategory: RiskCategory.NONE
-    },
-    'TG': {
-        text: "Togo",
-        riskCategory: RiskCategory.NONE
-    },
-    'TO': {
-        text: "Tonga",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'TT': {
-        text: "Trinidad and Tobago",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'TN': {
-        text: "Tunisia",
-        riskCategory: RiskCategory.NONE
-    },
-    'TR': {
-        text: "Turkey",
-        riskCategory: RiskCategory.NONE
-    },
-    'TM': {
-        text: "Turkmenistan",
-        riskCategory: RiskCategory.NONE
-    },
-    'TC' : {
-        text: "Turks and Caicos",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'TV': {
-        text: "Tuvalu",
-        riskCategory: RiskCategory.NONE
-    },
-    'VI': {
-        text: "U.S. Virgin Islands",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'UG': {
-        text: "Uganda",
-        riskCategory: RiskCategory.NONE
-    },
-    'UA': {
-        text: "Ukraine",
-        riskCategory: RiskCategory.NONE
-    },
-    'AE': {
-        text: "United Arab Emirates (UAE)",
-        riskCategory: RiskCategory.NONE
-    },
-    'GB': {
-        text: "United Kingdom (UK)",
-        riskCategory: RiskCategory.NONE
-    },
-    'UY': {
-        text: "Uruguay",
-        riskCategory: RiskCategory.NONE
-    },
-    'UZ': {
-        text: "Uzbekistan",
-        riskCategory: RiskCategory.NONE
-    },
-    'VU': {
-        text: "Vanuatu",
-        riskCategory: RiskCategory.NONE
-    },
-    'VE': {
-        text: "Venezuela",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'VN': {
-        text: "Vietnam",
-        riskCategory: RiskCategory.NONE
-    },
-    'YE': {
-        text: "Yemen",
-        riskCategory: RiskCategory.NONE
-    },
-    'ZM': {
-        text: "Zambia",
-        riskCategory: RiskCategory.NONE
-    },
-    'ZW': {
-        text: "Zimbabwe",
-        riskCategory: RiskCategory.NONE
-    }
-}
-
-var states = {
-    'AL':{
-        text: "Alabama",
-        riskCategory: RiskCategory.NONE
-    },
-    'AK':{
-        text: "Alaska",
-        riskCategory: RiskCategory.NONE
-    },
-    'AZ':{
-        text: "Arizona",
-        riskCategory: RiskCategory.NONE
-    },
-    'AR':{
-        text: "Arkansas",
-        riskCategory: RiskCategory.NONE
-    },
-    'CA':{
-        text: "California",
-        riskCategory: RiskCategory.NONE
-    },
-    'CO':{
-        text: "Colorado",
-        riskCategory: RiskCategory.NONE
-    },
-    'CT':{
-        text: "Connecticut",
-        riskCategory: RiskCategory.NONE
-    },
-    'DE':{
-        text: "Delaware",
-        riskCategory: RiskCategory.NONE
-    },
-    'FL':{
-        text: "Florida",
-        riskCategory: RiskCategory.ZIKA
-    },
-    'GA':{
-        text: "Georgia",
-        riskCategory: RiskCategory.NONE
-    },
-    'HI':{
-        text: "Hawaii",
-        riskCategory: RiskCategory.NONE
-    },
-    'ID':{
-        text: "Idaho",
-        riskCategory: RiskCategory.NONE
-    },
-    'IL':{
-        text: "Illinois",
-        riskCategory: RiskCategory.NONE
-    },
-    'IN':{
-        text: "Indiana",
-        riskCategory: RiskCategory.NONE
-    },
-    'IA':{
-        text: "Iowa",
-        riskCategory: RiskCategory.NONE
-    },
-    'KS':{
-        text: "Kansas",
-        riskCategory: RiskCategory.NONE
-    },
-    'KY':{
-        text: "Kentucky",
-        riskCategory: RiskCategory.NONE
-    },
-    'LA':{
-        text: "Louisiana",
-        riskCategory: RiskCategory.NONE
-    },
-    'ME':{
-        text: "Maine",
-        riskCategory: RiskCategory.NONE
-    },
-    'MD':{
-        text: "Maryland",
-        riskCategory: RiskCategory.NONE
-    },
-    'MA':{
-        text: "Massachusetts",
-        riskCategory: RiskCategory.NONE
-    },
-    'MI':{
-        text: "Michigan",
-        riskCategory: RiskCategory.NONE
-    },
-    'MN':{
-        text: "Minnesota",
-        riskCategory: RiskCategory.NONE
-    },
-    'MS':{
-        text: "Mississippi",
-        riskCategory: RiskCategory.NONE
-    },
-    'MO':{
-        text: "Missouri",
-        riskCategory: RiskCategory.NONE
-    },
-    'MT':{
-        text: "Montana",
-        riskCategory: RiskCategory.NONE
-    },
-    'NE':{
-        text: "Nebraska",
-        riskCategory: RiskCategory.NONE
-    },
-    'NV':{
-        text: "Nevada",
-        riskCategory: RiskCategory.NONE
-    },
-    'NH':{
-        text: "New Hampshire",
-        riskCategory: RiskCategory.NONE
-    },
-    'NJ':{
-        text: "New Jersey",
-        riskCategory: RiskCategory.NONE
-    },
-    'NM':{
-        text: "New Mexico",
-        riskCategory: RiskCategory.NONE
-    },
-    'NY':{
-        text: "New York",
-        riskCategory: RiskCategory.NONE
-    },
-    'NC':{
-        text: "North Carolina",
-        riskCategory: RiskCategory.NONE
-    },
-    'ND':{
-        text: "North Dakota",
-        riskCategory: RiskCategory.NONE
-    },
-    'OH':{
-        text: "Ohio",
-        riskCategory: RiskCategory.NONE
-    },
-    'OK':{
-        text: "Oklahoma",
-        riskCategory: RiskCategory.NONE
-    },
-    'OR':{
-        text: "Oregon",
-        riskCategory: RiskCategory.NONE
-    },
-    'PA':{
-        text: "Pennsylvania",
-        riskCategory: RiskCategory.NONE
-    },
-    'RI':{
-        text: "Rhode Island",
-        riskCategory: RiskCategory.NONE
-    },
-    'SC':{
-        text: "South Carolina",
-        riskCategory: RiskCategory.NONE
-    },
-    'SD':{
-        text: "South Dakota",
-        riskCategory: RiskCategory.NONE
-    },
-    'TN':{
-        text: "Tennessee",
-        riskCategory: RiskCategory.NONE
-    },
-    'TX':{
-        text: "Texas",
-        riskCategory: RiskCategory.NONE
-    },
-    'UT':{
-        text: "Utah",
-        riskCategory: RiskCategory.NONE
-    },
-    'VT':{
-        text: "Vermont",
-        riskCategory: RiskCategory.NONE
-    },
-    'VA':{
-        text: "Virginia",
-        riskCategory: RiskCategory.NONE
-    },
-    'WA':{
-        text: "Washington",
-        riskCategory: RiskCategory.NONE
-    },
-    'WV':{
-        text: "West Virginia",
-        riskCategory: RiskCategory.NONE
-    },
-    'WI':{
-        text: "Wisconsin",
-        riskCategory: RiskCategory.NONE
-    },
-    'WY':{
-        text: "Wyoming",
-        riskCategory: RiskCategory.NONE
-    }
-}
