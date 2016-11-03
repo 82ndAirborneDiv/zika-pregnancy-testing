@@ -992,7 +992,7 @@ var nodes = {
         endpointName: "armBReflexrRTPCR"
     },
     36: {
-        text: "<div><strong>Interpretation of test result:</strong> Test results indicate presumptive recent Zika virus infection or recent maternal flavivirus infection, but the specific virus cannot be identified. </br><div>Is the patient still pregnant?</div>",
+        text: "<div><strong>Interpretation of test result:</strong> Test results indicate presumptive recent Zika virus infection or recent maternal flavivirus infection, but the specific virus cannot be identified.<div><br/>Is the patient still pregnant?</div>",
         answers: {
             1: {
                 text: "Yes",
