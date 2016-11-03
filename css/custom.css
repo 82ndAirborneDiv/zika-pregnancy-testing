@@ -33,17 +33,7 @@ a {
 @media only screen and (max-width: 350px) {
 
 	.zika-title {font-size:12px;}
-	.app-panel-content{
-		height: 350px;
-	}
-}
-
-@media only screen and (max-width: 500px) {
-
-	.app-panel-content{
-		min-height: 350px;
-		max-height: 450px;
-	}
+	.scrollable{height: 300px;}
 }
 
 .panel-primary>.panel-heading {
@@ -57,6 +47,8 @@ a {
 	border-color: #075290;
 }
 .scrollable{
+	min-height: 375px;
+	max-height: 450px;
 	overflow:auto;
 }
 .widget-wrapper{
