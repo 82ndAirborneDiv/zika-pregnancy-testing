@@ -603,12 +603,12 @@ var nodes = {
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
         footnotes:{
-            text: 'Please note:<br/><div><ul>' +
-            +'<li>Area of active Zika virus transmission indicates local mosquito-borne transmission has been reported.</li>' +
-            +'<li>This question refers to sexual activity without a condom at any time during pregnancy or during ' +
-            'the periconceptional period, which is defined as eight weeks before conception or six weeks before ' +
-            'last menstrual period.</li>' +
-            '</ul></div>'
+            text: 'Please note:<br/><div><ul>'
+            +'<li>Area of active Zika virus transmission indicates local mosquito-borne transmission has been reported.</li>'
+            +'<li>This question refers to sexual activity without a condom at any time during pregnancy or during '
+            +'the periconceptional period, which is defined as eight weeks before conception or six weeks before '
+            +'last menstrual period.</li>'
+            +'</ul></div>'
         },
         decideChoice: function(nodeHistoryObject){
             return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
