@@ -1,3 +1,35 @@
+$(document).ready(function(){
+    start.click(function() {
+        cdcMetrics.trackEvent("ButtonClicked", "Start");
+        introPanel.hide();
+        mainPanel.show();
+        loadNode("1");
+    });
+
+    back.click(function(){
+        cdcMetrics.trackEvent("ButtonClicked", "Back");
+
+        var size = nodeHistory.length;
+        if(size > 0){
+            loadNode(getPreviousNode().node);
+            if(debug){
+                logNodeHistory();
+            }
+        }
+        else{
+            //back should restart the app when on question 1
+            triggerRestart();
+        }
+    });
+    nextButton.click(function(){
+        nextButtonClicked();
+    });
+    restart.click(function(){
+        cdcMetrics.trackEvent("ButtonClicked", "Restart");
+        triggerRestart();
+    });
+});
+
 //panels
 var introPanel = $("#zika-app-intro");
 var mainPanel = $("#zika-app-main");
@@ -12,13 +44,6 @@ var questionText = $("#question-text");
 var questionAnswers = $("#question-answers");
 var alertArea = $("#alert-area");
 
-var singleSelectListSurround = $("#singleSelectListDiv");
-var singleSelectList = $("#singleSelectList");
-var singleSelectLabel = $('#singleSelectLabel');
-var multiSelectListSurround = $("#multiSelectListDiv");
-var multiSelectList = $("#multiSelectList");
-var multiSelectLabel = $('#multiSelectLabel');
-
 //Nav buttons
 var start = $("#start");
 var back = $("#back");
@@ -26,13 +51,9 @@ var restart = $("#restart");
 var nextButton = $("#next");
 
 var debug = true;
+var currentQuestionNumber;
 
-/*array to store answers
-Each index of nodeHistory stores a NodeHistory object
-*/
-var nodeHistory = [];
-
-//NodeHistory stores the users activity: node and answer, if applicable
+//NodeHistory object stores the users activity: node and answer, if applicable
 //for each node in the decision tree.
 // The nodeName will correspond to an object in the list of nodes.
 //Answers will be either a number, string, or array of strings
@@ -42,7 +63,14 @@ function NodeHistory(nodeName, answer){
     this.answer = answer;
 }
 
-var currentQuestionNumber;
+/*array to store answers
+ Each index of nodeHistory stores a NodeHistory object
+ */
+var nodeHistory = [];
+
+function logNodeHistory(){
+    console.log(nodeHistory);
+}
 
 //return Question object from nodes array
 function getNode(nodeName){
@@ -58,9 +86,8 @@ function getPreviousNode(){
 }
 
 //return userAnswer by index, if it exists
-function getUserAnswerByIndex(number){
-    var numUserAnswers = nodeHistory.length;
-    if(numUserAnswers > 0 && number >= 0 && number < numUserAnswers) {
+function getNodeHistoryByIndex(number){
+    if(nodeHistory.length > 0 && number >= 0 && number < nodeHistory.length) {
         return nodeHistory[number];
     }
 }
@@ -78,100 +105,27 @@ function loadNode(nodeName){
             break;
     }
 }
-$(document).ready(function(){
-    start.click(function() {
-        cdcMetrics.trackEvent("ButtonClicked", "Start");
-        introPanel.hide();
-        mainPanel.show();
-        loadNode("1");
-    });
 
-    back.click(function(){
-        cdcMetrics.trackEvent("ButtonClicked", "Back");
-
-        var size = nodeHistory.length;
-        if(size > 0){
-            loadNode(getPreviousNode().node);
-        }
-        else{
-            //back should restart the app when on question 1
-            triggerRestart();
-        }
-    });
-    nextButton.click(function(){
-        nextButtonClicked();
-    });
-    restart.click(function(){
-        cdcMetrics.trackEvent("ButtonClicked", "Restart");
-        triggerRestart();
-    });
-});
-//populate singleSelect list
-var populateSingleSelectList = function(list) {
-    var listHTML = "";
-    listHTML += '<option></option>';
-        $.each(list, function (key, value) {
-            listHTML += '<option value=' + key + '>' + value.text + '</option>';
-        });
-    singleSelectList.html(listHTML);
-}
-//populate multiSelect list
-var populateMultiSelectList = function(list) {
-    var listHTML = "";
-    $.each(list, function (key, value) {
-       listHTML += '<label><input class="checkboxListItem" style="margin-left: 10px; margin-right: 10px"' +
-            ' type="checkbox" name="option[]" value="' + key + '">' + value.text + '</label>';
-    });
-    multiSelectList.html(listHTML);
-}
-var populateRadioList = function(question){
-
-}
-function noSelectionAlert(){
-    var alert = '<div id="noSelectionAlert" class="alert alert-warning fade in" role="alert">';
-    alert += '<a href="#" class="close" id="close-alert" style="text-decoration: none;"data-dismiss="alert"' +
-        ' role="button" aria-label="close">&times;</a>';
-    alert += '<strong>Please make a selection.</strong>';
-    alert += '</div>';
-    alertArea.html(alert);
-
-    //return focus to Next button when close alert button is clicked
-    $('#noSelectionAlert').on('closed.bs.alert', function(){
-        nextButton.focus();
-    });
-
-    //focus on close alert button when noSelectionAlert is displayed
-    $('#close-alert').focus();
-    resizeWidget();
-}
-function triggerRestart(){
-    nodeHistory = [];
-    clearMainPanel();
-    introPanel.show().focus();
-    mainPanel.hide();
-    $('.panel-body').focus();
-
-    $('.scrollable').animate({ scrollTop: 0 }, 0);
-}
 function loadQuestion(nextQuestionNumber){
     clearMainPanel();
     nextButton.show();
     questionContent.show();
 
     var nextQuestionObject = getNode(nextQuestionNumber);
-    var nextQuestionText = nextQuestionObject.text;
     if(debug){
-        nextQuestionText = "<strong>Screen number: " +nextQuestionNumber+"</strong></br>";
-        nextQuestionText += "<br />";
-        nextQuestionText += nextQuestionObject.text;
+        var nodeText = "Screen number: " +nextQuestionNumber;
+        nodeText += "<br />";
+        questionText.html(nodeText);
     }
-    var nextQuestionAnswers = nextQuestionObject.getValuesForAnswers();
 
     var previouslyVisited = false;
     var previousAnswerObject;
     if(nodeHistory.length > 0 && getPreviousNode().node === nextQuestionNumber){
         previouslyVisited = true;
         previousAnswerObject = getPreviousNode();
+    }
+    if(nextQuestionObject.hasOwnProperty('footnotes')){
+        $('#question-footnotes').html(nextQuestionObject.footnotes.text);
     }
 
     //Build question based on next question's answerType
@@ -180,34 +134,30 @@ function loadQuestion(nextQuestionNumber){
             if(previouslyVisited){
                 nodeHistory.pop();
             }
-            questionText.html('<strong>' +nextQuestionText +'</strong></strong>');
+            questionText.append('<strong>' +nextQuestionObject.text +'</strong>');
             break;
         case AnswerType.SINGLESELECT:
-            singleSelectListSurround.show();
-            populateSingleSelectList(nextQuestionObject.getValuesForAnswers());
+            questionAnswers.html(populateSingleSelectList(nextQuestionObject)).show();
             if(previouslyVisited){
-                singleSelectList.val(previousAnswerObject.answer).trigger("change");
+                $("#singleSelectList").val(previousAnswerObject.answer).trigger("change");
                 nodeHistory.pop();
             }
-            singleSelectLabel.html(nextQuestionText);
 
             //clear alerts on country selected
-            singleSelectList.change(function(){
+            $("#singleSelectList").change(function(){
                 alertArea.html("");
             });
             break;
         case AnswerType.MULTISELECT:
-            populateMultiSelectList(nextQuestionObject.getValuesForAnswers());
+            questionAnswers.html(populateMultiSelectList(nextQuestionObject)).show();
             if(previouslyVisited){
-                multiSelectList.find("input:checkbox").each(function(){
+                $("#multiSelectList").find("input:checkbox").each(function(){
                     var answerChecked = previousAnswerObject.answer.indexOf($(this).val());
                     $(this).prop('checked', answerChecked >= 0);
                 });
                 nodeHistory.pop();
             }
-            multiSelectLabel.html(nextQuestionText);
-            multiSelectList.multiselect();
-            multiSelectListSurround.show();
+            $("#multiSelectList").multiselect();
 
             //clear alerts on checkbox checked
             $("input:checkbox").change(function(){
@@ -216,29 +166,14 @@ function loadQuestion(nextQuestionNumber){
 
             break;
         case AnswerType.RADIO:
-            var radioButtonsHTML = '';
-            radioButtonsHTML += '<div id="radio_label">' +nextQuestionText +'</div>';
-            radioButtonsHTML += '<div role="radiogroup" aria-labelledby="' +"radio_label" +'">';
-
-            $.each(nextQuestionAnswers, function (key, value) {
-                radioButtonsHTML += '<div class="radio z-risk-rad">';
-                radioButtonsHTML += '<label>';
-                if (previouslyVisited && previousAnswerObject.answer === key) {
-                    radioButtonsHTML += '<input type="radio" class="radioAnswer" name="optionsRadios" value="'
-                        +"" +key + '" checked>';
-                    nodeHistory.pop();
-                    previouslyVisited = false;
-                }
-                else {
-                    radioButtonsHTML += '<input type="radio" class="radioAnswer" name="optionsRadios" value="'
-                        + key + '">';
-                }
-                radioButtonsHTML += value.text;
-                radioButtonsHTML += '</label>';
-                radioButtonsHTML += '</div>';
-            });
-            radioButtonsHTML += '</div>';
-            questionAnswers.html(radioButtonsHTML).show();
+            questionAnswers.html(populateRadioList(nextQuestionObject)).show();
+            if(previouslyVisited) {
+                $("input[name=optionsRadios]").each(function () {
+                    var answerChecked = previousAnswerObject.answer.indexOf($(this).val());
+                    $(this).prop('checked', answerChecked >= 0);
+                });
+                nodeHistory.pop();
+            }
 
             //clear alerts on radio selected
             $("input[name=optionsRadios]:radio").change(function(){
@@ -266,12 +201,111 @@ function loadEndPoint(number){
         endpointText.html("<div><strong>" +nodeNumText +"</strong></div></br>");
     }
 
-    endpointText.append($('<div>').load("endpoints.html #" +nodeObject.endpointName));
-    endpointDisclaimer.load("disclaimers.html #allResults")
+    endpointText.append($('<div>').load("html/endpoints.html #" +nodeObject.endpointName));
+    endpointDisclaimer.load("html/disclaimers.html #allResults")
 
     endpointContent.show();
     resizeWidget();
     $('.panel-body').focus();
+}
+
+function clearMainPanel(){
+    //endpoint
+    endpointText.html("");
+    endpointAdditionalNotes.html("");
+    endpointDisclaimer.html("");
+    endpointContent.hide();
+
+    //reset question area
+    questionText.html("");
+    questionContent.hide();
+    questionAnswers.html("");
+    questionAnswers.hide();
+    $("#question-footnotes").html("");
+
+    //hide next button
+    nextButton.hide();
+
+    //reset alert area
+    alertArea.html("");
+
+    resizeWidget();
+}
+
+//populate singleSelect list
+var populateSingleSelectList = function(questionObject) {
+    var nextQuestionObject = questionObject;
+    var listHTML = '';
+    listHTML += '<form id="singleSelectListDiv" role="form" class="form-group">';
+    listHTML += '<label id="singleSelectLabel" for="singleSelectList">';
+    listHTML += nextQuestionObject.text;
+    listHTML += '</label>';
+    listHTML += '<select id="singleSelectList" class="form-control"><option></option>';
+    $.each(nextQuestionObject.getValuesForAnswers(), function (key, value) {
+        listHTML += '<option value=' + key + '>' + value.text + '</option>';
+    });
+    listHTML += '</select></form>';
+    return listHTML;
+};
+//populate multiSelect list
+var populateMultiSelectList = function(questionObject) {
+    var nextQuestionObject = questionObject;
+    var listHTML = "";
+    listHTML += '<div id="multiSelectListDiv">';
+    listHTML += '<label id="multiSelectLabel" for="multiSelectList">';
+    listHTML += nextQuestionObject.text;
+    listHTML += '</label>';
+    listHTML +='<div role="group" aria-labelledby="multiSelectLabel" id="multiSelectList" class="multiselect">';
+    $.each(nextQuestionObject.getValuesForAnswers(), function (key, value) {
+        listHTML += '<label><input class="checkboxListItem" style="margin-left: 10px; margin-right: 10px"' +
+            ' type="checkbox" name="option[]" value="' + key + '">' + value.text + '</label>';
+    });
+    listHTML += '</div></div>';
+    return listHTML;
+};
+var populateRadioList = function(questionObject){
+    var nextQuestionObject = questionObject;
+    var radioButtonsHTML = '';
+    radioButtonsHTML += '<div id="radio_label">' +nextQuestionObject.text +'</div>';
+    radioButtonsHTML += '<div role="radiogroup" aria-labelledby="' +"radio_label" +'">';
+
+    $.each(nextQuestionObject.getValuesForAnswers(), function (key, value) {
+        radioButtonsHTML += '<div class="radio z-risk-rad">';
+        radioButtonsHTML += '<label>';
+        radioButtonsHTML += '<input type="radio" class="radioAnswer" name="optionsRadios" value="'
+            + key + '">';
+        radioButtonsHTML += value.text;
+        radioButtonsHTML += '</label>';
+        radioButtonsHTML += '</div>';
+    });
+    radioButtonsHTML += '</div>';
+    return radioButtonsHTML;
+};
+function noSelectionAlert(){
+    var alert = '<div id="noSelectionAlert" class="alert alert-warning fade in" role="alert">';
+    alert += '<a href="#" class="close" id="close-alert" style="text-decoration: none;"data-dismiss="alert"' +
+        ' role="button" aria-label="close">&times;</a>';
+    alert += '<strong>Please make a selection.</strong>';
+    alert += '</div>';
+    alertArea.html(alert);
+
+    //return focus to Next button when close alert button is clicked
+    $('#noSelectionAlert').on('closed.bs.alert', function(){
+        nextButton.focus();
+    });
+
+    //focus on close alert button when noSelectionAlert is displayed
+    $('#close-alert').focus();
+    resizeWidget();
+}
+function triggerRestart(){
+    nodeHistory = [];
+    clearMainPanel();
+    introPanel.show().focus();
+    mainPanel.hide();
+    $('.panel-body').focus();
+
+    $('.scrollable').animate({ scrollTop: 0 }, 0);
 }
 
 function nextButtonClicked(){
@@ -292,7 +326,7 @@ function nextButtonClicked(){
             }
             break;
         case AnswerType.SINGLESELECT:
-            selection = singleSelectList.val();
+            selection = $("#singleSelectList").val();
             if(selection === ""){
                 noSelectionAlert();
                 return;
@@ -314,41 +348,12 @@ function nextButtonClicked(){
     }
     nodeHistory.push(new NodeHistory(currentQuestionNumber, selection));
 
-    selectedAnswerObject = currentQuestionObject.decideChoice(currentQuestionNumber, selection);
+    if(debug){
+        logNodeHistory();
+    }
 
+    selectedAnswerObject = currentQuestionObject.decideChoice(nodeHistory[nodeHistory.length - 1]);
     loadNode(selectedAnswerObject.nextNode);
-}
-
-function clearMainPanel(){
-    //endpoint
-    endpointText.html("");
-    endpointAdditionalNotes.html("");
-    endpointDisclaimer.html("");
-    endpointContent.hide();
-
-    //reset question area
-    multiSelectList.animate({ scrollTop: 0 }, 0);
-    questionText.html("");
-    questionContent.hide();
-    questionAnswers.html("");
-    questionAnswers.hide();
-    singleSelectList.html("");
-    multiSelectList.html("");
-    singleSelectListSurround.hide();
-    multiSelectListSurround.hide();
-
-    //Remove checked state and css from all checkboxes
-    $("input:checkbox").prop("checked", false).parent().removeClass("multiselect-on");
-    //Reset selection on single country list to null
-    singleSelectList.val(null).trigger("change");
-
-    //hide next button
-    nextButton.hide();
-
-    //reset alert area
-    alertArea.html("");
-
-    resizeWidget();
 }
 
 //Used to resize widget when content changes.
@@ -456,15 +461,15 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function(){
             return this.answers;
         }
     },
     2: {
-        text: "<div>The user acknowledges and agrees that this tool is provided for informational purposes only and that the "
+        text: "<div>The User acknowledges and agrees that this tool is provided for informational purposes only and that the "
         +"product is not intended to be (nor should it be used as) a substitute for the exercise of your professional "
         +"judgment."
         +"<br /><br />"
@@ -485,12 +490,12 @@ var nodes = {
         getValuesForAnswers: function(){
             return this.answers;
         },
-        decideChoice: function(){
+        decideChoice: function(nodeHistoryObject){
             return this.answers["0"];
         }
     },
     3: {
-        text: "To begin, please select what information you are looking for.",
+        text: "To begin, please choose one of the following options to indicate what information you are looking for.",
         answers: {
             1: {
                 text: "Information to help decide if Zika virus testing is needed.",
@@ -508,13 +513,13 @@ var nodes = {
             4: {
                 text: "Next steps for a patient who already received a negative rRT-PCR result within 2 weeks of " +
                 "possible exposure and returned 2-12 weeks later for a Zika IgM test.",
-                nextNode: 22
+                nextNode: 13
             }
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function(){
             return this.answers;
@@ -523,7 +528,7 @@ var nodes = {
     4: {
         text: "<div>Does your pregnant patient live in "+
         "<a target='_blank' href='https://www.cdc.gov/zika/geo/index.html'>an area with active Zika virus "+
-        "transmission</a>?</div>",
+        "transmission</a>*?</div>",
         answers: {
             1: {
                 text: "Yes",
@@ -536,8 +541,11 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        footnotes:{
+            text: '*Area of active Zika transmission indicates local mosquito-borne transmission has been reported.'
+        },
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -547,8 +555,7 @@ var nodes = {
         text: "<div id='q5'>Has your pregnant patient previously lived in or traveled to " +
         "<a target='_blank' href='https://www.cdc.gov/zika/geo/index.html'>" +
         "an area with active Zika virus transmission</a> "
-        +"during pregnancy or the periconceptional period? (Periconceptional period is defined as eight weeks before " +
-        "conception or six weeks before last menstrual period).<br />"
+        +"during pregnancy or the periconceptional period?<br />"
         +"</div>",
         answers: {
             1:{
@@ -562,19 +569,27 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        footnotes:{
+            text: '<div>Please note:<br/><ul>' +
+            '<li>Many people move fluidly and regularly between areas with and without active Zika transmission ' +
+            'to live, work, attend school, socialize, and seek medical care. Those who live in areas without active ' +
+            'Zika transmission may not regard these activities as “travel.” This context should be considered when ' +
+            'asking women about travel history and potential exposure to Zika.</li>' +
+            '<li>Periconceptional period is defined as eight weeks before conception or six weeks before last ' +
+            'menstrual period.</li>' +
+            '</ul></div>'
+        },
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
         }
     },
     6: {
-        text: "Has your pregnant patient had unprotected sexual activity (vaginal, anal, or oral sex, or shared "
-        +"sex toys, without a condom) with a partner who has traveled to or lives in an "
-        +"<a target='_blank' href='http://www.cdc.gov/zika/geo/index.html'>area with active Zika virus transmission</a> " +
-        "during her pregnancy or the periconceptional period (eight weeks before conception or six weeks before last "
-        +"menstrual period)?",
+        text: "Has your pregnant patient had sex (vaginal, anal, or oral sex) without a condom with a partner(s) who " +
+        "lives in or has traveled to "
+        +"<a target='_blank' href='http://www.cdc.gov/zika/geo/index.html'>an area with active Zika virus transmission</a>?",
         answers: {
             1: {
                 text: "Yes",
@@ -587,8 +602,16 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        footnotes:{
+            text: 'Please note:<br/><div><ul>' +
+            +'<li>Area of active Zika virus transmission indicates local mosquito-borne transmission has been reported.</li>' +
+            +'<li>This question refers to sexual activity without a condom at any time during pregnancy or during ' +
+            'the periconceptional period, which is defined as eight weeks before conception or six weeks before ' +
+            'last menstrual period.</li>' +
+            '</ul></div>'
+        },
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -609,8 +632,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function(){
             return this.answers;
@@ -634,8 +657,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function(){
             return this.answers;
@@ -671,8 +694,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -687,22 +710,22 @@ var nodes = {
         endpointName: "lowRiskOfExposure"
     },
     15: {
-        text: "You indicated that your patient has travelled to a Zika affected area. Does your patient frequently " +
-        "travel to this area or was this a single trip?",
+        text: "You indicated that your patient has travelled to a Zika affected area. Was this a single trip to a " +
+        "Zika affected area(s)?",
         answers: {
             1: {
-                text: "Frequently travel",
-                nextNode: 16
+                text: "Yes",
+                nextNode: 7
             },
             2: {
-                text: "Single trip",
-                nextNode: 7
+                text: "No",
+                nextNode: 16
             }
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -744,8 +767,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -769,8 +792,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -790,8 +813,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -828,8 +851,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -849,15 +872,15 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
         }
     },
     25: {
-        text: "<div><strong>Interpretation of test result:</strong> Test results suggest recent maternal Zika virus infection. </div></br><br/><strong>Action needed: Zika virus disease is a nationally notifiable condition. Your patient meets criteria for reporting to the <a target='_blank' href='http://www.cdc.gov/zika/hc-providers/registry.html'>US Zika Pregnancy Registry</a>. </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal, local, or territorial health department. <ul> <li>If you are a healthcare provider or health department and you have questions about the registry, please <a href='mailto:ZikaMCH@cdc.gov'>email</a> or call 770-488-7100 and ask for the Zika Pregnancy Hotline.</li></ul></div></br><div>Is the patient still pregnant?</div>",
+        text: "<div><strong>Interpretation of test result:</strong> Test results suggest recent maternal Zika virus infection. </div></br><strong>Action needed: Zika virus disease is a nationally notifiable condition. Your patient meets criteria for reporting to the <a target='_blank' href='http://www.cdc.gov/zika/hc-providers/registry.html'>US Zika Pregnancy Registry</a>. </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal, local, or territorial health department. <ul> <li>If you are a healthcare provider or health department and you have questions about the registry, please <a href='mailto:ZikaMCH@cdc.gov'>email</a> or call 770-488-7100 and ask for the Zika Pregnancy Hotline.</li></ul></div></br><div>Is the patient still pregnant?</div>",
         answers: {
             1: {
                 text: "Yes",
@@ -870,14 +893,17 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
         }
     },
-    26: "unused",
+    26: {
+        nodeType: NodeType.ENDPOINT,
+        endpointName: "presumptiveRecentZikaVirusOrDengueVirusOrFlavivirusInfection"
+    },
     27: {
         nodeType: NodeType.ENDPOINT,
         endpointName: "prenatalClinicalManagementRecentZikaInfectionOrFlavivirusNOS"
@@ -896,8 +922,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -925,8 +951,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -950,8 +976,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -979,8 +1005,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -1009,8 +1035,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -1028,19 +1054,19 @@ var nodes = {
                 nextNode: 42
             },
             2: {
-                text: "Zika virus rRT-PCR on serum and urine (after previous positive IgM result)",
+                text: "Zika virus rRT-PCR on serum and urine (after previous positive Zika IgM result)",
                 nextNode: 43
             },
             3:{
-                text: "PRNT",
+                text: "Plaque reduction neutralization test (PRNT)",
                 nextNode: 44
             }
 
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -1055,13 +1081,13 @@ var nodes = {
             },
             2: {
                 text: "Zika IgM or dengue IgM positive or equivocal",
-                nextNode: 40
+                nextNode: 26
             }
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -1072,7 +1098,7 @@ var nodes = {
         answers: {
             1: {
                 text: "Negative Zika rRT-PCR",
-                nextNode: 40
+                nextNode: 26
             },
             2: {
                 text: "Positive Zika rRT-PCR on either serum or urine",
@@ -1081,8 +1107,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -1110,8 +1136,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -1136,8 +1162,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input);
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function() {
             return this.answers;
