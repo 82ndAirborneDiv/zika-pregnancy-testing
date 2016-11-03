@@ -745,8 +745,8 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        decideChoice: function(qNum, input){
-            return nodes.decisionLogic.getRadioAnswer(qNum, input)
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
         getValuesForAnswers: function(){
             return this.answers;
