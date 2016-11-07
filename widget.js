@@ -93,10 +93,6 @@
          // HTML INLINE SCRIPT CALL (NOT SUGGESTED AS BEST PRACTICE - EVENT BINDING PREFERRED)
          <a href="#" onclick="cdcMetrics.trackEvent('Your-Custom-Event','Your-Custom-Event-Data')">Your Link</a>
          */
-        cdcCommon.loadScript(function(){
-            '&lt;script type="text/javascript" src="zika_clinical_webtool.js"&gt;&lt;/script&lt;';
-
-        })
     };
     window.CDC.Widget.syndicatedLoad = function (cdcCommon) {
 
