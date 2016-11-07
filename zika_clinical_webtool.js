@@ -50,7 +50,7 @@ var back = $("#back");
 var restart = $("#restart");
 var nextButton = $("#next");
 
-var debug = true;
+var debug = false;
 var currentQuestionNumber;
 
 //NodeHistory object stores the users activity: node and answer, if applicable
@@ -193,8 +193,8 @@ function loadEndPoint(number){
     if(nodeHistory.length > 0 && getPreviousNode().node === number){
         nodeHistory.pop();
     }
-    cdcMetrics.trackEvent("Endpoint Reached", number);
     var nodeObject = getNode(number);
+    cdcMetrics.trackEvent("Endpoint Reached", nodeObject.endpointName);
 
     if(debug){
         var nodeNumText = "Screen number: " +number;
