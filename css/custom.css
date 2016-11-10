@@ -28,7 +28,6 @@ a {
 @media only screen and (max-width: 350px) {
 
 	.zika-title {font-size:12px;}
-	.zika-title {font-size:12px;}
 	.scrollable{height: 300px;}
 }
 
@@ -43,8 +42,7 @@ a {
 	border-color: #075290;
 }
 .scrollable{
-	min-height: 375px;
-	max-height: 450px;
+	height: 375px;
 	overflow:auto;
 }
 .widget-wrapper{
