@@ -103,6 +103,9 @@ function loadNode(nodeName){
         case NodeType.ENDPOINT:
             loadEndPoint(nodeName);
             break;
+        case NodeType.APP_INFO:
+            loadAppInfo(nodeName);
+            break;
     }
 }
 
@@ -184,7 +187,6 @@ function loadQuestion(nextQuestionNumber){
 
     $('.panel-body').focus();
 
-    resizeWidget();
 }
 
 function loadEndPoint(number){
@@ -205,7 +207,20 @@ function loadEndPoint(number){
     endpointDisclaimer.load("html/disclaimers.html #allResults")
 
     endpointContent.show();
-    resizeWidget();
+    $('.panel-body').focus();
+}
+
+function loadAppInfo(number) {
+    introPanel.hide();
+    mainPanel.show();
+    clearMainPanel();
+    var nodeObject = getNode(number);
+    if(number === 46){
+        $("#zika-app-info").load("/TemplatePackage/contrib/ssi/cdc-privacy-policy-eng.html");
+    } else {
+        $("#zika-app-info").append($('<div>').load("html/endpoints.html #" + nodeObject.endpointName));
+    }
+    $("#zika-app-info").show();
     $('.panel-body').focus();
 }
 
@@ -223,13 +238,15 @@ function clearMainPanel(){
     questionAnswers.hide();
     $("#question-footnotes").html("");
 
+    //reset app info area
+    $("#zika-app-info").html("");
+    $("#zika-app-info").hide();
+
     //hide next button
     nextButton.hide();
 
     //reset alert area
     alertArea.html("");
-
-    resizeWidget();
 }
 
 //populate singleSelect list
@@ -296,7 +313,6 @@ function noSelectionAlert(){
 
     //focus on close alert button when noSelectionAlert is displayed
     $('#close-alert').focus();
-    resizeWidget();
 }
 function triggerRestart(){
     nodeHistory = [];
@@ -398,7 +414,8 @@ function trackAnswer(answer){
 }
 var NodeType = {
     QUESTION: "question",
-    ENDPOINT: "endpoint"
+    ENDPOINT: "endpoint",
+    APP_INFO: "app info"
 }
 var AnswerType = {
     SINGLESELECT: "singleSelect",
@@ -1012,7 +1029,10 @@ var nodes = {
             return this.answers;
         }
     },
-    37 :'unused',
+    37 : {
+        nodeType: NodeType.APP_INFO,
+        endpointName: "share"
+    },
     38:{
         nodeType: NodeType.ENDPOINT,
         endpointName: "prenatalClinicalManagementPresumptiveRecentZIKVInfectionOrFlavivirusNOS"
@@ -1147,7 +1167,10 @@ var nodes = {
         nodeType: NodeType.ENDPOINT,
         endpointName: "IngridsPaper"
     },
-    46: "unused",
+    46: {
+        nodeType: NodeType.APP_INFO,
+        endpointName: "privacy"
+    },
     47: {
         text: "<div><strong>Interpretation of test result:</strong> Test results suggest recent maternal flavivirus infection, but the specific virus cannot be identified.</div></br><div>Is the patient still pregnant?</div>",
         answers: {

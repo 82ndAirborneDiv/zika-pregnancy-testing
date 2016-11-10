@@ -67,7 +67,7 @@
         cdcCommon.log('Initializing Common Framework Metrics...');
 
         // SET YOUR EMBED CODE HERE (INT PRE FORMAT [&gt;] instead of [>] etc.)
-        cdcCommon.events.setEmbedCode('&lt;div data-cdc-widget="zikaRiskAssessmentTool  "&gt;&lt;/div&gt;\n&lt;script src="https://tools.cdc.gov/1M1B"&gt;&lt;/script&gt;');
+        cdcCommon.events.setEmbedCode('&lt;div data-cdc-widget="zikaAndPregnancy"&gt;&lt;/div&gt;\n&lt;script src="https://tools.cdc.gov/1M1B"&gt;&lt;/script&gt;');
 
         // INIT METRICS
         cdcMetrics.init({

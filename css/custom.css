@@ -25,13 +25,9 @@ a {
 	text-decoration: underline;
 }
 
-.app-panel-content{
-	min-height: 350px;
-	max-height: 640px;
-}
-
 @media only screen and (max-width: 350px) {
 
+	.zika-title {font-size:12px;}
 	.zika-title {font-size:12px;}
 	.scrollable{height: 300px;}
 }
