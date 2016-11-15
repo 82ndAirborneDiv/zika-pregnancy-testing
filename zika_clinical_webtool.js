@@ -184,9 +184,11 @@ function loadQuestion(nextQuestionNumber){
             });
             break;
     }
+    if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
 
-    $('.panel-body').focus();
-
+    } else {
+        $('.panel-body').focus();
+    }
 }
 
 function loadEndPoint(number){
@@ -207,7 +209,12 @@ function loadEndPoint(number){
     endpointDisclaimer.load("html/disclaimers.html #allResults")
 
     endpointContent.show();
-    $('.panel-body').focus();
+
+    if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
+
+    } else {
+        $('.panel-body').focus();
+    }
 }
 
 function loadAppInfo(number) {
@@ -221,10 +228,16 @@ function loadAppInfo(number) {
         $("#zika-app-info").append($('<div>').load("html/endpoints.html #" + nodeObject.endpointName));
     }
     $("#zika-app-info").show();
-    $('.panel-body').focus();
+
+    if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
+
+    } else {
+        $('.panel-body').focus();
+    }
 }
 
 function clearMainPanel(){
+    $('.scrollable').animate({ scrollTop: 0 }, 0);
     //endpoint
     endpointText.html("");
     endpointAdditionalNotes.html("");
@@ -307,21 +320,31 @@ function noSelectionAlert(){
     alertArea.html(alert);
 
     //return focus to Next button when close alert button is clicked
-    $('#noSelectionAlert').on('closed.bs.alert', function(){
-        nextButton.focus();
-    });
+    if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
 
-    //focus on close alert button when noSelectionAlert is displayed
-    $('#close-alert').focus();
+    } else {
+
+        $('#noSelectionAlert').on('closed.bs.alert', function () {
+
+            $('#next').focus();
+        });
+
+        //focus on close alert button when noSelectionAlert is displayed
+        $('#close-alert').focus();
+    }
+    $('.scrollable').animate({ scrollTop: 0 }, 0);
 }
 function triggerRestart(){
     nodeHistory = [];
     clearMainPanel();
-    introPanel.show().focus();
+    introPanel.show();
     mainPanel.hide();
-    $('.panel-body').focus();
-
     $('.scrollable').animate({ scrollTop: 0 }, 0);
+    if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
+
+    } else {
+        $('.panel-body').focus();
+    }
 }
 
 function nextButtonClicked(){

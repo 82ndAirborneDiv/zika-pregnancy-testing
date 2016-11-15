@@ -28,7 +28,6 @@ a {
 @media only screen and (max-width: 350px) {
 
 	.zika-title {font-size:12px;}
-	.scrollable{height: 300px;}
 }
 
 .panel-primary>.panel-heading {
@@ -42,7 +41,7 @@ a {
 	border-color: #075290;
 }
 .scrollable{
-	height: 375px;
+	height: 350px;
 	overflow:auto;
 }
 .widget-wrapper{
@@ -67,4 +66,8 @@ a {
 
 #zika-app-endpoint-disclaimer {
 	margin-top: 1em;
+}
+
+html, body {
+	-webkit-overflow-scrolling: touch;
 }
