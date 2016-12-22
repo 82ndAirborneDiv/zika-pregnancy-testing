@@ -224,6 +224,14 @@ function loadAppInfo(number) {
     var nodeObject = getNode(number);
     if(number === 46){
         $("#zika-app-info").load("/TemplatePackage/contrib/ssi/cdc-privacy-policy-eng.html");
+    } else if (number === 37){
+        $("#zika-app-info").html(
+            '<h4>Embed code</h4>'
+            +'Copy the code below and paste it into your webpage.<br/><br/>'
+            +'<div contenteditable="true">'
+            +cdcCommon.runtime.embedCode
+            +'</div>'
+        );
     } else {
         $("#zika-app-info").append($('<div>').load("html/endpoints.html #" + nodeObject.endpointName));
     }
@@ -1054,7 +1062,7 @@ var nodes = {
     },
     37 : {
         nodeType: NodeType.APP_INFO,
-        endpointName: "share"
+        endpointName: "embed"
     },
     38:{
         nodeType: NodeType.ENDPOINT,
