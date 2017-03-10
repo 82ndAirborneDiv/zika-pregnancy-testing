@@ -187,7 +187,7 @@ function loadQuestion(nextQuestionNumber){
     if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
 
     } else {
-        $('.panel-body').focus();
+        $('.scrollable').focus();
     }
 }
 
@@ -213,7 +213,7 @@ function loadEndPoint(number){
     if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
 
     } else {
-        $('.panel-body').focus();
+        $('.scrollable').focus();
     }
 }
 
@@ -240,7 +240,7 @@ function loadAppInfo(number) {
     if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
 
     } else {
-        $('.panel-body').focus();
+        $('.scrollable').focus();
     }
 }
 
@@ -351,7 +351,7 @@ function triggerRestart(){
     if(navigator.userAgent.match(/iPhone|iPad|iPod/i)){
 
     } else {
-        $('.panel-body').focus();
+        $('.scrollable').focus();
     }
 }
 
@@ -499,10 +499,18 @@ var nodes = {
                 nextNode: 2
             },
             7:{
-                text: "Local health department official",
+                text: "Territorial health department official",
                 nextNode: 2
             },
             8:{
+                text: "City health department official",
+                nextNode: 2
+            },
+            9:{
+                text: "Local health department official",
+                nextNode: 2
+            },
+            10:{
                 text: "Other",
                 nextNode: 2
             }
@@ -574,9 +582,7 @@ var nodes = {
         }
     },
     4: {
-        text: "<div>Does your pregnant patient live in "+
-        "<a target='_blank' href='https://www.cdc.gov/zika/geo/index.html'>an area with active Zika virus "+
-        "transmission</a>*?</div>",
+        text: "Does your pregnant patient live in an area (domestic or international) with a risk of Zika?",
         answers: {
             1: {
                 text: "Yes",
@@ -590,7 +596,8 @@ var nodes = {
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
         footnotes:{
-            text: '*Area of active Zika transmission indicates local mosquito-borne transmission has been reported.'
+            text: "<div>*To see if your patient lives in an area with a risk of Zika, check this <a target='_blank' href='https://wwwnc.cdc.gov/travel/page/world-map-areas-with-zika'>map</a>.<br/>"+
+            "To see if your patient lives in an area of the United States with a risk of Zika, check <a target='_blank' href='https://www.cdc.gov/zika/intheus/maps-zika-us.html'>CDC\'s webpage</a></div>"
         },
         decideChoice: function(nodeHistoryObject){
             return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
@@ -600,32 +607,33 @@ var nodes = {
         }
     },
     5: {
-        text: "<div id='q5'>Has your pregnant patient previously lived in or traveled to " +
-        "<a target='_blank' href='https://www.cdc.gov/zika/geo/index.html'>" +
-        "an area with active Zika virus transmission</a> "
-        +"during pregnancy or the periconceptional period?<br />"
+        text: "<div id='q5'>Has your pregnant patient lived in or traveled to "
+        +"one of the areas listed below "
+        +"during pregnancy or periconceptional period?<br />"
         +"</div>",
         answers: {
             1:{
-                text: "Yes",
+                text: '<div>An area with a risk of Zika and a current Zika Travel Notice <a target="_blank" '
+                +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
+                +'(listed on this Zika travel webpage in the box to the left)</a></div>',
                 nextNode: 15
             },
-            2: {
-                text: "No",
+            2:{
+                text: 'An area with a risk of Zika but no Zika Travel Notice<a target="_blank" '
+                +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
+                +'(listed on this Zika travel webpage in the box to the right)</a></div>',
+                nextNode: 48
+            },
+            3: {
+                text: "Neither",
                 nextNode: 6
             }
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
         footnotes:{
-            text: '<div>Please note:<br/><ul>' +
-            '<li>Many people move fluidly and regularly between areas with and without active Zika transmission ' +
-            'to live, work, attend school, socialize, and seek medical care. Those who live in areas without active ' +
-            'Zika transmission may not regard these activities as “travel.” This context should be considered when ' +
-            'asking women about travel history and potential exposure to Zika.</li>' +
-            '<li>Periconceptional period is defined as eight weeks before conception or six weeks before last ' +
-            'menstrual period.</li>' +
-            '</ul></div>'
+            text: '<div>*Periconceptional period is defined as eight weeks before conception or six weeks before last ' +
+            'menstrual period.</div>'
         },
         decideChoice: function(nodeHistoryObject){
             return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
@@ -635,16 +643,23 @@ var nodes = {
         }
     },
     6: {
-        text: "Has your pregnant patient had sex (vaginal, anal, or oral sex) without a condom with a partner(s) who " +
-        "lives in or has traveled to "
-        +"<a target='_blank' href='http://www.cdc.gov/zika/geo/index.html'>an area with active Zika virus transmission</a>?",
+        text: "Has your pregnant patient had sex (vaginal, anal, or oral sex) without a condom with a partner who " +
+        "lives in or has traveled to one of the areas listed below?",
         answers: {
             1: {
-                text: "Yes",
+                text: '<div>An area with a risk of Zika in the United States OR in an international area with a current Zika Travel Notice <a target="_blank" '
+                +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
+                +'(listed on this Zika travel webpage in the box to the left)</a></div>',
                 nextNode: 7
             },
-            2: {
-                text: "No",
+            2:{
+                text: 'An area with a risk of Zika but no current Zika Travel Notice <a target="_blank" '
+                +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
+                +'(listed on this Zika travel webpage in the box to the right)</a></div>',
+                nextNode: 48
+            },
+            3: {
+                text: "Neither",
                 nextNode: 14
             }
         },
@@ -652,10 +667,11 @@ var nodes = {
         answerType: AnswerType.RADIO,
         footnotes:{
             text: 'Please note:<br/><div><ul>'
-            +'<li>Area of active Zika virus transmission indicates local mosquito-borne transmission has been reported.</li>'
             +'<li>This question refers to sexual activity without a condom at any time during pregnancy or during '
             +'the periconceptional period, which is defined as eight weeks before conception or six weeks before '
             +'last menstrual period.</li>'
+            +'<li>To see areas of the United States with a risk of Zika, check '
+            +'<a target="_blank" href="https://www.cdc.gov/zika/intheus/maps-zika-us.html">CDC\'s webpage</a>.</li>'
             +'</ul></div>'
         },
         decideChoice: function(nodeHistoryObject){
@@ -758,8 +774,7 @@ var nodes = {
         endpointName: "lowRiskOfExposure"
     },
     15: {
-        text: "You indicated that your patient has travelled to a Zika affected area. Was this a single trip to a " +
-        "Zika affected area(s)?",
+        text: "You indicated that your patient has traveled to a Zika affected area. Was this a single trip?",
         answers: {
             1: {
                 text: "Yes",
@@ -928,7 +943,7 @@ var nodes = {
         }
     },
     25: {
-        text: "<div><strong>Interpretation of test result:</strong> Test results suggest recent maternal Zika virus infection. </div></br><strong>Action needed: Zika virus disease is a nationally notifiable condition. Your patient meets criteria for reporting to the <a target='_blank' href='http://www.cdc.gov/zika/hc-providers/registry.html'>US Zika Pregnancy Registry</a>. </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal, local, or territorial health department. <ul> <li>If you are a healthcare provider or health department and you have questions about the registry, please <a href='mailto:ZikaMCH@cdc.gov'>email</a> or call 770-488-7100 and ask for the Zika Pregnancy Hotline.</li></ul></div></br><div>Is the patient still pregnant?</div>",
+        text: "<div><strong>Interpretation of test result:</strong> Test results suggest recent maternal Zika virus infection. </div></br><strong>Action needed: Zika virus infection and disease are nationally notifiable conditions. Your patient meets criteria for reporting to the <a target='_blank' href='http://www.cdc.gov/zika/hc-providers/registry.html'>US Zika Pregnancy Registry</a> and to the National Notifiable Disease Surveillance System (NNDSS). </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal, local, or territorial health department. <ul> <li>If you are a healthcare provider or health department and you have questions about the registry, please <a href='mailto:ZikaMCH@cdc.gov'>email</a> or call 770-488-7100 and ask for the Zika Pregnancy Hotline.</li></ul></div></br><div>Is the patient still pregnant?</div>",
         answers: {
             1: {
                 text: "Yes",
@@ -1222,6 +1237,32 @@ var nodes = {
         getValuesForAnswers: function() {
             return this.answers;
         }
+    },
+    48: {
+        text: "Does your pregnant patient have one or more symptoms consistent with Zika virus disease: fever, rash, " +
+        "arthralgia, or conjunctivitis?",
+        answers: {
+            1: {
+                text: "Yes",
+                nextNode: 18
+            },
+            2: {
+                text: "No",
+                nextNode: 49
+            }
+        },
+        nodeType: NodeType.QUESTION,
+        answerType: AnswerType.RADIO,
+        decideChoice: function(nodeHistoryObject){
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
+        },
+        getValuesForAnswers: function() {
+            return this.answers;
+        }
+    },
+    49: {
+        nodeType: NodeType.ENDPOINT,
+        endpointName: "testingNotRoutinelyRecommended"
     }
 }
 
