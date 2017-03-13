@@ -615,13 +615,13 @@ var nodes = {
             1:{
                 text: '<div>An area with a risk of Zika and a current Zika Travel Notice <a target="_blank" '
                 +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
-                +'(listed on this Zika travel webpage in the box to the left)</a></div>',
+                +'(listed on this Zika travel webpage in the box titled Zika Travel Notices)</a></div>',
                 nextNode: 15
             },
             2:{
                 text: 'An area with a risk of Zika but no Zika Travel Notice <a target="_blank" '
                 +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
-                +'(listed on this Zika travel webpage in the box to the right)</a></div>',
+                +'(listed on this Zika travel webpage in the box titled Other Areas with Zika Risk)</a></div>',
                 nextNode: 48
             },
             3: {
@@ -632,8 +632,14 @@ var nodes = {
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
         footnotes:{
-            text: '<div>*Periconceptional period is defined as eight weeks before conception or six weeks before last ' +
-            'menstrual period.</div>'
+            text: '<div>*Please note:'
+            +'<ul>'
+            +'<li>Many people move fluidly and regularly between areas with and without active Zika transmission to '
+            +'live, work, attend school, socialize, and seek medical care. Those who live in areas without active Zika '
+            +'transmission may not regard these activities as "travel." This context should be considered when asking '
+            +'women about travel history and potential exposure to Zika.</li>'
+            +'<li>Periconceptional period is defined as eight weeks before conception or six weeks before last '
+            +'menstrual period.</li></ul></div>'
         },
         decideChoice: function(nodeHistoryObject){
             return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
@@ -649,13 +655,13 @@ var nodes = {
             1: {
                 text: '<div>An area with a risk of Zika in the United States OR in an international area with a current Zika Travel Notice <a target="_blank" '
                 +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
-                +'(listed on this Zika travel webpage in the box to the left)</a></div>',
+                +'(listed on this Zika travel webpage in the box titled Zika Travel Notices)</a></div>',
                 nextNode: 7
             },
             2:{
                 text: 'An area with a risk of Zika but no current Zika Travel Notice <a target="_blank" '
                 +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
-                +'(listed on this Zika travel webpage in the box to the right)</a></div>',
+                +'(listed on this Zika travel webpage in the box titled Other Areas with Zika Risk)</a></div>',
                 nextNode: 48
             },
             3: {
