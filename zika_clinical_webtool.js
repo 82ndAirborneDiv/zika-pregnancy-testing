@@ -597,7 +597,7 @@ var nodes = {
         answerType: AnswerType.RADIO,
         footnotes:{
             text: "<div>*To see if your patient lives in an area with a risk of Zika, check this <a target='_blank' href='https://wwwnc.cdc.gov/travel/page/world-map-areas-with-zika'>map</a>.<br/>"+
-            "*To see if your patient lives in an area of the United States with a risk of Zika, check <a target='_blank' href='https://www.cdc.gov/zika/intheus/maps-zika-us.html'>CDC\'s webpage</a></div>"
+            "</div>"
         },
         decideChoice: function(nodeHistoryObject){
             return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
