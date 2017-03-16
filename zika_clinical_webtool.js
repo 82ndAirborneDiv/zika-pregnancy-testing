@@ -677,7 +677,7 @@ var nodes = {
             +'the periconceptional period, which is defined as eight weeks before conception or six weeks before '
             +'last menstrual period.</li>'
             +'<li>To see if your patient lives in an area with a risk of Zika, check this '
-            +'<a target="_blank" href="https://www.cdc.gov/zika/intheus/maps-zika-us.html">map</a>.</li>'
+            +'<a target="_blank" href="https://wwwnc.cdc.gov/travel/page/world-map-areas-with-zika">map</a>.</li>'
             +'</ul></div>'
         },
         decideChoice: function(nodeHistoryObject){
