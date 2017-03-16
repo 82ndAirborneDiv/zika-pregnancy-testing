@@ -676,8 +676,8 @@ var nodes = {
             +'<li>This question refers to sexual activity without a condom at any time during pregnancy or during '
             +'the periconceptional period, which is defined as eight weeks before conception or six weeks before '
             +'last menstrual period.</li>'
-            +'<li>To see areas of the United States with a risk of Zika, check '
-            +'<a target="_blank" href="https://www.cdc.gov/zika/intheus/maps-zika-us.html">CDC\'s webpage</a>.</li>'
+            +'<li>To see if your patient lives in an area with a risk of Zika, check this '
+            +'<a target="_blank" href="https://www.cdc.gov/zika/intheus/maps-zika-us.html">map</a>.</li>'
             +'</ul></div>'
         },
         decideChoice: function(nodeHistoryObject){
