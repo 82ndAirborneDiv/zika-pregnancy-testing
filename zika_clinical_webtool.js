@@ -50,7 +50,7 @@ var back = $("#back");
 var restart = $("#restart");
 var nextButton = $("#next");
 
-var debug = true;
+var debug = false;
 var currentQuestionNumber;
 
 //NodeHistory object stores the users activity: node and answer, if applicable
