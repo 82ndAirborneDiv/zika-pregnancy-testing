@@ -50,7 +50,7 @@ var back = $("#back");
 var restart = $("#restart");
 var nextButton = $("#next");
 
-var debug = false;
+var debug = true;
 var currentQuestionNumber;
 
 //NodeHistory object stores the users activity: node and answer, if applicable
@@ -613,19 +613,25 @@ var nodes = {
         +"</div>",
         answers: {
             1:{
-                text: '<div>An area with a risk of Zika and a current Zika Travel Notice <a target="_blank" '
+                text: '<div>An international area with a current Zika Travel Notice <a target="_blank" '
                 +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
-                +'(listed on this Zika travel webpage in the box titled Zika Travel Notices)</a></div>',
+                +'(listed on this Zika travel webpage in the box titled Zika Travel Notices).</a></div>',
                 nextNode: 15
             },
             2:{
-                text: 'An area with a risk of Zika but no Zika Travel Notice <a target="_blank" '
+                text: 'An area with a risk of Zika in the United States (outlined in purple on <a target="_blank" '
                 +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
-                +'(listed on this Zika travel webpage in the box titled Other Areas with Zika Risk)</a></div>',
+                +'this map</a>).</div>',
+                nextNode: 15
+            },
+            3:{
+                text: 'Other areas with a risk of Zika <a target="_blank" '
+                +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
+                +'(listed on this Zika travel webpage in the box titled Other Areas with Zika Risk).</a></div>',
                 nextNode: 48
             },
-            3: {
-                text: "Neither",
+            4: {
+                text: "None of the above",
                 nextNode: 6
             }
         },
@@ -653,19 +659,25 @@ var nodes = {
         "lives in or has traveled to one of the areas listed below?",
         answers: {
             1: {
-                text: '<div>An area with a risk of Zika in the United States OR in an international area with a current Zika Travel Notice <a target="_blank" '
+                text: '<div>An international area with a current Zika Travel Notice <a target="_blank" '
                 +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
                 +'(listed on this Zika travel webpage in the box titled Zika Travel Notices)</a></div>',
                 nextNode: 7
             },
-            2:{
-                text: 'An area with a risk of Zika but no current Zika Travel Notice <a target="_blank" '
+            2: {
+                text: 'An area with a risk of Zika in the United States (outlined in purple on <a target="_blank" '
+                +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
+                +'this map</a>).</div>',
+                nextNode: 7
+            },
+            3:{
+                text: 'Other areas with a risk of Zika <a target="_blank" '
                 +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
                 +'(listed on this Zika travel webpage in the box titled Other Areas with Zika Risk)</a></div>',
                 nextNode: 48
             },
-            3: {
-                text: "Neither",
+            4: {
+                text: "None of the above",
                 nextNode: 14
             }
         },
@@ -896,10 +908,6 @@ var nodes = {
     21: {
         nodeType: NodeType.ENDPOINT,
         endpointName: "prenatalClinicalManagement3rdTrimester"
-    },
-    22: {
-        nodeType: NodeType.ENDPOINT,
-        endpointName: "nextStepsReturned2to12WeeksLaterForZikaIgMTest"
     },
     23: {
         text: "Choose test performed:",
