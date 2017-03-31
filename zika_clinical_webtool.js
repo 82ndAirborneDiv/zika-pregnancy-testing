@@ -607,7 +607,7 @@ var nodes = {
         }
     },
     5: {
-        text: "<div id='q5'>Has your pregnant patient lived in or traveled to "
+        text: "<div id='q5'>Has your pregnant patient previously lived in or traveled to "
         +"one of the areas listed below "
         +"during pregnancy or periconceptional period?<br />"
         +"</div>",
