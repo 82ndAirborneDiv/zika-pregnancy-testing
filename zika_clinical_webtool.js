@@ -470,6 +470,64 @@ var nodes = {
             trackAnswer(answerObject.text);
             return answerObject;
         },
+        getAnswerForNodeByName: function (nodeName) {
+            console.log("getAnswerForNodeByName(" +nodeName +")");
+            var results = null;
+            for(var i = 0; i < nodeHistory.length; i++) {
+                var currentAnswer = nodeHistory[i];
+                console.log("CurrentAnswer.node - " +currentAnswer.node +" === nodeName - " +nodeName +" : " +(currentAnswer.node === nodeName));
+                if(currentAnswer.node === nodeName) {
+                    results = currentAnswer;
+                }
+            }
+
+            if(results === null) {
+                console.log("nodeName " +nodeName +" node found. Restart.");
+                triggerRestart();
+            } else {
+                console.log("nodeName " +nodeName +" found, return results");
+                return results;
+            }
+        },
+        getNextNodeFromTestResults: function () {
+            var answerTo23 = nodes.decisionLogic.getAnswerForNodeByName('23').answer;
+            var answerToZikaNAT = nodes.decisionLogic.getAnswerForNodeByName('24').answer;
+            var answerToZikaIgM = null;
+
+
+            if (answerToZikaNAT === "1") {
+                if (answerTo23 === "1") {
+                    return {nextNode: 25};
+                } else {
+                    answerToZikaIgM = nodes.decisionLogic.getAnswerForNodeByName('33').answer;
+                    if (answerToZikaIgM === "1") {
+                        return {nextNode: 25};
+                    } else {
+                        return {nextNode: 35};
+                    }
+                }
+            } else {
+                if (answerTo23 === "1") {
+                    return {nextNode: 32};
+                } else {
+                    answerToZikaIgM = nodes.decisionLogic.getAnswerForNodeByName('33').answer;
+                    if (answerToZikaIgM === "1") {
+                        return {nextNode: 26};
+                    } else {
+                        if (answerTo23 === "2") {
+                            return {nextNode: 50};
+                        }
+                        var answerToDengueIgM = nodes.decisionLogic.getAnswerForNodeByName('39').answer;
+                        if(answerToDengueIgM === "1") {
+                            return {nextNode: 40};
+                        } else {
+                            return {nextNode: 34};
+                        }
+
+                    }
+                }
+            }
+        }
     },
     1: {
         text: "Select your profession:",
@@ -558,19 +616,9 @@ var nodes = {
                 nextNode: 4
             },
             2: {
-                text: "Information to understand how to interpret INITIAL test results and manage clinical care.",
+                text: "Information to understand how to interpret test results and manage clinical care.",
                 nextNode: 23
             },
-            3: {
-                text: "Information to understand how to interpret SUBSEQUENT test results that were completed to " +
-                "confirm or rule out an infection.",
-                nextNode: 41
-            },
-            4: {
-                text: "Next steps for a patient who already received a negative rRT-PCR result within 2 weeks of " +
-                "possible exposure and returned 2-12 weeks later for a Zika IgM test.",
-                nextNode: 13
-            }
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
@@ -723,14 +771,10 @@ var nodes = {
         text: "How long ago did symptom(s) begin?",
         answers:{
             1:{
-                text: "<2 weeks",
-                nextNode: 9
-            },
-            2:{
                 text: "2-12 weeks",
                 nextNode: 10
             },
-            3:{
+            2:{
                 text: ">12 weeks",
                 nextNode: 11
             }
@@ -744,10 +788,6 @@ var nodes = {
             return this.answers;
         }
     },
-    9: {
-        nodeType: NodeType.ENDPOINT,
-        endpointName: "armAInitialrRTPCR"
-    },
     10: {
         nodeType: NodeType.ENDPOINT,
         endpointName: "zikaAndDengueIgMTests",
@@ -760,14 +800,10 @@ var nodes = {
         text: "How long ago was possible exposure (travel or unprotected sex)?",
         answers: {
             1: {
-                text: "<2 weeks",
-                nextNode: 9
-            },
-            2: {
                 text: "2-12 weeks",
                 nextNode: 13
             },
-            3: {
+            2: {
                 text: ">12 weeks",
                 nextNode: 11
             }
@@ -857,14 +893,10 @@ var nodes = {
         text: "How long ago did symptom(s) begin?",
         answers: {
             1: {
-                text: "<2 weeks",
-                nextNode: 9
-            },
-            2: {
                 text: "2-12 weeks",
                 nextNode: 10
             },
-            3: {
+            2: {
                 text: ">12 weeks",
                 nextNode: 11
             }
@@ -879,15 +911,15 @@ var nodes = {
         }
     },
     19: {
-        text: "Is the patient in her 1st or 2nd trimester?",
+        text: "Has the patient already been tested in this trimester?",
         answers: {
             1: {
                 text: "Yes",
-                nextNode: 13
+                nextNode: 20
             },
             2: {
                 text: "No",
-                nextNode: 20
+                nextNode: 13
             }
         },
         nodeType: NodeType.QUESTION,
@@ -908,19 +940,23 @@ var nodes = {
         endpointName: "prenatalClinicalManagement3rdTrimester"
     },
     23: {
-        text: "Choose test performed:",
+        text: "Select results you have received",
         answers: {
             1: {
-                text: "Zika virus rRT-PCR on serum and urine",
-                nextNode: 24
+                text: "Zika virus NAT (Still awaiting IgM results)",
+                nextNode: '24'
             },
             2: {
-                text: "Zika virus IgM on serum",
-                nextNode: 33
+                text: "Zika virus NAT and Zika virus IgM",
+                nextNode: '24'
             },
             3:{
-                text: "Zika virus IgM and dengue IgM on serum",
-                nextNode: 39
+                text: "Zika virus NAT, Zika virus IgM and dengue IgM",
+                nextNode: '24'
+            },
+            4: {
+                text: "PRNT",
+                nextNode: 44
             }
 
         },
@@ -934,7 +970,7 @@ var nodes = {
         }
     },
     24: {
-        text: "What were the results of the Zika virus rRT-PCR on serum or urine?",
+        text: "What were the results of the Zika virus NAT on serum or urine?",
         answers: {
             1: {
                 text: "Positive on either serum or urine",
@@ -942,13 +978,20 @@ var nodes = {
             },
             2: {
                 text: "Negative on both serum AND urine",
-                nextNode: 31
+                nextNode: 32
             }
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
         decideChoice: function(nodeHistoryObject){
-            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
+            var answerObject = this.answers["" +nodeHistoryObject.answer];
+            trackAnswer(answerObject.text);
+            var answerTo23 = nodes.decisionLogic.getAnswerForNodeByName("23");
+            if(answerTo23.answer != "1") {
+                return {nextNode: '33'};
+            } else {
+                return nodes.decisionLogic.getNextNodeFromTestResults();
+            }
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -1012,47 +1055,36 @@ var nodes = {
         nodeType: NodeType.ENDPOINT,
         endpointName: "postnatalClinicalManagementRecentZIKVInfectionOrFlavivirusNOSPregnancyLoss"
     },
-    31:{
-        text: "Which of these best describes your patient?",
-        answers:{
-            1:{
-                text: "Symptomatic and seeking care within 2 weeks of symptom onset",
-                nextNode: 10
-            },
-            2:{
-                text: "Asymptomatic and <strong>not</strong> living in an area with active Zika virus transmission",
-                nextNode: 32
-            }
-        },
-        nodeType: NodeType.QUESTION,
-        answerType: AnswerType.RADIO,
-        decideChoice: function(nodeHistoryObject){
-            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
-        },
-        getValuesForAnswers: function() {
-            return this.answers;
-        }
-    },
     32:{
         nodeType: NodeType.ENDPOINT,
-        endpointName: "igMTestReturn2to12Weeks"
+        endpointName: "awaitAdditionalTestResults"
     },
-    33:{
-        text: "What were the results of the IgM tests?",
+    33: {
+        text: "What were the results of the Zika IgM test?",
         answers:{
             1:{
-                text: "Zika IgM negative",
-                nextNode: 34
+                text: "Positive (or equivocal), presumptive, or possible",
+                nextNode: 25
             },
             2:{
-                text: "Zika IgM positive or equivocal",
+                text: "Negative",
                 nextNode: 35
             }
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
         decideChoice: function(nodeHistoryObject){
-            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
+            var answerObject = this.answers["" +nodeHistoryObject.answer];
+            trackAnswer(answerObject.text);
+
+            //Check answer 23 to see if dengue result was received
+            var answerTo23 = nodes.decisionLogic.getAnswerForNodeByName("23").answer;
+
+            if(answerTo23 === "3") {
+                return {nextNode: '39'};
+            } else {
+                return nodes.decisionLogic.getNextNodeFromTestResults();
+            }
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -1063,8 +1095,54 @@ var nodes = {
         endpointName: "noEvidenceOfRecentZIKVInfection"
     },
     35:{
-        nodeType: NodeType.ENDPOINT,
-        endpointName: "armBReflexrRTPCR"
+        text: '<div id="armBReflexrRTPCR">'
+            +'<strong>Interpretation:</strong> Test results suggest recent maternal Zika virus infection. However, '
+            +'additional testing may be indicated. <br /><br />'
+            +'<strong>Action needed:</strong> Despited the specificity of NAT, false positive NAT results have been '
+            +'reported. In a pregnant woman with a positive NAT and a negative IgM result who is asymptomatic or >= 2 '
+            +'weeks from last exposure or symptom onset, confirm results by repeat NAT and IgM testing on a new serum '
+            +'sample. <br /><br />'
+            +' <strong>To order test:</strong> Healthcare and laboratory professionals are instructed to direct Zika '
+            +'virus testing requests to their local or state public health laboratory or to a commercial laboratory that '
+            +'performs Zika testing using a validated assay with demonstrated analytical and clinical performance. '
+            +'Healthcare and laboratory professionals should follow state or local public health department guidance on '
+            +'notification procedures for suspect cases of Zika virus infection. Visit '
+            +'<a target="_blank" href="http://www.cdc.gov/zika/laboratories/test-specimens-bodyfluids.html">'
+            +'CDC’s Collecting & Submitting Body Fluid Specimens for Zika Virus Testing</a> web page for guidance.'
+            +'<br /><br />'
+            +'<strong>Action needed: Zika virus infection and disease are nationally notifiable conditions. Your '
+            +'patient meets criteria for reporting to the '
+            +'<a target="_blank" href="http://www.cdc.gov/zika/hc-providers/registry.html">US Zika Pregnancy Registry</a>'
+            +' and to the National Notifiable Disease Surveillance System (NNDSS). </strong> Report information about '
+            +'pregnant women with laboratory evidence of Zika virus to your state, tribal, local, or territorial '
+            +'health department. '
+            +'<ul><li>If you are a healthcare provider or health department and you have questions about the registry, '
+            +'please <a href="mailto:ZikaMCH@cdc.gov">email</a> or call 770-488-7100 and ask for the Zika Pregnancy '
+            +'Hotline.</li></ul>'
+            +'Is the patient still pregnant?</div>',
+        answers: {
+            1: {
+                text: "Yes",
+                nextNode: 27
+            },
+            2: {
+                text: "No",
+                nextNode: 28
+            }
+        },
+        footnotes: {
+            text: "<strong>Follow-up action might be needed. Return to this tool for help interpreting the test "
+            +"results and determining if additional testing might be needed to confirm or rule out Zika virus "
+            +"infection.</strong>"
+        },
+        nodeType: NodeType.QUESTION,
+        answerType: AnswerType.RADIO,
+        decideChoice: function (nodeHistoryObject) {
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
+        },
+        getValuesForAnswers: function () {
+            return this.answers;
+        }
     },
     36: {
         text: "<div><strong>Interpretation of test result:</strong> Test results indicate presumptive recent Zika virus infection or recent maternal flavivirus infection, but the specific virus cannot be identified.<div><br/>Is the patient still pregnant?</div>",
@@ -1095,26 +1173,25 @@ var nodes = {
         nodeType: NodeType.ENDPOINT,
         endpointName: "prenatalClinicalManagementPresumptiveRecentZIKVInfectionOrFlavivirusNOS"
     },
-    39:{
-        text: "What were the results of the IgM tests?",
+    39: {
+        text: "What were the results of the dengue virus IgM test?",
         answers: {
             1: {
-                text: "Negative on both Zika IgM AND dengue IgM",
-                nextNode: 34
+                text: "Positive or equivocal",
+                nextNode: -1
             },
             2: {
-                text: "Zika IgM positive or equivocal and any result on dengue IgM",
-                nextNode: 35
-            },
-            3:{
-                text: "Dengue IgM positive or equivocal and Zika IgM negative",
-                nextNode: 40
+                text: "Negative",
+                nextNode: -1
             }
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
         decideChoice: function(nodeHistoryObject){
-            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
+            var answerObject = this.answers["" +nodeHistoryObject.answer];
+            trackAnswer(answerObject.text);
+
+            return nodes.decisionLogic.getNextNodeFromTestResults();
         },
         getValuesForAnswers: function() {
             return this.answers;
@@ -1123,74 +1200,6 @@ var nodes = {
     40:{
         nodeType: NodeType.ENDPOINT,
         endpointName: "prnt"
-    },
-    41:{
-        text: "Choose test performed:",
-        answers: {
-            1: {
-                text: "Zika virus IgM or dengue virus IgM (after previous negative rRT-PCR result)",
-                nextNode: 42
-            },
-            2: {
-                text: "Zika virus rRT-PCR on serum and urine (after previous positive Zika IgM result)",
-                nextNode: 43
-            },
-            3:{
-                text: "Plaque reduction neutralization test (PRNT)",
-                nextNode: 44
-            }
-
-        },
-        nodeType: NodeType.QUESTION,
-        answerType: AnswerType.RADIO,
-        decideChoice: function(nodeHistoryObject){
-            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
-        },
-        getValuesForAnswers: function() {
-            return this.answers;
-        }
-    },
-    42:{
-        text: "What were the results of the IgM tests?",
-        answers: {
-            1: {
-                text: "Negative on both Zika IgM AND dengue IgM (if both were performed)",
-                nextNode: 34
-            },
-            2: {
-                text: "Zika IgM or dengue IgM positive or equivocal",
-                nextNode: 26
-            }
-        },
-        nodeType: NodeType.QUESTION,
-        answerType: AnswerType.RADIO,
-        decideChoice: function(nodeHistoryObject){
-            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
-        },
-        getValuesForAnswers: function() {
-            return this.answers;
-        }
-    },
-    43:{
-        text: "What were the results of the reflex rRT-PCR?",
-        answers: {
-            1: {
-                text: "Negative Zika rRT-PCR",
-                nextNode: 26
-            },
-            2: {
-                text: "Positive Zika rRT-PCR on either serum or urine",
-                nextNode: 25
-            }
-        },
-        nodeType: NodeType.QUESTION,
-        answerType: AnswerType.RADIO,
-        decideChoice: function(nodeHistoryObject){
-            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
-        },
-        getValuesForAnswers: function() {
-            return this.answers;
-        }
     },
     44:{
         text: "What were the results of the PRNT tests?",
@@ -1275,6 +1284,10 @@ var nodes = {
     49: {
         nodeType: NodeType.ENDPOINT,
         endpointName: "testingNotRoutinelyRecommended"
+    },
+    50: {
+        nodeType: NodeType.ENDPOINT,
+        endpointName: "noEvidenceOfRecentZikaVirusInfection"
     }
 }
 
