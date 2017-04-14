@@ -471,21 +471,17 @@ var nodes = {
             return answerObject;
         },
         getAnswerForNodeByName: function (nodeName) {
-            console.log("getAnswerForNodeByName(" +nodeName +")");
             var results = null;
             for(var i = 0; i < nodeHistory.length; i++) {
                 var currentAnswer = nodeHistory[i];
-                console.log("CurrentAnswer.node - " +currentAnswer.node +" === nodeName - " +nodeName +" : " +(currentAnswer.node === nodeName));
                 if(currentAnswer.node === nodeName) {
                     results = currentAnswer;
                 }
             }
 
             if(results === null) {
-                console.log("nodeName " +nodeName +" node found. Restart.");
                 triggerRestart();
             } else {
-                console.log("nodeName " +nodeName +" found, return results");
                 return results;
             }
         },
