@@ -771,7 +771,7 @@ var nodes = {
         text: "How long ago did symptom(s) begin?",
         answers:{
             1:{
-                text: "2-12 weeks",
+                text: "≤12 weeks",
                 nextNode: 10
             },
             2:{
@@ -800,7 +800,7 @@ var nodes = {
         text: "How long ago was possible exposure (travel or unprotected sex)?",
         answers: {
             1: {
-                text: "2-12 weeks",
+                text: "≤12 weeks",
                 nextNode: 13
             },
             2: {
@@ -893,7 +893,7 @@ var nodes = {
         text: "How long ago did symptom(s) begin?",
         answers: {
             1: {
-                text: "2-12 weeks",
+                text: "≤12 weeks",
                 nextNode: 10
             },
             2: {
@@ -1095,11 +1095,11 @@ var nodes = {
         endpointName: "noEvidenceOfRecentZIKVInfection"
     },
     35:{
-        text: '<div id="armBReflexrRTPCR">'
+        text: '<div>'
             +'<strong>Interpretation:</strong> Test results suggest recent maternal Zika virus infection. However, '
             +'additional testing may be indicated. <br /><br />'
             +'<strong>Action needed:</strong> Despited the specificity of NAT, false positive NAT results have been '
-            +'reported. In a pregnant woman with a positive NAT and a negative IgM result who is asymptomatic or >= 2 '
+            +'reported. In a pregnant woman with a positive NAT and a negative IgM result who is asymptomatic or ≥ 2 '
             +'weeks from last exposure or symptom onset, confirm results by repeat NAT and IgM testing on a new serum '
             +'sample. <br /><br />'
             +' <strong>To order test:</strong> Healthcare and laboratory professionals are instructed to direct Zika '
@@ -1205,15 +1205,15 @@ var nodes = {
         text: "What were the results of the PRNT tests?",
         answers: {
             1: {
-                text: "Zika virus PRNT >=10 AND dengue virus <10",
+                text: "Zika virus PRNT ≥ 10 AND dengue virus < 10",
                 nextNode: 25
             },
             2: {
-                text: "Zika virus PRNT >= 10 AND dengue virus PRNT >= 10",
+                text: "Zika virus PRNT ≥ 10 AND dengue virus PRNT ≥ 10",
                 nextNode: 47
             },
             3:{
-                text: "Zika virus PRNT <10",
+                text: "Zika virus PRNT < 10",
                 nextNode: 34
             },
             4:{
