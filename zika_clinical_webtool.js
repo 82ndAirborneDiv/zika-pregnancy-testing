@@ -1205,15 +1205,15 @@ var nodes = {
         text: "What were the results of the PRNT tests?",
         answers: {
             1: {
-                text: "Zika virus PRNT ≥ 10 AND dengue virus < 10",
+                text: "Zika virus PRNT ≥10 AND dengue virus <10",
                 nextNode: 25
             },
             2: {
-                text: "Zika virus PRNT ≥ 10 AND dengue virus PRNT ≥ 10",
+                text: "Zika virus PRNT ≥10 AND dengue virus PRNT ≥10",
                 nextNode: 47
             },
             3:{
-                text: "Zika virus PRNT < 10",
+                text: "Zika virus PRNT <10",
                 nextNode: 34
             },
             4:{
