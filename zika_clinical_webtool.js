@@ -206,7 +206,7 @@ function loadEndPoint(number){
     }
 
     endpointText.append($('<div>').load("html/endpoints.html #" +nodeObject.endpointName));
-    endpointDisclaimer.load("html/disclaimers.html #allResults")
+    endpointDisclaimer.load("html/disclaimers.html #allResults");
 
     endpointContent.show();
 
@@ -447,19 +447,19 @@ var NodeType = {
     QUESTION: "question",
     ENDPOINT: "endpoint",
     APP_INFO: "app info"
-}
+};
 var AnswerType = {
     SINGLESELECT: "singleSelect",
     MULTISELECT: "multiSelect",
     RADIO: "radio",
     NONE: "none"
-}
+};
 var Disclaimers = {
 
-}
+};
 var AdditionalNotes = {
 
-}
+};
 
 var nodes = {
     decisionLogic: {
@@ -493,7 +493,7 @@ var nodes = {
 
             if (answerToZikaNAT === "1") {
                 if (answerTo23 === "1") {
-                    return {nextNode: 25};
+                    return {nextNode: 51};
                 } else {
                     answerToZikaIgM = nodes.decisionLogic.getAnswerForNodeByName('33').answer;
                     if (answerToZikaIgM === "1") {
@@ -614,7 +614,7 @@ var nodes = {
             2: {
                 text: "Information to understand how to interpret test results and manage clinical care.",
                 nextNode: 23
-            },
+            }
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
@@ -626,7 +626,9 @@ var nodes = {
         }
     },
     4: {
-        text: "Does your pregnant patient live in an area (domestic or international) with a risk of Zika?",
+        text: 'Does your pregnant patient live in an area with a '
+        +'<a target="_blank" href="https://www.cdc.gov/zika/geo/countries-territories.html">CDC Zika travel notice</a>'
+        +' or <a target="_blank" href="https://www.cdc.gov/zika/geo/index.html">domestic travel guidance</a>?',
         answers: {
             1: {
                 text: "Yes",
@@ -639,10 +641,6 @@ var nodes = {
         },
         nodeType: NodeType.QUESTION,
         answerType: AnswerType.RADIO,
-        footnotes:{
-            text: "<div>*To see if your patient lives in an area with a risk of Zika, check this <a target='_blank' href='https://wwwnc.cdc.gov/travel/page/world-map-areas-with-zika'>map</a>.<br/>"+
-            "</div>"
-        },
         decideChoice: function(nodeHistoryObject){
             return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
         },
@@ -657,21 +655,19 @@ var nodes = {
         +"</div>",
         answers: {
             1:{
-                text: '<div>An international area with a current Zika Travel Notice <a target="_blank" '
-                +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
-                +'(listed on this Zika travel webpage in the box titled Zika Travel Notices).</a></div>',
+                text: 'An international area with a '
+                +'<a target="_blank" href="https://www.cdc.gov/zika/geo/countries-territories.html">'
+                +'current Zika Travel Notice</a>.',
                 nextNode: 15
             },
             2:{
-                text: 'An area with a risk of Zika in the United States (outlined in purple on <a target="_blank" '
-                +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
-                +'this map</a>).</div>',
+                text: 'An area in the <a target="_blank" href="https://www.cdc.gov/zika/geo/index.html">'
+                +'United States with a risk of Zika</a>.',
                 nextNode: 15
             },
             3:{
-                text: 'Other areas with a risk of Zika <a target="_blank" '
-                +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
-                +'(listed on this Zika travel webpage in the box titled Other Areas with Zika Risk).</a></div>',
+                text: 'Other areas with a <a target="_blank" href="https://www.cdc.gov/zika/geo/countries-territories.html">'
+                +'risk of Zika</a>.',
                 nextNode: 48
             },
             4: {
@@ -703,21 +699,18 @@ var nodes = {
         "lives in or has traveled to one of the areas listed below?",
         answers: {
             1: {
-                text: '<div>An international area with a current Zika Travel Notice <a target="_blank" '
-                +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
-                +'(listed on this Zika travel webpage in the box titled Zika Travel Notices)</a></div>',
+                text: 'An international area with a <a target="_blank" href="https://www.cdc.gov/zika/geo/countries-territories.html">'
+                +'current Zika Travel Notice</a>.',
                 nextNode: 7
             },
             2: {
-                text: 'An area with a risk of Zika in the United States (outlined in purple on <a target="_blank" '
-                +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
-                +'this map</a>).</div>',
+                text: 'An area in the <a target="_blank" href="https://www.cdc.gov/zika/geo/index.html">'
+                +'United States with a risk of Zika</a>.',
                 nextNode: 7
             },
             3:{
-                text: 'Other areas with a risk of Zika <a target="_blank" '
-                +'href="https://wwwnc.cdc.gov/travel/page/zika-travel-information">'
-                +'(listed on this Zika travel webpage in the box titled Other Areas with Zika Risk)</a></div>',
+                text: 'Other areas with a <a target="_blank" href="https://www.cdc.gov/zika/geo/countries-territories.html">'
+                +'risk of Zika</a>.',
                 nextNode: 48
             },
             4: {
@@ -786,11 +779,11 @@ var nodes = {
     },
     10: {
         nodeType: NodeType.ENDPOINT,
-        endpointName: "zikaAndDengueIgMTests",
+        endpointName: "zikaAndDengueIgMTests"
     },
     11: {
         nodeType: NodeType.ENDPOINT,
-        endpointName: "clinicalManagementOver12weeks",
+        endpointName: "clinicalManagementOver12weeks"
     },
     12: {
         text: "How long ago was possible exposure (travel or unprotected sex)?",
@@ -815,7 +808,7 @@ var nodes = {
     },
     13: {
         nodeType: NodeType.ENDPOINT,
-        endpointName: "zikaIgMTest",
+        endpointName: "zikaIgMTest"
     },
     14: {
         nodeType: NodeType.ENDPOINT,
@@ -936,6 +929,10 @@ var nodes = {
         endpointName: "prenatalClinicalManagement3rdTrimester"
     },
     23: {
+        /*
+            The answer to this node is used by 24, 33, & 39. If this node number changes,
+            decisionLogic & decideChoice must be updated for these questions.
+         */
         text: "Select results you have received",
         answers: {
             1: {
@@ -967,14 +964,18 @@ var nodes = {
     },
     24: {
         text: "What were the results of the Zika virus NAT on serum or urine?",
+        /*
+            This node uses answer from 23.
+            The next node for these answers are determined by decisionLogic.getNextNodeFromTestResults();
+         */
         answers: {
             1: {
                 text: "Positive on either serum or urine",
-                nextNode: 25
+                nextNode: -1
             },
             2: {
                 text: "Negative on both serum AND urine",
-                nextNode: 32
+                nextNode: -1
             }
         },
         nodeType: NodeType.QUESTION,
@@ -1053,18 +1054,22 @@ var nodes = {
     },
     32:{
         nodeType: NodeType.ENDPOINT,
-        endpointName: "awaitAdditionalTestResults"
+        endpointName: "negativeNATawaitAdditionalTestResults"
     },
     33: {
         text: "What were the results of the Zika IgM test?",
+        /*
+         This node uses answers from 23 & 24.
+         The next node for these answers are determined by decisionLogic.getNextNodeFromTestResults();
+         */
         answers:{
             1:{
-                text: "Positive (or equivocal), presumptive, or possible",
-                nextNode: 25
+                text: "Positive, equivocal, presumptive, or possible",
+                nextNode: -1
             },
             2:{
                 text: "Negative",
-                nextNode: 35
+                nextNode: -1
             }
         },
         nodeType: NodeType.QUESTION,
@@ -1094,7 +1099,7 @@ var nodes = {
         text: '<div>'
             +'<strong>Interpretation:</strong> Test results suggest recent maternal Zika virus infection. However, '
             +'additional testing may be indicated. <br /><br />'
-            +'<strong>Action needed:</strong> Despited the specificity of NAT, false positive NAT results have been '
+            +'<strong>Action needed:</strong> Despite the specificity of NAT, false positive NAT results have been '
             +'reported. In a pregnant woman with a positive NAT and a negative IgM result who is asymptomatic or ≥ 2 '
             +'weeks from last exposure or symptom onset, confirm results by repeat NAT and IgM testing on a new serum '
             +'sample. <br /><br />'
@@ -1171,6 +1176,10 @@ var nodes = {
     },
     39: {
         text: "What were the results of the dengue virus IgM test?",
+        /*
+         This node uses answers from 24 & 33.
+         The next node for these answers are determined by decisionLogic.getNextNodeFromTestResults();
+         */
         answers: {
             1: {
                 text: "Positive or equivocal",
@@ -1243,7 +1252,7 @@ var nodes = {
             },
             2: {
                 text: "No",
-                nextNode: 28
+                nextNode: 52
             }
         },
         nodeType: NodeType.QUESTION,
@@ -1284,6 +1293,39 @@ var nodes = {
     50: {
         nodeType: NodeType.ENDPOINT,
         endpointName: "noEvidenceOfRecentZikaVirusInfection"
+    },
+    51: {
+        nodeType: NodeType.ENDPOINT,
+        endpointName: "positiveNATawaitAdditionalResults"
+    },
+    52: {
+        text: "Did the pregnancy result in a live birth or pregnancy loss?",
+        answers: {
+            1: {
+                text: "Live birth",
+                nextNode: 53
+            },
+            2: {
+                text: "Pregnancy loss",
+                nextNode: 54
+            }
+        },
+        nodeType: NodeType.QUESTION,
+        answerType: AnswerType.RADIO,
+        decideChoice: function (nodeHistoryObject) {
+            return nodes.decisionLogic.getRadioAnswer(nodeHistoryObject.node, nodeHistoryObject.answer);
+        },
+        getValuesForAnswers: function () {
+            return this.answers;
+        }
+    },
+    53: {
+        nodeType: NodeType.ENDPOINT,
+        endpointName: "node53"
+    },
+    54: {
+        nodeType: NodeType.ENDPOINT,
+        endpointName: "node54"
     }
-}
+};
 
