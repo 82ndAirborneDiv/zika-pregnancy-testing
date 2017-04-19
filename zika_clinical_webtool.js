@@ -1100,8 +1100,8 @@ var nodes = {
             +'<strong>Interpretation:</strong> Test results suggest recent maternal Zika virus infection. However, '
             +'additional testing may be indicated. <br /><br />'
             +'<strong>Action needed:</strong> Despite the specificity of NAT, false positive NAT results have been '
-            +'reported. In a pregnant woman with a positive NAT and a negative IgM result who is asymptomatic or ≥ 2 '
-            +'weeks from last exposure or symptom onset, confirm results by repeat NAT and IgM testing on a new serum '
+            +'reported. In a pregnant woman with a positive NAT and a negative IgM result who is asymptomatic or '
+            +'the specimen was collected ≥14 days from symptom onset, confirm results by repeat NAT on the original serum '
             +'sample. <br /><br />'
             +' <strong>To order test:</strong> Healthcare and laboratory professionals are instructed to direct Zika '
             +'virus testing requests to their local or state public health laboratory or to a commercial laboratory that '
@@ -1154,7 +1154,7 @@ var nodes = {
             },
             2: {
                 text: "No",
-                nextNode: 28
+                nextNode: 52
             }
         },
         nodeType: NodeType.QUESTION,
@@ -1326,6 +1326,10 @@ var nodes = {
     54: {
         nodeType: NodeType.ENDPOINT,
         endpointName: "node54"
+    },
+    55: {
+        nodeType: NodeType.ENDPOINT,
+        endpointName: "node55"
     }
 };
 
