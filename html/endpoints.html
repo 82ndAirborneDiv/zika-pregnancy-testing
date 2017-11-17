@@ -1,11 +1,14 @@
 <head>
     <script type="text/javascript" src="/TemplatePackage/contrib/libs/jquery/jquery-1.11.3.min.js"></script>
 </head>
-<div id="zikaAndDengueIgMTests">
+
+<div id="node10">
     <strong>Action needed:</strong>
     <ol>
-        <li>Order Zika virus RNA nucleic acid test (NAT) on serum and urine specimens and Zika virus IgM and dengue
-            virus IgM tests on serum specimen.</li>
+        <li>Order Zika virus RNA nucleic acid test (NAT) on serum and urine specimens and Zika virus IgM on serum
+            specimen. Dengue IgM serology should also be performed for patients at risk of exposure and with clinically
+            compatible illness.
+        </li>
         <li>Collect serum and urine specimens and/or other specimens deemed appropriate by the public health or commercial
             lab performing your testing. Collect enough specimen so that reflex testing can occur if needed.
         </li>
@@ -23,14 +26,14 @@
     <strong>Follow-up action will be needed. Return to this tool for help interpreting the test results and determining if
         additional testing might be needed to confirm or rule out Zika virus infection.</strong>
 </div>
-<div id="clinicalManagementOver12weeks">
-    <strong>Clinical Management: </strong>For symptomatic and asymptomatic pregnant women with possible Zika virus
-    exposure who seek care >12 weeks after symptom onset or possible exposure, IgM antibody testing might be
+
+<div id="node11">
+    <strong>Clinical Management: </strong>For symptomatic pregnant women with possible Zika virus
+    exposure who seek care >12 weeks after symptom onset, IgM antibody testing might be
     considered. If <a target="_blank" href="http://www.cdc.gov/zika/geo/pregnancy-outcomes.html">fetal abnormalities</a>
     are present, Zika virus RNA nucleic acid testing (NAT) should also be performed on maternal serum and urine. However, a negative IgM antibody
     test or NAT result >12 weeks after symptom onset or possible exposure does not rule out recent Zika virus
-    infection because IgM antibody and viral RNA levels decline over time. Given the limitations of testing beyond 12
-    weeks after symptom onset or possible exposure, serial fetal ultrasounds should be considered.
+    infection because IgM antibody and viral RNA levels decline over time.
     <br /><br />
     <strong>To order test:</strong> Healthcare and laboratory professionals are instructed to direct Zika virus testing
     requests to their local or state public health laboratory or to a commercial laboratory that performs Zika testing
@@ -40,16 +43,36 @@
     <a target="_blank" href="http://www.cdc.gov/zika/laboratories/test-specimens-bodyfluids.html">
         CDC’s Collecting & Submitting Body Fluid Specimens for Zika Virus Testing</a> web page for guidance.
 </div>
-<div id="zikaIgMTest">
+
+<div id="node12a">
+    Testing of asymptomatic pregnant women with recent possible exposure, but without ongoing exposure to Zika, is
+    not routinely recommended by CDC. Testing should be considered as a shared patient-provider decision, based on
+    <ul>
+        <li>patient preferences and values</li>
+        <li>clinical judgment</li>
+        <li>a balanced assessment of risks and expected outcomes, and</li>
+        <li>jurisdiction’s recommendations.</li>
+    </ul>
+    Jurisdictional recommendations may take into account the epidemiology of Zika virus transmission and other
+    epidemiologic considerations and, therefore, might recommend routine testing for asymptomatic pregnant women.
+    <ul>
+        <li>Check with your state or local health department for your jurisdiction’s recommendations.</li>
+    </ul>
+    If testing is conducted, click <a href='#' onclick='event.preventDefault();nodeHistory.push(new NodeHistory(currentQuestionNumber, null));loadNode(12);'>here</a> for next steps.
+    <br/><br/>
+    Rationale: As the number of people reported with Zika infection in the Americas is declining, the pretest
+    probability declines, which leads to a higher proportion of positive results being false.
+</div>
+
+<div id="node13">
+    For asymptomatic pregnant women with ongoing risk of exposure but without a prior laboratory-confirmed diagnosis
+    of Zika virus, NAT testing should be offered at the initial prenatal care visit with two additional tests during pregnancy.
+    <br/><br/>
     <strong>Action needed:</strong>
-    <ol>
-        <li>Order 2 tests: Zika virus RNA nucleic acid test (NAT) and Zika virus IgM test.</li>
-        <li>Collect serum and urine specimens and/or other specimens deemed appropriate by the public health or commercial
-            lab performing your testing. Collect enough specimen so that reflex testing can occur if needed.
-        </li>
-        <li>Consider storing additional samples for further testing that might be needed. If no stored sample is
-            available and additional testing is needed, patient will need to submit a new sample.</li>
-    </ol>
+    <br/>
+    Order a Zika virus RNA nucleic acid test (NAT) on serum and urine specimens.
+    <br/><br/>
+
     <strong>To order test:</strong> Healthcare and laboratory professionals are instructed to direct Zika virus testing
     requests to their local or state public health laboratory or to a commercial laboratory that performs Zika testing
     using a validated assay with demonstrated analytical and clinical performance. Healthcare and laboratory
@@ -61,7 +84,8 @@
     <strong>Follow-up action will be needed. Return to this tool for help interpreting the test results and determining if
         additional testing might be needed to confirm or rule out Zika virus infection.</strong>
 </div>
-<div id="lowRiskOfExposure">
+
+<div id="node14">
     <strong>Interpretation:</strong> Based on your assessment of possible exposure, your patient is at low risk for
     travel-associated mosquito transmission or sexual transmission of Zika. However, if your patient has signs or
     symptoms consistent with Zika virus disease and other risk factors for exposure, talk to your health department
@@ -87,73 +111,26 @@
         </li>
     </ul>
 </div>
-<div id="clinicalManagementPresentingForCareIn3rdTrimesterAsymptomaticPregnantWomenAtOngoingRiskForExposure">
-    <strong>Interpretation: </strong>Asymptomatic pregnant women at ongoing risk for Zika virus exposure should be
-    offered testing in the 1<sup>st</sup>, 2<sup>nd</sup>, and 3<sup>rd</sup> trimesters. If your patient has already
-    received testing in her current trimester, monitor for signs and symptoms consistent
-    with Zika virus disease. Follow <a href="#" onclick="event.preventDefault();
-    nodeHistory.push(new NodeHistory(currentQuestionNumber, null));loadNode(21);">clinical management</a> for those
-    exposed to Zika virus and consider testing if fetal abnormalities consistent with congenital Zika virus syndrome
-    are present. Placental testing can be considered.
+
+<div id="node19b">
+    For pregnant women who have received a diagnosis of <strong><i>laboratory–confirmed</i></strong> Zika virus
+    infection any time <i>before</i> or <i>during</i> the current pregnancy, additional Zika virus testing is not recommended.
 </div>
-<div id="prenatalClinicalManagement3rdTrimester">
-    <strong>Recommendations for prenatal management:</strong>
-    <ul>
-        <li>
-            Consider serial ultrasounds <strong>every 3-4 weeks</strong> to assess fetal anatomy and growth. Fetal
-            abnormalities consistent with congenital Zika virus syndrome include microcephaly, intracranial
-            calcifications, ventriculomegaly, arthrogryposis (curving of joints), and abnormalities of the corpus
-            callosum, cerebrum, cerebellum, and eyes.
-        </li>
-        <li>
-            Notify the appropriate health department staff for your jurisdiction about any adverse events (e.g., birth
-            defects, pregnancy losses, abnormal ultrasound findings) when they are identified. This could be a state, tribal, local, or territorial
-            health department. Health department staff should notify CDC registry staff of adverse events.
-        </li>
-    </ul>
+
+<div id="node20">
+    <strong>Interpretation: </strong> For asymptomatic pregnant women with ongoing risk of exposure but without a
+    prior laboratory-confirmed diagnosis of Zika virus, NAT testing should be offered at the initial prenatal care
+    visit with two additional tests during pregnancy.
+    <br/><br/>
+    Continue to monitor for signs and symptoms consistent with Zika virus disease. If your patient develops symptoms
+    of Zika virus infection, <a href="#" onclick="event.preventDefault();
+    nodeHistory.push(new NodeHistory(currentQuestionNumber, null));loadNode(8);">testing for Zika virus</a> should be
+    repeated.
 </div>
-<div id="prenatalClinicalManagementRecentZikaInfectionOrFlavivirusNOS">
-    <strong>Recommendations for prenatal management:</strong>
-    <ul>
-        <li>
-            Consider serial ultrasounds <strong>every 3-4 weeks</strong> to assess fetal anatomy and growth. Fetal
-            abnormalities consistent with congenital Zika virus syndrome include microcephaly, intracranial
-            calcifications, vetriculomegaly, arthrogryposis, and/or abnormalities of the corpus callosum, cerebrum,
-            cerebellum, and eyes.
-        </li>
-        <li>
-            Decisions regarding amniocentesis should be individualized for each clinical circumstance.
-        </li>
-        <li>
-            Notify state, tribal, local, or territorial health department staff or CDC registry staff of adverse
-            events (e.g., birth defects, pregnancy losses, abnormal ultrasound findings).
-        </li>
-    </ul>
-</div>
-<div id="postnatalClinicalManagementRecentZIKVInfectionOrFlavivirusNOSLiveBirth">
-    <strong>Recommendations for postnatal management of live births:</strong>
-    <ul>
-        <li>
-            Infant serum and urine samples should be
-            <a target="_blank" href="https://www.cdc.gov/zika/hc-providers/test-specimens-at-time-of-birth.html">
-                tested</a> for Zika virus NAT and infant serum samples for Zika IgM antibodies within the first 2 days of
-            life or as soon as possible thereafter.
-        </li>
-        <li>
-            Consider obtaining CSF for Zika virus RNA and IgM antibody testing in infants with clinical findings of
-            possible congenital Zika syndrome but whose initial laboratory tests are negative on serum and urine.
-        </li>
-        <li>
-            Infant should receive comprehensive physical exam, head ultrasound, ophthalmology exam and newborn hearing screen. Additional evaluation may be indicated depending on clinical findings present. Refer to the previously published <a target="_blank" href="http://www.cdc.gov/mmwr/volumes/65/wr/mm6533e2.htm?s_cid=mmv6533e2_w">guidance</a> for evaluation and management of infants with possible congenital Zika virus infection.
-        </li>
-        <li>
-            Pathology testing is not indicated; no added diagnostic value given known maternal Zika diagnosis.
-        </li>
-        <li>
-            Notify state, tribal, local, or territorial health department staff or CDC registry staff of adverse
-            events (e.g., birth defects, perinatal or infant deaths).
-        </li>
-    </ul>
+
+<div id="node25">
+    <strong>Interpretation of test result:</strong> Test results suggest acute maternal Zika virus infection.
+    <br/><br/>
     <strong>Action needed: Zika virus infection and disease are nationally notifiable conditions. Your patient meets criteria for
         reporting to the
         <a target="_blank" href="http://www.cdc.gov/zika/hc-providers/registry.html">US Zika Pregnancy Registry</a>
@@ -163,80 +140,16 @@
     <ul>
         <li>
             If you are a healthcare provider or health department and you have questions about the registry, please
-            <a href="mailto:ZikaMCH@cdc.gov">email</a> or call 770-488-7100 and ask for the Zika Pregnancy
-            Hotline.
+            <a href="mailto:ZikaMCH@cdc.gov">email</a>.
         </li>
     </ul>
 </div>
-<div id="postnatalClinicalManagementRecentZIKVInfectionOrFlavivirusNOSPregnancyLoss">
-    <strong>Recommendations for postnatal management of fetal losses:</strong> Zika virus RNA NAT, IHC staining, and microscopic evaluation of fetal tissues is recommended to aid fetal diagnosis. Visit <a target="_blank" href="http://www.cdc.gov/zika/laboratories/test-specimens-tissues.html">
-        CDC’s Collecting & Submitting Fetal Tissue Specimens for Zika Virus Testing</a> web page for guidance.
-    <br /><br />
-    <strong>Action needed: Zika virus infection and disease are a nationally notifiable conditions. Your patient meets
-        criteria for reporting to the
-        <a target="_blank" href="http://www.cdc.gov/zika/hc-providers/registry.html">US Zika Pregnancy Registry</a>
-        and to the National Notifiable Disease Surveillance System (NNDSS).
-    </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal,
-    local, or territorial health department.
-    <ul>
-        <li>
-            If you are a healthcare provider or health department and you have questions about the registry, please
-            <a href="mailto:ZikaMCH@cdc.gov">email</a> or call 770-488-7100 and ask for the Zika Pregnancy
-            Hotline.
-        </li>
-    </ul>
-</div>
-<div id="negativeNATawaitAdditionalTestResults">
-    <strong>Action needed:</strong> Await additional IgM test results. Zika virus-specific IgM antibodies develop
-    during the first week of illness; therefore a negative NAT result does not indicated absence of a recent Zika
-    virus infection.
+
+<div id="node25a">
+    <strong>Interpretation of test result:</strong> Zika virus infection. Timing of infection cannot be determined.
+    For pregnant women without Zika virus exposure before the current pregnancy, a positive result represents recent
+    Zika virus infection.
     <br/><br/>
-    <strong>Follow-up action will be needed. Return to this tool for help interpreting the test results and
-    determining if additional testing might be needed to confirm or rule out Zika virus infection.</strong>
-</div>
-<div id="noEvidenceOfRecentZIKVInfection">
-    <strong>Interpretation</strong>: No evidence of Zika virus or dengue virus infection.
-    <br/><br/>
-    <strong>Recommendations for clinical management:</strong>
-    <ul>
-        <li>
-            Prenatal ultrasound to evaluate for fetal abnormalities consistent with congenital Zika virus syndrome.
-            This includes microcephaly, intracranial calcifications, ventriculomegaly, arthrogryposis, and/or
-            abnormalities of the corpus callosum, cerebrum, cerebellum, and eyes.
-            <ul>
-                <li>
-                    If fetal abnormalities are present, repeat Zika virus rRT-PCR and IgM test on the infant; base clinical
-                    management on corresponding laboratory results.
-                </li>
-                <li>
-                    If fetal abnormalities are absent, base obstetric care on the ongoing risk of Zika virus
-                    exposure in pregnant women.
-                </li>
-            </ul>
-        </li>
-    </ul>
-    If testing was conducted more than 12 weeks after symptom onset or last possible exposure, follow these postnatal <a href="#" onclick="event.preventDefault();
-        nodeHistory.push(new NodeHistory(currentQuestionNumber, null));loadNode(55);">
-    clinical management recommendations</a>.
-</div>
-<div id="prenatalClinicalManagementPresumptiveRecentZIKVInfectionOrFlavivirusNOS">
-    <strong>Recommendations for prenatal management:</strong>
-    <ul>
-        <li>
-            Consider serial ultrasounds <strong>every 3-4 weeks</strong> to assess fetal anatomy and growth. Fetal
-            abnormalities consistent with congenital Zika virus syndrome include microcephaly, intracranial
-            calcifications, vetriculomegaly, arthrogryposis, and/or abnormalities of the corpus callosum, cerebrum,
-            cerebellum, and eyes.
-        </li>
-        <li>
-            Decisions regarding amniocentesis should be individualized for each
-            clinical circumstance.
-        </li>
-        <li>
-            Notify state, tribal, local, or territorial health department staff or CDC registry staff of adverse
-            events (e.g., birth defects, pregnancy losses, abnormal ultrasound findings).
-        </li>
-    </ul>
     <strong>Action needed: Zika virus infection and disease are nationally notifiable conditions. Your patient meets criteria for
         reporting to the
         <a target="_blank" href="http://www.cdc.gov/zika/hc-providers/registry.html">US Zika Pregnancy Registry</a>
@@ -246,151 +159,32 @@
     <ul>
         <li>
             If you are a healthcare provider or health department and you have questions about the registry, please
-            <a href="mailto:ZikaMCH@cdc.gov">email</a> or call 770-488-7100 and ask for the Zika Pregnancy
-            Hotline.
+            <a href="mailto:ZikaMCH@cdc.gov">email</a>.
         </li>
     </ul>
 </div>
-<div id="prnt">
-    <strong>Interpretation:</strong> Presumptive Dengue virus infection.
-    <br /><br />
-    <strong>Action needed:</strong> Plaque reduction neutralization test (PRNT) for Zika and dengue viruses (or
-    other flaviviruses endemic to the region where exposure occurred) should be automatically performed on the same
-    IgM-tested sample or a subsequently collected sample. If your designated laboratory does not have capacity to
-    perform PRNT, work with your health department to submit a sample for further testing.
-    <br /><br />
-    <strong>Clinical management:</strong> For presumptive recent dengue virus infection, follow
-    <a target="_blank" href="http://apps.who.int/iris/bitstream/10665/44188/1/9789241547871_eng.pdf">existing
-        guidelines</a>.
-    <br /><br />
-    <strong>To order test:</strong> Healthcare and laboratory professionals are instructed to direct Zika virus testing
-    requests to their local or state public health laboratory or to a commercial laboratory that performs Zika testing
-    using a validated assay with demonstrated analytical and clinical performance. Healthcare and laboratory
-    professionals should follow state or local public health department guidance on notification procedures for suspect
-    cases of Zika virus infection. Visit
-    <a target="_blank" href="http://www.cdc.gov/zika/laboratories/test-specimens-bodyfluids.html">
-        CDC’s Collecting & Submitting Body Fluid Specimens for Zika Virus Testing</a> web page for guidance.
-    <br /><br />
-    <strong>Follow-up action might be needed. Return to this tool for help interpreting the test results to confirm or rule out Zika virus infection. </strong>
-</div>
-<div id="IngridsPaper">
-    <strong>Interpretation:</strong> Review this table for help interpreting the results. For more information, read
-    <a target="_blank" href="http://www.cdc.gov/mmwr/volumes/65/wr/mm6521e1.htm?s_cid=mm6521e1_w">MMWR article</a> by
-    Rabe et al.
-    <br />
-    For additional assistance, please e-mail: <a href="mailto:ZikaMCH@cdc.gov">ZikaMCH@cdc.gov</a> or call 770-448-7100 (24/7).
-    <br />
-    <div>
-        <h5 class="h5"><b>TABLE</b>. <strong>Interpretation of results of antibody testing for suspected Zika virus
-            infection*<sup>,†,§,¶,</sup>** — United States, 2016</strong>
-        </h5>
-        <table class="table table-bordered opt-in" width="100%" id="CDCTable_0">
-            <thead>
-            <tr>
-                <th class="row1left" bgcolor="#f0f0f0" valign="top" align="left" scope="col">Zika virus and dengue virus IgM ELISA</th>
-                <th class="row1" bgcolor="#f0f0f0" valign="top" align="center" scope="col">Zika virus PRNT</th>
-                <th class="row1" bgcolor="#f0f0f0" valign="top" align="center" scope="col">Dengue virus PRNT</th>
-                <th class="row1" bgcolor="#f0f0f0" valign="top" align="left" scope="col">Interpretation</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td valign="top" align="left" scope="row">Positive or equivocal (either assay)</td>
-                <td valign="top" align="center">≥10</td><td valign="top" align="center">&lt;10</td>
-                <td valign="top" align="left">Recent Zika virus infection</td>
-            </tr>
-            <tr>
-                <td valign="top" align="left" scope="row">Positive or equivocal (either assay)</td>
-                <td valign="top" align="center">&lt;10</td><td valign="top" align="center">≥10</td>
-                <td valign="top" align="left">Recent dengue virus infection</td>
-            </tr>
-            <tr>
-                <td valign="top" align="left" scope="row">Positive or equivocal (either assay)</td>
-                <td valign="top" align="center">≥10</td><td valign="top" align="center">≥10</td>
-                <td valign="top" align="left">Recent flavivirus infection; specific virus cannot be identified</td>
-            </tr>
-            <tr>
-                <td valign="top" align="left" scope="row">Inconclusive in one assay AND inconclusive or negative in the other</td>
-                <td valign="top" align="center">≥10</td><td valign="top" align="center">&lt;10</td>
-                <td valign="top" align="left">Evidence of Zika virus infection; timing cannot be determined</td>
-            </tr>
-            <tr>
-                <td valign="top" align="left" scope="row">Inconclusive in one assay AND inconclusive or negative in the other</td>
-                <td valign="top" align="center">&lt;10</td><td valign="top" align="center">≥10</td>
-                <td valign="top" align="left">Evidence of dengue virus infection; timing cannot be determined</td>
-            </tr>
-            <tr>
-                <td valign="top" align="left" scope="row">Inconclusive in one assay AND inconclusive or negative in the other</td>
-                <td valign="top" align="center">≥10</td><td valign="top" align="center">≥10</td>
-                <td valign="top" align="left">Evidence of flavivirus infection; specific virus and timing cannot be determined</td>
-            </tr>
-            <tr>
-                <td valign="top" align="left" scope="row">Any result (either or both assays)</td>
-                <td valign="top" align="center">&lt;10</td><td valign="top" align="center">&lt;10</td>
-                <td valign="top" align="left">No evidence of Zika virus or dengue virus infection</td>
-            </tr>
-            <tr>
-                <td valign="top" align="left" scope="row">Positive for Zika virus AND negative for dengue virus</td>
-                <td colspan="2" valign="top" align="center">Not yet performed</td><td valign="top" align="left">Presumptive recent Zika virus infection</td>
-            </tr>
-            <tr>
-                <td valign="top" align="left" scope="row">Positive for dengue virus AND negative for Zika virus</td>
-                <td colspan="2" valign="top" align="center">Not yet performed</td>
-                <td valign="top" align="left">Presumptive recent dengue virus infection</td>
-            </tr>
-            <tr>
-                <td valign="top" align="left" scope="row">Positive for Zika virus AND positive for dengue virus</td>
-                <td colspan="2" valign="top" align="center">Not yet performed</td>
-                <td valign="top" align="left">Presumptive recent flavivirus virus infection</td>
-            </tr>
-            <tr>
-                <td valign="top" align="left" scope="row">Equivocal (either or both assays)</td>
-                <td colspan="2" valign="top" align="center">Not yet performed</td>
-                <td valign="top" align="left">Equivocal results</td>
-            </tr>
-            <tr>
-                <td valign="top" align="left" scope="row">Inconclusive in one assay AND inconclusive or negative in the other</td>
-                <td colspan="2" valign="top" align="center">Not yet performed</td><td valign="top" align="left">Inconclusive results</td>
-            </tr>
-            <tr>
-                <td valign="top" align="left" scope="row">Negative for Zika virus AND negative for dengue virus</td>
-                <td colspan="2" valign="top" align="center">Not indicated</td>
-                <td valign="top" align="left">No evidence of recent Zika virus or dengue virus infection </td>
-            </tr>
-            </tbody>
-        </table>
-        <p class="caption">
-            <b>Abbreviations:</b>
-            ELISA = enzyme-linked immunosorbent assay; IgM = immunoglobulin M antibodies; PRNT = plaque reduction neutralization test.
-            <br>
-            *For persons with suspected Zika virus disease, Zika virus real-time reverse transcription–polymerase chain
-            reaction (rRT-PCR) should be performed on serum specimens collected &lt;7 days after onset of symptoms, and
-            on urine specimens collect &lt;14 days after onset of symptoms. <br><sup>†</sup>In the absence of rRT-PCR
-            testing, negative IgM or neutralizing antibody testing in specimens collected &lt;7 days after illness
-            onset might reflect collection before development of detectable antibodies and does not rule out infection
-            with the virus for which testing was conducted.<br><sup>§</sup>Zika IgM positive result is reported as
-            “presumptive positive” to denote the need to perform confirmatory PRNT.<br><sup>¶</sup>Report any positive
-            or equivocal IgM Zika or dengue results to state or local health department.<br>**To resolve false-positive
-            results that might be caused by cross-reactivity or nonspecific reactivity, presumptive positive Zika IgM
-            results should be confirmed with PRNT titers against Zika, dengue, and other flaviviruses to which the
-            person might have been exposed. In addition, equivocal and inconclusive results that are not resolved by
-            retesting also should have PRNT titers performed to rule out a false-positive result.
-        </p>
-    </div>
-</div>
-<div id="presumptiveRecentZikaVirusOrDengueVirusOrFlavivirusInfection">
-    <strong>Interpretation:</strong> At this point, interpretation of the testing results suggests presumptive recent
-    Zika virus or presumptive recent flavivirus infection.
+
+<div id="node26">
+    <strong>Interpretation:</strong> If you live in area where PRNT is recommended, continue to plaque reduction
+    neutralization test (PRNT). If you live in area where PRNT is not recommended (i.e., Puerto Rico), interpretation
+    of the testing results suggests presumptive Zika virus or presumptive flavivirus infection.
     <br/><br/>
+    <strong>Important reminders:</strong>
+    <ol>
+        <li>
+            It’s important to remember that Zika virus IgM test results might be difficult to interpret for pregnant
+            women who have had exposure to any area with risk for Zika virus transmission before the current pregnancy.
+        </li>
+        <li>
+            If dengue virus IgM testing was ordered for a symptomatic patient, refer to
+            <a target="_blank" href="https://www.cdc.gov/dengue/clinicallab/laboratory.html">this page</a> for
+            laboratory interpretation in the presence of dengue virus IgM results.
+        </li>
+    </ol>
     <strong>Action needed:</strong> Plaque reduction neutralization test (PRNT) for Zika and dengue viruses (or
     other flaviviruses endemic to the region where exposure occurred) should be automatically performed on the same
     IgM-tested sample or a subsequently collected sample. If your designated laboratory does not have capacity to
     perform PRNT, work with your health department to submit a sample for further testing.
-    <br /><br />
-    <strong>Clinical management:</strong> For presumptive recent Zika virus infection or presumptive recent flavivirus
-    infection, follow these <a href="#" onclick="event.preventDefault();
-        nodeHistory.push(new NodeHistory(currentQuestionNumber, null));loadNode(36);">
-    clinical management recommendations</a>.
     <br /><br />
     <strong>To order test:</strong> Healthcare and laboratory professionals are instructed to direct Zika virus testing
     requests to their local or state public health laboratory or to a commercial laboratory that performs Zika testing
@@ -403,7 +197,295 @@
     <strong>Follow-up action might be needed. Return to this tool for help interpreting the test results to confirm or
         rule out Zika virus infection. </strong>
 </div>
-<div id="testingNotRoutinelyRecommended">
+
+<div id="node32">
+    <strong>Action needed:</strong> Await additional IgM test results. Zika virus-specific IgM antibodies develop
+    during the first week of illness; therefore a negative NAT result does not indicate absence of a recent Zika
+    virus infection.
+    <br/><br/>
+    <strong>Follow-up action will be needed. Return to this tool for help interpreting the test results and
+        determining if additional testing might be needed to confirm or rule out Zika virus infection.</strong>
+</div>
+
+<div id="node32a">
+    <strong>Interpretation:</strong> No Zika virus RNA detected. Zika virus infection during pregnancy cannot be ruled
+    out. A negative Zika virus NAT does not exclude infection during pregnancy, because it represents a single point
+    in time. Zika virus RNA levels decline over time, and the duration of presence of Zika virus RNA in serum and
+    urine following infection vary among pregnant women.
+    <br/><br/>
+    For asymptomatic pregnant women with ongoing possible Zika virus exposure but without a prior laboratory-confirmed
+    diagnosis of Zika virus, NAT testing should be offered at the initial prenatal care visit with two additional
+    tests during pregnancy. If your patient has already received three tests during pregnancy, monitor for signs and
+    symptoms consistent with Zika virus disease. If patient develops symptoms of Zika virus infection, testing for
+    Zika virus should be repeated.
+</div>
+
+<div id="node35">
+    <strong>Interpretation:</strong> Test results suggest acute maternal Zika virus infection. However, additional
+    testing may be indicated.
+    <br/><br/>
+    <strong>Action needed:</strong> Despite the specificity of NAT, false positive NAT results have been reported. In a
+    pregnant woman with a positive NAT on serum or urine and a negative IgM result repeat testing on the original
+    NAT-positive specimen. If repeat NAT is positive, results should be interpreted as evidence of acute Zika virus
+    infection. If repeat NAT testing is negative, results are indeterminate and healthcare providers should repeat
+    Zika virus IgM antibody testing on a serum specimen collected ≥ 2 weeks after symptom onset or possible exposure
+    or specimen collection date. If subsequent IgM antibody test is positive, interpret as evidence of acute Zika
+    virus infection but if negative, interpret as no evidence of Zika virus infection. For more information on
+    laboratory interpretation, click
+    <a href='#' onclick='event.preventDefault();nodeHistory.push(new NodeHistory(currentQuestionNumber, null));loadNode(45);'>here</a>.
+    <br/><br/>
+    <strong>To order test:</strong> Healthcare and laboratory professionals are instructed to direct Zika virus testing
+    requests to their local or state public health laboratory or to a commercial laboratory that performs Zika testing
+    using a validated assay with demonstrated analytical and clinical performance. Healthcare and laboratory
+    professionals should follow state or local public health department guidance on notification procedures for suspect
+    cases of Zika virus infection. Visit
+    <a target="_blank" href="http://www.cdc.gov/zika/laboratories/test-specimens-bodyfluids.html">
+        CDC’s Collecting & Submitting Body Fluid Specimens for Zika Virus Testing</a> web page for guidance.
+    <br /><br />
+    <strong>Action needed: Zika virus infection and disease are nationally notifiable conditions. Your patient meets criteria for
+        reporting to the
+        <a target="_blank" href="http://www.cdc.gov/zika/hc-providers/registry.html">US Zika Pregnancy Registry</a>
+        and to the National Notifiable Disease Surveillance System (NNDSS).
+    </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal,
+    local, or territorial health department.
+    <ul>
+        <li>
+            If you are a healthcare provider or health department and you have questions about the registry, please
+            <a href="mailto:ZikaMCH@cdc.gov">email</a> or call 770-488-7100 and ask for the Zika Pregnancy
+            Hotline.
+        </li>
+    </ul>
+    <strong>Follow-up action might be needed. Return to this tool for help interpreting the test results and
+        determining if additional testing might be needed to confirm or rule out Zika virus infection.</strong>
+</div>
+
+<div id="node35a">
+    <strong>Interpretation:</strong> Test results suggest acute maternal Zika virus infection. However, additional
+    testing may be indicated.
+    <br/><br/>
+    <strong>Action needed:</strong>
+    Despite the high specificity of NAT, false positive NAT results have been reported. If NAT is only positive on
+    serum or urine, testing should be repeated on the original NAT positive specimen. If repeat NAT is positive,
+    results should be interpreted as evidence of acute Zika virus infection. If repeat NAT testing is negative,
+    results are indeterminate and healthcare providers should perform IgM antibody testing on a specimen collected ≥2
+    weeks after symptom onset or possible exposure or specimen collection date. For laboratory interpretation, click
+    <a href='#' onclick='event.preventDefault();nodeHistory.push(new NodeHistory(currentQuestionNumber, null));loadNode(45);'>here</a>.
+    <br/><br/>
+    <strong>To order test:</strong> Healthcare and laboratory professionals are instructed to direct Zika virus testing
+    requests to their local or state public health laboratory or to a commercial laboratory that performs Zika testing
+    using a validated assay with demonstrated analytical and clinical performance. Healthcare and laboratory
+    professionals should follow state or local public health department guidance on notification procedures for suspect
+    cases of Zika virus infection. Visit
+    <a target="_blank" href="http://www.cdc.gov/zika/laboratories/test-specimens-bodyfluids.html">
+        CDC’s Collecting & Submitting Body Fluid Specimens for Zika Virus Testing</a> web page for guidance.
+    <br /><br />
+    <strong>Follow-up action might be needed. Return to this tool for help interpreting the test results and
+        determining if additional testing might be needed to confirm or rule out Zika virus infection.</strong>
+</div>
+
+<div id="node36">
+    <strong>Interpretation of test result:</strong> Test results indicate presumptive recent Zika virus infection or
+    recent maternal flavivirus infection, but the specific virus cannot be identified.
+</div>
+
+<div id="node45">
+    <strong>Interpretation:</strong> Review this table for help interpreting the results.
+    <br />
+    For additional assistance, please e-mail: <a href="mailto:ZikaMCH@cdc.gov">ZikaMCH@cdc.gov</a> or call 770-448-7100 (24/7).
+    <br />
+    <div>
+        <h5><b>TABLE 1</b>. <strong>Interpretation*<sup>,</sup><sup>†</sup> of results of nucleic acid and antibody testing<sup>§</sup><sup>,</sup><sup>¶</sup> for suspected Zika virus infection — United States (including U.S. territories), July 2017</strong>
+        </h5>
+        <table class="table table-bordered opt-in">
+            <thead><tr>
+                <th class="row1left" scope="col" align="left" valign="top">Zika virus NAT (serum)**</th>
+                <th class="row1" scope="col" align="left" valign="top">Zika virus NAT (urine) **</th>
+                <th class="row1" scope="col" align="left" valign="top">Zika virus IgM<sup>††</sup>
+                </th>
+                <th class="row1" scope="col" align="left" valign="top">Zika virus PRNT</th>
+                <th class="row1" scope="col" align="left" valign="top">Dengue virus PRNT</th>
+                <th class="row1" scope="col" align="left" valign="top">Interpretation and recommendations</th>
+            </tr></thead>
+            <tbody>
+            <tr>
+                <td scope="row" align="left" valign="top">Positive</td>
+                <td align="left" valign="top">Positive</td>
+                <td align="left" valign="top">Any result</td>
+                <td align="left" valign="top">Not indicated</td>
+                <td align="left" valign="top">Not indicated</td>
+                <td align="left" valign="top"><b>Acute Zika virus infection</b></td>
+            </tr>
+            <tr>
+                <td scope="row" align="left" valign="top">Negative</td>
+                <td align="left" valign="top">Positive</td>
+                <td align="left" valign="top">Positive</td>
+                <td align="left" valign="top">Not indicated</td>
+                <td align="left" valign="top">Not indicated</td>
+                <td align="left" valign="top"><b>Acute Zika virus infection</b></td>
+            </tr>
+            <tr>
+                <td rowspan="6" scope="row" align="left" valign="top">Negative</td>
+                <td rowspan="6" align="left" valign="top">Positive</td>
+                <td rowspan="6" align="left" valign="top">Negative</td>
+                <td rowspan="6" align="left" valign="top">Not indicated</td>
+                <td rowspan="6" align="left" valign="top">Not indicated</td>
+                <td align="left" valign="top"><b>Suggests acute Zika virus infection</b></td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">• <i>Repeat testing on original urine specimen</i>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">• <i>If repeat NAT result is positive, interpret as </i><b><i>evidence of acute Zika virus infection</i></b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">• <i>If repeat NAT result is negative, repeat Zika virus IgM testing on a serum specimen collected ≥2 weeks after symptom onset or possible exposure or specimen collection date</i>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">       • <i>If repeat IgM result is positive,<sup>§§</sup> interpret as </i><b><i>evidence of acute Zika virus infection</i></b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">       • <i>If repeat IgM result is not positive, interpret as no evidence of Zika virus infection</i>
+                </td>
+            </tr>
+            <tr>
+                <td scope="row" align="left" valign="top">Positive</td>
+                <td align="left" valign="top">Negative or not performed</td>
+                <td align="left" valign="top">Positive</td>
+                <td align="left" valign="top">Not indicated</td>
+                <td align="left" valign="top">Not indicated</td>
+                <td align="left" valign="top"><b>Acute Zika virus infection</b></td>
+            </tr>
+            <tr>
+                <td rowspan="6" scope="row" align="left" valign="top">Positive</td>
+                <td rowspan="6" align="left" valign="top">Negative or not performed</td>
+                <td rowspan="6" align="left" valign="top">Negative</td>
+                <td rowspan="6" align="left" valign="top">Not indicated</td>
+                <td rowspan="6" align="left" valign="top">Not indicated</td>
+                <td align="left" valign="top"><b>Suggests acute Zika virus infection</b></td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">• <i>Repeat testing on original serum specimen</i>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">• <i>If repeat NAT result is positive, interpret as </i><b><i>evidence of acute Zika virus infection</i></b>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">• <i>If repeat NAT result is negative, repeat Zika virus IgM testing on a serum specimen collected ≥2 weeks after symptom onset or possible exposure or specimen collection date</i>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">        • <i>If repeat IgM result is positive,<sup> §§</sup> interpret as evidence of acute Zika virus infection</i>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">        • <i>If repeat IgM antibody result is not positive, interpret as no evidence of Zika virus infection</i>
+                </td>
+            </tr>
+            <tr>
+                <td rowspan="2" scope="row" align="left" valign="top">Negative</td>
+                <td rowspan="2" align="left" valign="top">Negative or not performed</td>
+                <td rowspan="2" align="left" valign="top">Any nonnegative result<sup>¶¶</sup>
+                </td>
+                <td rowspan="2" align="left" valign="top">≥10</td>
+                <td rowspan="2" align="left" valign="top">&lt;10</td>
+                <td align="left" valign="top"><b>Zika virus infection; timing of infection cannot be determined</b></td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">• <i>For persons without prior Zika virus exposure, a positive IgM result represents recent Zika virus infection</i>
+                </td>
+            </tr>
+            <tr>
+                <td scope="row" align="left" valign="top">Negative</td>
+                <td align="left" valign="top">Negative or not performed</td>
+                <td align="left" valign="top">Any nonnegative result<sup>¶¶</sup>
+                </td>
+                <td align="left" valign="top">&lt;10</td>
+                <td align="left" valign="top">Any result</td>
+                <td align="left" valign="top"><b>No evidence of Zika virus infection</b></td>
+            </tr>
+            <tr>
+                <td rowspan="2" scope="row" align="left" valign="top">Negative</td>
+                <td rowspan="2" align="left" valign="top">Negative or not performed</td>
+                <td rowspan="2" align="left" valign="top">Any nonnegative result<sup>¶¶</sup>
+                </td>
+                <td rowspan="2" align="left" valign="top">≥10</td>
+                <td rowspan="2" align="left" valign="top">≥10</td>
+                <td align="left" valign="top"><b>Flavivirus infection; specific virus cannot be identified; timing of infection cannot be determined</b></td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">• <i>For persons without prior Zika virus exposure, a positive IgM result represents recent unspecified flavivirus infection</i>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="6" scope="col" align="left" valign="top"><b><i>For areas where PRNT is not recommended<sup>¶</sup></i></b></td>
+            </tr>
+            <tr>
+                <td scope="row" align="left" valign="top">Negative</td>
+                <td align="left" valign="top">Negative or not performed</td>
+                <td align="left" valign="top">Positive for Zika virus AND negative for dengue virus</td>
+                <td colspan="2" align="left" valign="top">Not performed because PRNT is not recommended</td>
+                <td align="left" valign="top"><b>Presumptive Zika virus infection; timing of infection cannot be determined***</b></td>
+            </tr>
+            <tr>
+                <td scope="row" align="left" valign="top">Negative</td>
+                <td align="left" valign="top">Negative or not performed</td>
+                <td align="left" valign="top">Positive for Zika virus AND positive for dengue virus</td>
+                <td colspan="2" align="left" valign="top">Not performed because PRNT is not recommended</td>
+                <td align="left" valign="top"><b>Presumptive flavivirus infection; specific virus cannot be identified; timing of infection cannot be determined***</b></td>
+            </tr>
+            <tr>
+                <td rowspan="2" scope="row" align="left" valign="top">Negative</td>
+                <td rowspan="2" align="left" valign="top">Negative or not performed</td>
+                <td rowspan="2" align="left" valign="top">Equivocal (either or both assays)</td>
+                <td colspan="2" rowspan="2" align="left" valign="top">Not performed because PRNT is not recommended</td>
+                <td align="left" valign="top"><b>Insufficient information for interpretation</b></td>
+            </tr>
+            <tr>
+                <td colspan="1" scope="col" align="left" valign="top">• <i>Consider repeat testing</i>
+                </td>
+            </tr>
+            <tr>
+                <td scope="row" align="left" valign="top">Negative</td>
+                <td align="left" valign="top">Negative or not performed</td>
+                <td align="left" valign="top">Negative on both assays</td>
+                <td colspan="2" align="left" valign="top">Not performed because PRNT is not recommended</td>
+                <td align="left" valign="top"><b>No laboratory evidence of Zika virus infection</b></td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="caption"><b>Abbreviations</b>: IgM = immunoglobulin M; NAT = nucleic acid test; PRNT = plaque reduction neutralization test.<br>
+            * Final interpretations of results of Zika virus tests should be performed after all testing is completed.<br><b><sup>†</sup></b> Serology test results that indicate flavivirus infection should be interpreted in the context of circulating flaviviruses.<br><b><sup>§</sup></b> Dengue virus IgM testing is recommended for symptomatic pregnant women as well as for asymptomatic pregnant women residing in areas where PRNT is not recommended.<br><sup>¶ </sup>Currently, PRNT confirmation is not routinely recommended for persons living in Puerto Rico.<br>
+            ** Serum must be submitted for all persons tested for Zika virus infection; a urine specimen for Zika virus NAT testing should always be submitted concurrently with a serum specimen.<br><b><sup>††</sup></b> For laboratory interpretation in the presence of dengue virus IgM results refer to <a href="https://www.cdc.gov/dengue/clinicallab/laboratory.html">https://www.cdc.gov/dengue/clinicallab/laboratory.html</a>.<br><b><sup>§§</sup></b> <b>Positive</b> results include “positive,” “presumptive Zika virus positive,” or “possible Zika virus positive.” These are examples of assay interpretations that might accompany test results; positive serology terminology varies by assay. For explanation of a specific interpretation, refer to the instructions for use for the specific assay performed. Information on each assay can be found at <a href="https://www.fda.gov/MedicalDevices/Safety/EmergencySituations/ucm161496.htm#zika">https://www.fda.gov/MedicalDevices/Safety/EmergencySituations/ucm161496.htm#zika</a> under the “Labeling” tab for the specific assay.<br><sup>¶¶ </sup><b>Nonnegative</b> results include “positive,” “equivocal,” “presumptive positive,” or “possible positive.” These are examples of assay interpretations that might accompany test results; nonnegative serology terminology varies by assay. For explanation of a specific interpretation, refer to the instructions for use for the specific assay performed. Information on each assay can be found at <a href="https://www.fda.gov/MedicalDevices/Safety/EmergencySituations/ucm161496.htm#zika">https://www.fda.gov/MedicalDevices/Safety/EmergencySituations/ucm161496.htm#zika</a> under the “Labeling” tab for the specific assay.<br>
+            *** Zika virus IgM positive result is reported as “presumptive positive or flavivirus infection” to denote the need to perform confirmatory PRNT titers against Zika virus, dengue virus, and other flaviviruses to which the person might have been exposed to resolve potential false-positive results that might have been caused by cross-reactivity or nonspecific reactivity. In addition, ambiguous test results (e.g., inconclusive, equivocal, and indeterminate) that are not resolved by retesting also should have PRNT titers performed to rule out a false-positive result. However, PRNT confirmation is currently not routinely recommended for persons living in Puerto Rico.</p>
+    </div>
+</div>
+
+<div id="node47">
+    <strong>Interpretation of test result:</strong> Flavivirus infection, but the specific virus cannot be identified
+    and timing of infection cannot be determined. For pregnant women without Zika virus exposure before the current
+    pregnancy, a positive IgM result represents recent unspecified flavivirus infection.
+    <br/><br/>
+    <strong>Action needed: Zika virus infection and disease are nationally notifiable conditions. Your patient meets criteria for
+        reporting to the
+        <a target="_blank" href="http://www.cdc.gov/zika/hc-providers/registry.html">US Zika Pregnancy Registry</a>
+        and to the National Notifiable Disease Surveillance System (NNDSS).
+    </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal,
+    local, or territorial health department.
+    <ul>
+        <li>
+            If you are a healthcare provider or health department and you have questions about the registry, please
+            <a href="mailto:ZikaMCH@cdc.gov">email</a>.
+        </li>
+    </ul>
+</div>
+
+<div id="node49">
     <strong>Interpretation:</strong> Because the chance of Zika virus infection is unknown in areas with Zika risk that
     do not have travel notices, routine testing is not recommended for pregnant women who do not have symptoms. However,
     testing is recommended for
@@ -427,67 +509,14 @@
     If you choose to test, click <a href="#" onclick="event.preventDefault();
     nodeHistory.push(new NodeHistory(currentQuestionNumber, null));loadNode(13);">here</a> for which tests to order.
 </div>
-<div id="noEvidenceOfRecentZikaVirusInfection">
-    <strong>Interpretation:</strong> No evidence of recent Zika virus infection. However, additional testing may be indicated.
-    <br /><br />
-    <strong>Action needed:</strong> For asymptomatic pregnant women with time-limited exposure (i.e., who infrequently traveled to or had sex with a partner who lives in or traveled to areas with risk of Zika virus infection) and negative for Zika NAT and IgM, if the specimen was collected &lt;14 days after last exposure, collect a follow-up specimen 2 to 12 weeks after last exposure, and conduct another Zika virus IgM assay.
-    <br/><br/>
-    <strong>Recommendations for clinical management:</strong>
-        Prenatal ultrasound to evaluate for fetal abnormalities consistent with congenital Zika virus syndrome.
-        This includes microcephaly, intracranial calcifications, ventriculomegaly, arthrogryposis, and/or abnormalities
-        of the corpus callosum, cerebrum, cerebellum, and eyes.
-        <ul>
-            <li>
-                If fetal abnormalities are present, repeat Zika virus rRT-PCR and IgM test on the infant; base
-                clinical management on corresponding laboratory results.
-            </li>
-            <li>
-                If fetal abnormalities are absent, base obstetric care on the ongoing risk of Zika virus exposure
-                in pregnant women.
-            </li>
-        </ul>
-</div>
-<div id="positiveNATawaitAdditionalResults">
-    <strong>Interpretation:</strong> NAT test results suggest recent maternal Zika virus infection. Despite the
-    specificity of NAT, false positive results have been reported; therefore, await additional IgM test results for
-    confirmation.
-    <br/><br/>
-    <strong>Follow-up action will be needed. Return to this tool for help interpreting the test results and
-        determining if additional testing might be needed to confirm or rule out Zika virus infection.</strong>
 
+<div id="node50">
+    <strong>Interpretation:</strong> No evidence of Zika virus infection.
 </div>
-<div id="node53">
-    <strong>Recommendations for postnatal management of live births:</strong>
-    <ul>
-        <li>
-            Infant serum and urine samples should be
-            <a target="_blank" href="https://www.cdc.gov/zika/hc-providers/test-specimens-at-time-of-birth.html">
-                tested</a> for Zika virus NAT and infant serum samples for Zika IgM antibodies within the first 2 days of
-            life or as soon as possible thereafter.
-        </li>
-        <li>
-            Zika virus NAT, immunohistochemical staining, and microscopic evaluation of fixed placenta, umbilical cord,
-            and fetal membranes should be considered. Visit
-            <a target="_blank" href="http://www.cdc.gov/zika/laboratories/test-specimens-tissues.html">
-                CDC’s Collecting & Submitting Fetal Tissue Specimens for Zika Virus Testing</a> web page for guidance.
-        </li>
-        <li>
-            Consider obtaining cerebrospinal fluid (CSF) for Zika virus RNA and IgM antibody testing in infants with
-            clinical findings of possible congenital Zika syndrome but whose initial laboratory tests are negative
-            on serum and urine.
-        </li>
-        <li>
-            Infant should receive comprehensive physical exam, head ultrasound, ophthalmology exam and newborn hearing
-            screen. Additional evaluation may be indicated depending on clinical findings present. Refer to the
-            previously published
-            <a target="_blank" href="http://www.cdc.gov/mmwr/volumes/65/wr/mm6533e2.htm?s_cid=mmv6533e2_w">guidance</a>
-            for evaluation and management of infants with possible congenital Zika virus infection.
-        </li>
-        <li>
-            Notify state, tribal, local, or territorial health department staff or CDC registry staff of adverse
-            events (e.g., birth defects, perinatal or infant deaths).
-        </li>
-    </ul>
+
+<div id="node51">
+    <strong>Interpretation:</strong> NAT test results suggest acute maternal Zika virus infection.
+    <br/><br/>
     <strong>Action needed: Zika virus infection and disease are nationally notifiable conditions. Your patient meets criteria for
         reporting to the
         <a target="_blank" href="http://www.cdc.gov/zika/hc-providers/registry.html">US Zika Pregnancy Registry</a>
@@ -497,39 +526,11 @@
     <ul>
         <li>
             If you are a healthcare provider or health department and you have questions about the registry, please
-            <a href="mailto:ZikaMCH@cdc.gov">email</a> or call 770-488-7100 and ask for the Zika Pregnancy
-            Hotline.
+            <a href="mailto:ZikaMCH@cdc.gov">email</a>.
         </li>
     </ul>
 </div>
-<div id="node54">
-    <strong>Recommendations for postnatal management of pregnancy losses:</strong>
-    <ul>
-        <li>
-            Zika virus RNA NAT, immunohistochemical staining, and microscopic evaluation of fetal tissues is
-            recommended to aid fetal diagnosis. Visit
-            <a target="_blank" href="http://www.cdc.gov/zika/laboratories/test-specimens-tissues.html">
-                CDC’s Collecting & Submitting Fetal Tissue Specimens for Zika Virus Testing</a> web page for guidance.
-        </li>
-        <li>
-            <strong>IMPORTANT: Pre-approval is required prior to submission of any tissue specimens. For pre-approval please
-                contact pathology@cdc.gov and eocevent189@cdc.gov.</strong>
-        </li>
-    </ul>
-    <strong>Action needed: Zika virus infection and disease are a nationally notifiable conditions. Your patient meets
-        criteria for reporting to the
-        <a target="_blank" href="http://www.cdc.gov/zika/hc-providers/registry.html">US Zika Pregnancy Registry</a>
-        and to the National Notifiable Disease Surveillance System (NNDSS).
-    </strong> Report information about pregnant women with laboratory evidence of Zika virus to your state, tribal,
-    local, or territorial health department.
-    <ul>
-        <li>
-            If you are a healthcare provider or health department and you have questions about the registry, please
-            <a href="mailto:ZikaMCH@cdc.gov">email</a> or call 770-488-7100 and ask for the Zika Pregnancy
-            Hotline.
-        </li>
-    </ul>
-</div>
+
 <div id="node55">
     <strong>Interpretation:</strong> No evidence of Zika virus or dengue virus infection, if tested more than 12 weeks
     after symptom onset or last possible exposure.
@@ -537,5 +538,4 @@
     <strong>Recommendations for clinical management:</strong> If there is concern about infant follow-up or maternal
     testing is not performed or negative in the setting of an exposure that occurred more than 12 weeks earlier, head
     ultrasound, ophthalmologic assessment, and infant Zika virus testing should be considered before hospital discharge.
-
 </div>
